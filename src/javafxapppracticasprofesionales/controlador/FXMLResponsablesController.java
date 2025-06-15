@@ -59,7 +59,8 @@ public class FXMLResponsablesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        configurarTabla();
+        cargarInformacionTabla();
     }    
     
     private void configurarTabla() {
@@ -82,7 +83,6 @@ public class FXMLResponsablesController implements Initializable {
                     + "Por favor intentelo más tarde", Alert.AlertType.WARNING);
             Utilidad.getEscenarioComponente(tvResponsables).close();
         }
-        
     }
 
     @FXML
@@ -92,7 +92,7 @@ public class FXMLResponsablesController implements Initializable {
             Parent vista = loader.load();
             
             Stage escenario = new Stage();
-            escenario.setTitle("Registrar Nuevo Proyecto - Paso 1");
+            escenario.setTitle("Registrar Nuevo Responsable");
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();

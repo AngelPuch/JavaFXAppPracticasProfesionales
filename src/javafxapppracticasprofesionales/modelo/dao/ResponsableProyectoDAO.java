@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
+import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 
 public class ResponsableProyectoDAO {
@@ -14,9 +15,9 @@ public class ResponsableProyectoDAO {
         ArrayList<ResponsableProyecto> responsables = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String consulta = "SELECT rp.nombre AS Nombre, rp.cargo AS Cargo, rp.correo AS Correo, rp.telefono AS Telefono, ov.nombre AS OrganizacionVinculada "
+            String consulta = "SELECT rp.idResponsableProyecto, rp.nombre AS Nombre, rp.cargo AS Cargo, rp.correo AS Correo, rp.telefono AS Telefono, ov.nombre AS OrganizacionVinculada "
                 + "FROM responsableproyecto rp "
-                + "INNER JOIN organizacionvinculada ov ON rp.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada;";
+                + "INNER JOIN organizacionvinculada ov ON rp.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
             
@@ -65,6 +66,10 @@ public class ResponsableProyectoDAO {
         responsable.setCargo(resultado.getString("cargo"));
         responsable.setCorreo(resultado.getString("correo"));
         responsable.setTelefono(resultado.getString("telefono"));
+        
+        OrganizacionVinculada organizacion = new OrganizacionVinculada();
+        organizacion.setNombre(resultado.getString("OrganizacionVinculada"));
+        responsable.setOrganizacionVinculada(organizacion);
         
         return responsable;
     }
