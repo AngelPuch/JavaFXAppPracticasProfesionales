@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.dao.InicioSesionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
@@ -69,7 +70,7 @@ public class FXMLInicioSesionController implements Initializable {
                 SesionUsuario.getInstancia().setUsuarioLogueado(usuarioSesion);
                 Utilidad.mostrarAlertaSimple("Credenciales correctas", 
                         "Bienvenido(a) " + usuarioSesion.getUsername() + " al sistema. Roles: " + usuarioSesion.getRoles(), Alert.AlertType.INFORMATION);
-                //irPantallaPrincipal(usuarioSesion);
+                irPantallaPrincipal(usuarioSesion);
             } else {
                 Utilidad.mostrarAlertaSimple("Credenciales incorrectas", 
                         "Usuario y/o contraseña incorrectos, por favor verifica la información", Alert.AlertType.WARNING);
@@ -79,13 +80,13 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
     
-    /*private void irPantallaPrincipal(Usuario usuarioSesion) {
+    private void irPantallaPrincipal(Usuario usuarioSesion) {
         try {
-            Stage escenarioBase = (Stage) tfPassword.getScene().getWindow();
-            FXMLLoader cargador = new FXMLLoader(JavaFXAppEscolar.class.getResource("vista/FXMLPrincipal.fxml"));
+            Stage escenarioBase = (Stage) pfPassword.getScene().getWindow();
+            FXMLLoader cargador = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLPrincipalCoordinador.fxml"));
             Parent vista = cargador.load();
             
-            FXMLPrincipalController controlador = cargador.getController();
+            FXMLPrincipalCoordinadorController controlador = cargador.getController();
             controlador.inicializarInformacion(usuarioSesion);
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
@@ -94,6 +95,6 @@ public class FXMLInicioSesionController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }*/
+    }
 
 }

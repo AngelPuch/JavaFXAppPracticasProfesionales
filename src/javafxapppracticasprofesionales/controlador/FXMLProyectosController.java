@@ -78,28 +78,26 @@ public class FXMLProyectosController implements Initializable {
     private void cargarPeriodos() {
         listaPeriodos = FXCollections.observableArrayList();
         try {
-            ArrayList<Periodo> periodosBD = PeriodoDAO.obtenerTodosLosPeriodos();
-            listaPeriodos.addAll(periodosBD);
+            listaPeriodos.addAll(PeriodoDAO.obtenerTodosLosPeriodos());
             cbPeriodos.setItems(listaPeriodos);
-            
             if (!listaPeriodos.isEmpty()) {
                 cbPeriodos.getSelectionModel().selectFirst();
             }
         } catch (SQLException e) {
-            Utilidad.mostrarAlertaSimple("Error de conexión", 
-                    "No fue posible conectar con la base de datos. Intente de nuevo o contacte al administrador.", 
-                    Alert.AlertType.ERROR);
+            Utilidad.mostrarAlertaSimple("Error al cargar", 
+                    "Lo sentimos, por el momento no se pueden mostrar los periodos escolares. "
+                            + "Por favor intentelo más tarde." + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     
     private void cargarProyectos(int idPeriodo) {
         listaProyectos = FXCollections.observableArrayList();
         try {
-            ArrayList<Proyecto> proyectosBD = ProyectoDAO.obtenerProyectosPorPeriodo(idPeriodo);
-            listaProyectos.addAll(proyectosBD);
+            listaProyectos.addAll(ProyectoDAO.obtenerProyectosPorPeriodo(idPeriodo));
             tvProyectos.setItems(listaProyectos);
         } catch (SQLException e) {
-            Utilidad.mostrarAlertaSimple("Error de consulta", "Hubo un error al cargar los proyectos.", Alert.AlertType.WARNING);
+            Utilidad.mostrarAlertaSimple("Error al cargar", "Hubo un error al cargar los proyectos. "
+                    + "Por favor intentelo más tarde", Alert.AlertType.WARNING);
         }
     }
 

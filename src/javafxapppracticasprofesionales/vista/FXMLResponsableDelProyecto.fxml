@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLResponsableDelProyectoController">
+   <children>
+      <Label layoutX="26.0" layoutY="25.0" text="Registrar Proyecto (Paso 2 de 3): Seleccionar Responsable">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvResponsables" layoutX="26.0" layoutY="73.0" prefHeight="274.0" prefWidth="549.0">
+         <columns>
+            <TableColumn fx:id="colNombre" prefWidth="200.0" text="Nombre" />
+            <TableColumn fx:id="colCargo" prefWidth="150.0" text="Cargo" />
+            <TableColumn fx:id="colCorreo" prefWidth="198.0" text="Correo" />
+         </columns>
+      </TableView>
+      <Button layoutX="500.0" layoutY="358.0" mnemonicParsing="false" onAction="#btnClicContinuar" text="Continuar" />
+      <Button layoutX="425.0" layoutY="358.0" mnemonicParsing="false" onAction="#btnClicRegresar" text="Regresar" />
+       <Label fx:id="lbOrganizacion" layoutX="26.0" layoutY="52.0" text="Organización: " />
+   </children>
+</AnchorPane>

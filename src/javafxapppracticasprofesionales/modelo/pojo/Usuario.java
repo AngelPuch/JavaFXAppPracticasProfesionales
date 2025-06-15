@@ -4,22 +4,12 @@ public class Usuario {
     private int idUsuario;
     private String username;
     private String password;
-    private int idAcademico;
-    private int idEstudiante;
+    private String nombre;
     private String roles;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String username, String password, int idAcademico, int idEstudiante, String roles) {
-        this.idUsuario = idUsuario;
-        this.username = username;
-        this.password = password;
-        this.idAcademico = idAcademico;
-        this.idEstudiante = idEstudiante;
-        this.roles = roles;
-    }
-    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -44,20 +34,12 @@ public class Usuario {
         this.password = password;
     }
 
-    public int getIdAcademico() {
-        return idAcademico;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setIdAcademico(int idAcademico) {
-        this.idAcademico = idAcademico;
-    }
-
-    public int getIdEstudiante() {
-        return idEstudiante;
-    }
-
-    public void setIdEstudiante(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getRoles() {
@@ -70,6 +52,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return username;
+        return nombre;
     }
 }

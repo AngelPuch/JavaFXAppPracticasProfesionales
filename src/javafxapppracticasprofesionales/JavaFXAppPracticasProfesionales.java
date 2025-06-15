@@ -13,7 +13,7 @@ public class JavaFXAppPracticasProfesionales extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent vista  = FXMLLoader.load(getClass().getResource("vista/FXMLPrincipalCoordinador.fxml"));
+            Parent vista  = FXMLLoader.load(getClass().getResource("vista/FXMLInicioSesion.fxml"));
             Scene escenaInicioSesion = new Scene(vista);
             
             primaryStage.setScene(escenaInicioSesion);

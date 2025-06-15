@@ -6,6 +6,7 @@ public class ResponsableProyecto {
     private String nombre;
     private String cargo;
     private String correo;
+    private String telefono;
     private OrganizacionVinculada organizacionVinculada;
 
     public ResponsableProyecto() {
@@ -58,6 +59,15 @@ public class ResponsableProyecto {
     public void setOrganizacionVinculada(OrganizacionVinculada organizacionVinculada) {
         this.organizacionVinculada = organizacionVinculada;
     }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
 
     
 }

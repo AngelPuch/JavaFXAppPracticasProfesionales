@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
@@ -25,6 +26,7 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     private Label lbNombreVentana;
     @FXML
     private Label lbNombreUsuario;
+    private Usuario usuarioSesion;
 
     /**
      * Initializes the controller class.
@@ -32,7 +34,18 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }   
+    
+    public void inicializarInformacion(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
+        cargarInformacion();
+    }
+    
+    private void cargarInformacion() {
+        if (usuarioSesion != null) {
+            lbNombreUsuario.setText(usuarioSesion.toString());
+        }
+    }
 
     @FXML
     private void btnClicProyectos(ActionEvent event) {
