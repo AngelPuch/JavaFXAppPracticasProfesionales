@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLResponsablesController">
+   <children>
+      <TableView fx:id="tvResponsables" layoutX="37.0" layoutY="87.0" prefHeight="396.0" prefWidth="766.0">
+         <columns>
+            <TableColumn fx:id="colNombre" prefWidth="131.0" text="Nombre" />
+            <TableColumn fx:id="colCargo" prefWidth="122.0" text="Cargo" />
+            <TableColumn fx:id="colCorreo" minWidth="0.0" prefWidth="117.0" text="Correo" />
+            <TableColumn fx:id="coltelefono" minWidth="0.0" prefWidth="133.0" text="Telefono" />
+            <TableColumn fx:id="colOrganizacion" maxWidth="602.0" prefWidth="262.0" text="Organizacion Vinculada" />
+         </columns>
+      </TableView>
+      <Button layoutX="609.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Responsable">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
