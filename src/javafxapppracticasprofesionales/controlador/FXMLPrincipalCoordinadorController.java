@@ -55,10 +55,13 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
 
     @FXML
     private void btnClicOrganizaciones(ActionEvent event) {
+        
     }
 
     @FXML
     private void btnClicResponsables(ActionEvent event) {
+        cargarEscenas("vista/FXMLResponsables.fxml");
+        lbNombreVentana.setText("Gestion de responsables");
     }
 
     @FXML
