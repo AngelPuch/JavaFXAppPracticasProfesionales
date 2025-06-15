@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLProyectosController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="15.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label text="Filtrar por periodo:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbPeriodos" prefWidth="300.0" promptText="Selecciona un periodo" />
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Proyecto">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <TableView fx:id="tvProyectos" prefHeight="400.0" prefWidth="760.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="85.0">
+        <columns>
+          <TableColumn fx:id="colNombre" prefWidth="240.0" text="Nombre Proyecto" />
+          <TableColumn fx:id="colOrganizacion" prefWidth="170.0" text="Organización" />
+          <TableColumn fx:id="colResponsable" prefWidth="170.0" text="Responsable" />
+          <TableColumn fx:id="colCupos" minWidth="0.0" prefWidth="80.0" text="Cupos" />
+          <TableColumn fx:id="colEstado" prefWidth="98.0" text="Estado" />
+        </columns>
+         <placeholder>
+            <Label text="No hay proyectos para mostrar en el periodo seleccionado." />
+         </placeholder>
+      </TableView>
+   </children>
+</AnchorPane>
