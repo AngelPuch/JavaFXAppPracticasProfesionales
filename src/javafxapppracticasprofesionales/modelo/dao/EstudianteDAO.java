@@ -1,0 +1,78 @@
+package javafxapppracticasprofesionales.modelo.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javafxapppracticasprofesionales.modelo.ConexionBD;
+import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
+
+/** 
+* Project: JavaFX Sales System 
+* File: ClassName.java 
+* Author: Jose Luis Silva Gomez 
+* Date: YYYY-MM-DD 
+* Description: Brief description of the file's purpose. 
+*/
+public class EstudianteDAO {
+
+    public static ArrayList<Estudiante> obtenerEstudiantesConProyecto() throws SQLException {
+        ArrayList<Estudiante> estudiantes = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT e.idEstudiante, e.nombre, e.matricula, e.semestre, e.correo " +
+                         "FROM estudiante e " +
+                         "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
+                         "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
+                         "JOIN proyecto p ON ex.Proyecto_idProyecto = p.idProyecto " +
+                         "WHERE p.idProyecto IS NOT NULL";
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                estudiantes.add(convertirRegistroEstudiante(resultado));
+            }
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return estudiantes;
+    }
+
+    public static ArrayList<Estudiante> obtenerEstudiantesSinProyecto() throws SQLException {
+        ArrayList<Estudiante> estudiantes = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT e.idEstudiante, e.nombre, e.matricula, e.semestre, e.correo " +
+                         "FROM estudiante e " +
+                         "LEFT JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
+                         "LEFT JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
+                         "WHERE ex.Proyecto_idProyecto IS NULL";
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                estudiantes.add(convertirRegistroEstudiante(resultado));
+            }
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return estudiantes;
+    }
+
+    private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
+        Estudiante estudiante = new Estudiante();
+        estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
+        estudiante.setNombre(resultado.getString("nombre"));
+        estudiante.setMatricula(resultado.getString("matricula"));
+        estudiante.setSemestre(resultado.getInt("semestre"));
+        estudiante.setCorre(resultado.getString("correo"));
+        return estudiante;
+    }
+}
