@@ -27,6 +27,7 @@ import javafxapppracticasprofesionales.modelo.dao.PeriodoDAO;
 import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Periodo;
 import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
+import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLProyectosController implements Initializable {
@@ -84,7 +85,7 @@ public class FXMLProyectosController implements Initializable {
                 cbPeriodos.getSelectionModel().selectFirst();
             }
         } catch (SQLException e) {
-            Utilidad.mostrarAlertaSimple("Error al cargar", 
+            AlertaUtilidad.mostrarAlertaSimple("Error al cargar", 
                     "Lo sentimos, por el momento no se pueden mostrar los periodos escolares. "
                             + "Por favor intentelo más tarde." + e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -96,7 +97,7 @@ public class FXMLProyectosController implements Initializable {
             listaProyectos.addAll(ProyectoDAO.obtenerProyectosPorPeriodo(idPeriodo));
             tvProyectos.setItems(listaProyectos);
         } catch (SQLException e) {
-            Utilidad.mostrarAlertaSimple("Error al cargar", "Hubo un error al cargar los proyectos. "
+            AlertaUtilidad.mostrarAlertaSimple("Error al cargar", "Hubo un error al cargar los proyectos. "
                     + "Por favor intentelo más tarde", Alert.AlertType.WARNING);
         }
     }
@@ -104,7 +105,7 @@ public class FXMLProyectosController implements Initializable {
     @FXML
     private void btnClicRegistrar(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarOrganizacion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLOrganizacionDelProyecto.fxml"));
             Parent vista = loader.load();
             
             Stage escenario = new Stage();
@@ -116,7 +117,7 @@ public class FXMLProyectosController implements Initializable {
             refrescarTabla();
             
         } catch (IOException e) {
-            Utilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de registro.", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de registro.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }

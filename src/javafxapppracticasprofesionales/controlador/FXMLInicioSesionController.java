@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.dao.InicioSesionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
+import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
@@ -68,15 +69,15 @@ public class FXMLInicioSesionController implements Initializable {
             Usuario usuarioSesion = InicioSesionDAO.verificarUsuario(username, password); // Cambio aquí
             if (usuarioSesion != null) {
                 SesionUsuario.getInstancia().setUsuarioLogueado(usuarioSesion);
-                Utilidad.mostrarAlertaSimple("Credenciales correctas", 
+                AlertaUtilidad.mostrarAlertaSimple("Credenciales correctas", 
                         "Bienvenido(a) " + usuarioSesion.getUsername() + " al sistema. Roles: " + usuarioSesion.getRoles(), Alert.AlertType.INFORMATION);
                 irPantallaPrincipal(usuarioSesion);
             } else {
-                Utilidad.mostrarAlertaSimple("Credenciales incorrectas", 
+                AlertaUtilidad.mostrarAlertaSimple("Credenciales incorrectas", 
                         "Usuario y/o contraseña incorrectos, por favor verifica la información", Alert.AlertType.WARNING);
             }
         } catch (SQLException ex) {
-            Utilidad.mostrarAlertaSimple("Problemas de conexión", ex.getMessage(), Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Problemas de conexión", ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
     

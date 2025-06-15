@@ -5,13 +5,23 @@
 package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
+import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
+import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
+import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
+import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
+import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 /**
  * FXML Controller class
@@ -27,22 +37,89 @@ public class FXMLRegistrarProyectoController implements Initializable {
     @FXML
     private TextArea taObjetivo;
     @FXML
-    private Spinner<?> spnCupos;
+    private Spinner<Integer> spnCupos;
+    
+    private OrganizacionVinculada organizacion;
+    private ResponsableProyecto responsable;
+    private boolean observador;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-
+        configurarSpinner();
+    }   
+    
+    public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable) {
+        this.organizacion = organizacion;
+        this.responsable = responsable;
+    }
+    
     @FXML
     private void clicBtnAceptar(ActionEvent event) {
+        if(validarCampos()){
+            registrarProyecto(obtenerProyectoNuevo());
+        }
     }
 
     @FXML
     private void clicBtnCancelar(ActionEvent event) {
+        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null, 
+                "¿Estás seguro de que quieres cancelar?");
+        if (confirmado) {
+            cerrarVentana();
+        }
+    }
+    
+    private void configurarSpinner(){
+        SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = 
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 1);
+        spnCupos.setValueFactory(valueFactory);
+    }
+    
+    private boolean validarCampos(){
+        if(tfNombre.getText().isEmpty() || taDescripcion.getText().isEmpty() || 
+                taObjetivo.getText().isEmpty()){
+            AlertaUtilidad.mostrarAlertaSimple("Datos inválidos", 
+                    "Existen campos inválidos. Por favor corrige tu información.", Alert.AlertType.WARNING);
+            return false;
+        }
+        return true;
+    }
+    
+    private Proyecto obtenerProyectoNuevo() {
+        Proyecto nuevoProyecto = new Proyecto();
+        nuevoProyecto.setNombre(tfNombre.getText());
+        nuevoProyecto.setDescripcion(taDescripcion.getText());
+        nuevoProyecto.setObjetivo(taObjetivo.getText());
+        nuevoProyecto.setNumeroCupos(spnCupos.getValue());
+        nuevoProyecto.setOrganizacion(organizacion);
+        nuevoProyecto.setResponsable(responsable);
+        
+        return nuevoProyecto;
+    }
+    
+    private void registrarProyecto(Proyecto proyecto){
+        try {
+            ResultadoOperacion resultado = ProyectoDAO.registrarProyecto(proyecto);
+            if(!resultado.isError()){ 
+                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", 
+                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                observador = true;
+                cerrarVentana();
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Error en el registro", 
+                        resultado.getMensaje(), Alert.AlertType.ERROR);
+            }
+        } catch (SQLException e) { 
+            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión", 
+                    "Se perdió la conexión. Inténtalo de nuevo.", Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void cerrarVentana(){
+        Utilidad.getEscenarioComponente(tfNombre).close();
     }
     
 }
