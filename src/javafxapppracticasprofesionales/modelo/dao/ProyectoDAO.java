@@ -72,6 +72,42 @@ public class ProyectoDAO {
         return resultado;
     }
     
+    public static ArrayList<Proyecto> obtenerProyectosDisponiblesPorPeriodo(int idPeriodo) throws SQLException {
+    ArrayList<Proyecto> proyectos = new ArrayList<>();
+    Connection conexionBD = ConexionBD.abrirConexion();
+    if (conexionBD != null) {
+        String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo " +
+                     "FROM proyecto p " +
+                     "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
+                     "JOIN expediente ex ON ex.Proyecto_idProyecto = p.idProyecto " +
+                     "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
+                     "JOIN grupoee g ON i.grupoEE_idgrupoEE = g.idgrupoEE " +
+                     "WHERE pe.nombreEstado = 'Disponible' " +
+                     "AND p.numeroCupos > ( " +
+                     "    SELECT COUNT(*) " +
+                     "    FROM expediente ex2 " +
+                     "    WHERE ex2.Proyecto_idProyecto = p.idProyecto " +
+                     ") " +
+                     "AND g.Periodo_idPeriodo = ? " +
+                     "GROUP BY p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo";
+
+        PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+        sentencia.setInt(1, idPeriodo);
+        ResultSet resultado = sentencia.executeQuery();
+
+        while (resultado.next()) {
+            
+            proyectos.add(convertirRegistroProyecto(resultado));
+        }
+        resultado.close();
+        sentencia.close();
+        conexionBD.close();
+    } else {
+        throw new SQLException("Error: Sin conexión a la Base de Datos");
+    }
+    return proyectos;
+}
+    
     private static Proyecto convertirRegistroProyecto(ResultSet resultado) throws SQLException {
         Proyecto proyecto = new Proyecto();
         proyecto.setIdProyecto(resultado.getInt("idProyecto"));
