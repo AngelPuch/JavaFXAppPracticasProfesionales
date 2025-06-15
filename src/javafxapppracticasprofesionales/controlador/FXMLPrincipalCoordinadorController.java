@@ -66,6 +66,8 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
 
     @FXML
     private void btnClicAsignarProyectos(ActionEvent event) {
+        cargarEscenas("vista/FXMLEstudiantesConProyecto.fxml");
+        lbNombreVentana.setText("Estudiantes con Proyectos Asignados");
     }
 
     @FXML
