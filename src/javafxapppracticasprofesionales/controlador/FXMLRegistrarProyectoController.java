@@ -15,6 +15,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
@@ -41,7 +42,7 @@ public class FXMLRegistrarProyectoController implements Initializable {
     
     private OrganizacionVinculada organizacion;
     private ResponsableProyecto responsable;
-    private boolean observador;
+    private INotificacion observador;
 
     /**
      * Initializes the controller class.
@@ -51,9 +52,11 @@ public class FXMLRegistrarProyectoController implements Initializable {
         configurarSpinner();
     }   
     
-    public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable) {
+    public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable,
+            INotificacion observador) {
         this.organizacion = organizacion;
         this.responsable = responsable;
+        this.observador = observador;
     }
     
     @FXML
@@ -106,7 +109,7 @@ public class FXMLRegistrarProyectoController implements Initializable {
             if(!resultado.isError()){ 
                 AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", 
                         "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
-                observador = true;
+                observador.operacionExitosa();
                 cerrarVentana();
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Error en el registro", 

@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
@@ -41,6 +42,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     
     private OrganizacionVinculada organizacion;
     private ObservableList<ResponsableProyecto> listaResponsables;
+    INotificacion observador;
 
     /**
      * Initializes the controller class.
@@ -48,11 +50,12 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        cargarResponsables();
+        cargarInformacionTabla();
     }
     
-    public void inicializarInformacion(OrganizacionVinculada organizacion){
+    public void inicializarInformacion(OrganizacionVinculada organizacion, INotificacion observador){
         this.organizacion = organizacion;
+        this.observador = observador;
         lbOrganizacion.setText("Organización: " + this.organizacion.getNombre());
     }
 
@@ -65,7 +68,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
                 Parent vista = loader.load();
 
                 FXMLRegistrarProyectoController controller = loader.getController();
-                controller.inicializarInformacion(organizacion, responsableSeleccionado);
+                controller.inicializarInformacion(organizacion, responsableSeleccionado, observador);
 
                 Stage escenario = new Stage();
                 escenario.setTitle("Registrar Nuevo Proyecto - Paso 3");
@@ -108,7 +111,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
     }
     
-    private void cargarResponsables() {
+    private void cargarInformacionTabla() {
         listaResponsables = FXCollections.observableArrayList();
         try {
             listaResponsables.addAll(ResponsableProyectoDAO.obtenerResponsablesPorOrganizacion(organizacion.getIdOrganizacion()));
