@@ -98,22 +98,24 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
     
     private void irSiguientePantallaRegistrarProyecto(OrganizacionVinculada organizacionSeleccionada) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLRegistrarProyecto.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLResponsableDelProyecto.fxml"));
             Parent vista = loader.load();
-            
-            FXMLRegistrarResponsableController controller = loader.getController();
+
+            FXMLResponsableDelProyectoController controller = loader.getController();
             controller.inicializarInformacion(organizacionSeleccionada, observador);
-            
+
             Stage escenario = new Stage();
             escenario.setTitle("Registrar Nuevo Proyecto - Paso 2");
             escenario.setScene(new Scene(vista));
-            escenario.initModality(Modality.APPLICATION_MODAL);
             cerrarVentana();
-            escenario.showAndWait();
+
+            escenario.show(); // Muestra la nueva ventana y espera a que se cierre
+
         } catch (IOException ex) {
-            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana." + ex.getMessage(), Alert.AlertType.ERROR);
+            ex.printStackTrace(); // Es útil para ver la traza completa del error en la consola
         }
-    }   
+    } 
     
     private void irSiguientePantallaRegistrarResponsable(OrganizacionVinculada organizacionSeleccionada) {
         try {

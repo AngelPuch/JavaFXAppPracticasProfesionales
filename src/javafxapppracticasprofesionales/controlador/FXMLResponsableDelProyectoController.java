@@ -50,13 +50,14 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        cargarInformacionTabla();
     }
     
     public void inicializarInformacion(OrganizacionVinculada organizacion, INotificacion observador){
         this.organizacion = organizacion;
         this.observador = observador;
         lbOrganizacion.setText("Organización: " + this.organizacion.getNombre());
+        
+        cargarInformacionTabla();
     }
 
     @FXML
@@ -91,14 +92,15 @@ public class FXMLResponsableDelProyectoController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLOrganizacionDelProyecto.fxml"));
             Parent vista = loader.load();
+            
+            FXMLOrganizacionDelProyectoController controller = loader.getController();
+            controller.inicializarInformacion(observador, true);
 
             Stage escenario = new Stage();
             escenario.setTitle("Registrar Nuevo Proyecto - Paso 1");
             escenario.setScene(new Scene(vista));
-            escenario.initModality(Modality.APPLICATION_MODAL);
-            
             cerrarVentana();
-            escenario.showAndWait();
+            escenario.show();
 
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo volver a la ventana anterior.", Alert.AlertType.ERROR);
