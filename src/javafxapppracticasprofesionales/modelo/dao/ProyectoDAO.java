@@ -14,23 +14,24 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 public class ProyectoDAO {
 
-    public static ArrayList<Proyecto> obtenerProyectosPorPeriodo(int idPeriodo) throws SQLException {
+    /**
+     * Obtiene todos los proyectos cuyo estado es 'Disponible'.
+     * Ya no filtra por periodo escolar.
+     */
+    public static ArrayList<Proyecto> obtenerTodosLosProyectosActivos() throws SQLException {
         ArrayList<Proyecto> proyectos = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT p.idProyecto, p.nombre, p.numeroCupos, " +
-                                  "ov.idOrganizacionVinculada, ov.nombre AS nombreOrganizacion, " +
-                                  "r.idResponsableProyecto, r.nombre AS nombreResponsable, " +
-                                  "pe.idProyectoEstado, pe.nombreEstado " +
-                                  "FROM proyecto p " +
-                                  "JOIN organizacionvinculada ov ON p.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada " +
-                                  "JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
-                                  "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
-                                  "WHERE p.idProyecto IN (SELECT Proyecto_idProyecto FROM expediente e " +
-                                  "JOIN inscripcion i ON e.Inscripcion_idInscripcion = i.idInscripcion " +
-                                  "WHERE i.grupoEE_idgrupoEE IN (SELECT idgrupoEE FROM grupoee WHERE Periodo_idPeriodo = ?))";
+            String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.objetivo, p.numeroCupos, " +
+                         "ov.idOrganizacionVinculada, ov.nombre AS nombreOrganizacion, " +
+                         "r.idResponsableProyecto, r.nombre AS nombreResponsable, " +
+                         "pe.idProyectoEstado, pe.nombreEstado " +
+                         "FROM proyecto p " +
+                         "JOIN organizacionvinculada ov ON p.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada " +
+                         "JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
+                         "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
+                         "WHERE pe.nombreEstado = 'Disponible'";
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setInt(1, idPeriodo);
             ResultSet resultado = sentencia.executeQuery();
             
             while(resultado.next()){
@@ -39,6 +40,38 @@ public class ProyectoDAO {
             conexionBD.close();
             sentencia.close();
             resultado.close();
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return proyectos;
+    }
+    
+    /**
+     * Obtiene los proyectos que están 'Disponibles' y tienen cupos libres para ser asignados.
+     */
+    public static ArrayList<Proyecto> obtenerProyectosDisponiblesParaAsignar() throws SQLException {
+        ArrayList<Proyecto> proyectos = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo, " +
+                         "ov.idOrganizacionVinculada, ov.nombre AS nombreOrganizacion, " +
+                         "r.idResponsableProyecto, r.nombre AS nombreResponsable, " +
+                         "pe.idProyectoEstado, pe.nombreEstado " +
+                         "FROM proyecto p " +
+                         "JOIN organizacionvinculada ov ON p.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada " +
+                         "JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
+                         "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
+                         "WHERE pe.nombreEstado = 'Disponible' AND p.numeroCupos > (" +
+                         "    SELECT COUNT(*) FROM expediente ex2 WHERE ex2.Proyecto_idProyecto = p.idProyecto" +
+                         ")";
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                proyectos.add(convertirRegistroProyecto(resultado));
+            }
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
@@ -72,47 +105,13 @@ public class ProyectoDAO {
         return resultado;
     }
     
-    public static ArrayList<Proyecto> obtenerProyectosDisponiblesPorPeriodo(int idPeriodo) throws SQLException {
-    ArrayList<Proyecto> proyectos = new ArrayList<>();
-    Connection conexionBD = ConexionBD.abrirConexion();
-    if (conexionBD != null) {
-        String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo " +
-                     "FROM proyecto p " +
-                     "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
-                     "JOIN expediente ex ON ex.Proyecto_idProyecto = p.idProyecto " +
-                     "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
-                     "JOIN grupoee g ON i.grupoEE_idgrupoEE = g.idgrupoEE " +
-                     "WHERE pe.nombreEstado = 'Disponible' " +
-                     "AND p.numeroCupos > ( " +
-                     "    SELECT COUNT(*) " +
-                     "    FROM expediente ex2 " +
-                     "    WHERE ex2.Proyecto_idProyecto = p.idProyecto " +
-                     ") " +
-                     "AND g.Periodo_idPeriodo = ? " +
-                     "GROUP BY p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo";
-
-        PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-        sentencia.setInt(1, idPeriodo);
-        ResultSet resultado = sentencia.executeQuery();
-
-        while (resultado.next()) {
-            
-            proyectos.add(convertirRegistroProyecto(resultado));
-        }
-        resultado.close();
-        sentencia.close();
-        conexionBD.close();
-    } else {
-        throw new SQLException("Error: Sin conexión a la Base de Datos");
-    }
-    return proyectos;
-}
-    
     private static Proyecto convertirRegistroProyecto(ResultSet resultado) throws SQLException {
         Proyecto proyecto = new Proyecto();
         proyecto.setIdProyecto(resultado.getInt("idProyecto"));
         proyecto.setNombre(resultado.getString("nombre"));
         proyecto.setNumeroCupos(resultado.getInt("numeroCupos"));
+        proyecto.setDescripcion(resultado.getString("descripcion"));
+        proyecto.setObjetivo(resultado.getString("objetivo"));
         
         OrganizacionVinculada ov = new OrganizacionVinculada();
         ov.setIdOrganizacion(resultado.getInt("idOrganizacionVinculada"));

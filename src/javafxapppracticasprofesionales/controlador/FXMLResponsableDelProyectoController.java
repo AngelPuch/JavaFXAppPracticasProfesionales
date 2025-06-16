@@ -119,7 +119,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
             listaResponsables.addAll(ResponsableProyectoDAO.obtenerResponsablesPorOrganizacion(organizacion.getIdOrganizacion()));
             tvResponsables.setItems(listaResponsables);
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión", "Se perdió la conexión. Inténtalo de nuevo", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión", "Se perdió la conexión. Inténtalo de nuevo" + e.getMessage(), Alert.AlertType.ERROR);
             cerrarVentana();
         }
     }

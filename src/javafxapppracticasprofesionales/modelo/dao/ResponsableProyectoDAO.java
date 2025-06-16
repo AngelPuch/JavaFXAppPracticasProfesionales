@@ -15,14 +15,14 @@ public class ResponsableProyectoDAO {
         ArrayList<ResponsableProyecto> responsables = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String consulta = "SELECT rp.idResponsableProyecto, rp.nombre AS Nombre, rp.cargo AS Cargo, rp.correo AS Correo, rp.telefono AS Telefono, ov.nombre AS OrganizacionVinculada "
+            String consulta = "SELECT rp.idResponsableProyecto, rp.nombre AS nombre, rp.cargo AS cargo, rp.correo AS correo, rp.telefono AS telefono, ov.nombre AS nombreOrganizacion "
                 + "FROM responsableproyecto rp "
                 + "INNER JOIN organizacionvinculada ov ON rp.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
             
             while (resultado.next()) {
-                responsables.add(convertirRegistroResponsable(resultado));
+                responsables.add(convertirRegistroResponsable(resultado, true));
             }
             
             conexionBD.close();
@@ -46,7 +46,7 @@ public class ResponsableProyectoDAO {
             ResultSet resultado = sentencia.executeQuery();
             
             while (resultado.next()) {
-                responsables.add(convertirRegistroResponsable(resultado));
+                responsables.add(convertirRegistroResponsable(resultado, false));
             }
             
             conexionBD.close();
@@ -59,7 +59,7 @@ public class ResponsableProyectoDAO {
         return responsables;
     }
     
-    private static ResponsableProyecto convertirRegistroResponsable(ResultSet resultado) throws SQLException {
+    private static ResponsableProyecto convertirRegistroResponsable(ResultSet resultado, boolean isleerTodo) throws SQLException {
         ResponsableProyecto responsable = new ResponsableProyecto();
         responsable.setIdResponsable(resultado.getInt("idResponsableProyecto"));
         responsable.setNombre(resultado.getString("nombre"));
@@ -67,10 +67,11 @@ public class ResponsableProyectoDAO {
         responsable.setCorreo(resultado.getString("correo"));
         responsable.setTelefono(resultado.getString("telefono"));
         
-        OrganizacionVinculada organizacion = new OrganizacionVinculada();
-        organizacion.setNombre(resultado.getString("OrganizacionVinculada"));
-        responsable.setOrganizacionVinculada(organizacion);
-        
+        if (isleerTodo) {
+            OrganizacionVinculada organizacion = new OrganizacionVinculada();
+            organizacion.setNombre(resultado.getString("nombreOrganizacion"));
+            responsable.setOrganizacionVinculada(organizacion);
+        }
         return responsable;
     }
 }

@@ -108,7 +108,6 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
             escenario.setTitle("Registrar Nuevo Proyecto - Paso 2");
             escenario.setScene(new Scene(vista));
             cerrarVentana();
-
             escenario.show();
 
         } catch (IOException ex) {
