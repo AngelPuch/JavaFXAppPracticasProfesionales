@@ -107,10 +107,37 @@ public class FXMLResponsablesController implements Initializable, INotificacion{
             e.printStackTrace();
         }
     }
+    
+    @FXML
+    private void btnClicActualizar(ActionEvent event) {
+        ResponsableProyecto responsableSeleccionado = tvResponsables.getSelectionModel().getSelectedItem();
+        if (responsableSeleccionado != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLRegistrarResponsable.fxml"));
+                Parent vista = loader.load();
+            
+                FXMLRegistrarResponsableController controller = loader.getController();
+                controller.inicializarInformacion(null, this, responsableSeleccionado, true);
+            
+                Stage escenario = new Stage();
+                escenario.setTitle("Organizacion del Responsable");
+                escenario.setScene(new Scene(vista));
+                escenario.initModality(Modality.APPLICATION_MODAL);
+                escenario.showAndWait();
+                
+            } catch (IOException e) {
+                AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de registro.", Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+        } else {
+            AlertaUtilidad.mostrarAlertaSimple("Selección requerida", "Debes seleccionar un responsable de proyecto para continuar.", Alert.AlertType.WARNING);
+        }
+        
+    }
 
     @Override
     public void operacionExitosa() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        cargarInformacionTabla();
     }
     
     

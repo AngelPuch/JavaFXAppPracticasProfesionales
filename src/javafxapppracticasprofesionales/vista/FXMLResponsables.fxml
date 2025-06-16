@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLResponsablesController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLResponsablesController">
    <children>
       <TableView fx:id="tvResponsables" layoutX="37.0" layoutY="87.0" prefHeight="396.0" prefWidth="766.0">
          <columns>
@@ -20,6 +19,11 @@
          </columns>
       </TableView>
       <Button layoutX="609.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Responsable">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="431.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnClicActualizar" style="-fx-background-color: #ffae3f; -fx-text-fill: white; -fx-background-radius: 5;" text="🔁 Actualizar Responsable">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

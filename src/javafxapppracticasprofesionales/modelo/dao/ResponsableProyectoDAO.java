@@ -87,6 +87,42 @@ public class ResponsableProyectoDAO {
         return responsables;
     }
     
+    public static ResultadoOperacion actualizarResponsable(ResponsableProyecto responsable, int idResponsable) throws SQLException {
+        ResultadoOperacion resultado = new ResultadoOperacion();
+        Connection conexionBD = ConexionBD.abrirConexion();
+
+        if (conexionBD != null) {
+            String sql = "UPDATE responsableproyecto SET nombre = ?, cargo = ?, correo = ?, telefono = ? " +
+                         "WHERE idResponsableProyecto = ?";
+            
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            
+            sentencia.setString(1, responsable.getNombre());
+            sentencia.setString(2, responsable.getCargo());
+            sentencia.setString(3, responsable.getCorreo());
+            sentencia.setString(4, responsable.getTelefono());
+            
+            sentencia.setInt(5, idResponsable);
+            
+            int filasAfectadas = sentencia.executeUpdate();
+            
+            if (filasAfectadas == 1) {
+                resultado.setIsError(false);
+                resultado.setMensaje("Responsable actualizado correctamente.");
+            } else {
+                resultado.setIsError(true);
+                resultado.setMensaje("No se pudo actualizar el responsable. Verifique que el ID sea correcto.");
+            }
+            
+            conexionBD.close();
+            sentencia.close();
+            
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        
+        return resultado;
+    }
 
     private static void asignarParametrosResponsable(PreparedStatement ps, ResponsableProyecto responsable) throws SQLException {
         ps.setString(1, responsable.getNombre());
