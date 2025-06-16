@@ -5,13 +5,23 @@
 package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
+import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
+import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
+import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
+import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
+import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
+import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 /**
  * FXML Controller class
@@ -22,15 +32,19 @@ public class FXMLRegistrarResponsableController implements Initializable {
 
     @FXML
     private TextField tfNombre;
+    
+    private OrganizacionVinculada organizacionSeleccionada;
+    private INotificacion observador;
     @FXML
     private TextField tfCargo;
     @FXML
     private TextField tfTelefono;
     @FXML
     private TextField tfCorreo;
-    
-    private OrganizacionVinculada organizacionSeleccionada;
-    private INotificacion observador;
+    @FXML
+    private Label lbTelefonoError;
+    @FXML
+    private Label lbCorreoError;
 
     /**
      * Initializes the controller class.
@@ -47,11 +61,93 @@ public class FXMLRegistrarResponsableController implements Initializable {
 
 
     @FXML
-    private void btnAceptar(ActionEvent event) {
+    private void clicBtnAceptar(ActionEvent event) {
+        if (validarCampos()) {
+            registrarResponsable(obtenerResponsableNuevo());
+        }
     }
 
     @FXML
-    private void btnCancelar(ActionEvent event) {
+    private void clicBtnCancelar(ActionEvent event) {
+        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
+                "¿Estás seguro de que quieres cancelar?");
+        if (confirmado) {
+            cerrarVentana();
+        }
     }
+    
+    private boolean validarCampos() {
+        boolean esValido = true;
+
+        // Validar que ningún campo de texto principal esté vacío
+        if (tfNombre.getText().isEmpty() || tfCargo.getText().isEmpty()
+                || tfTelefono.getText().isEmpty() || tfCorreo.getText().isEmpty()) {
+            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
+                    "Existen campos vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+            return false;
+        }
+
+        String telefono = tfTelefono.getText().trim();
+        if (!telefono.isEmpty()) {
+            if (!telefono.matches("\\d{10}")) {
+                lbTelefonoError.setText("*Teléfono inválido");
+                esValido = false;
+            } else {
+                lbTelefonoError.setText("");
+            }
+        } else {
+            lbTelefonoError.setText("");
+        }
+        
+        String correo = tfCorreo.getText().trim();
+        if (!correo.isEmpty()) {
+            if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
+                lbCorreoError.setText("*Correo inválido");
+                esValido = false;
+            } else {
+                lbCorreoError.setText("");
+            }
+        } else {
+            lbCorreoError.setText("");
+        }
+
+        return esValido;
+    }
+    
+    private ResponsableProyecto obtenerResponsableNuevo() {
+        ResponsableProyecto nuevoResponsable = new ResponsableProyecto();
+        nuevoResponsable.setNombre(tfNombre.getText());
+        nuevoResponsable.setCargo(tfCargo.getText());
+        nuevoResponsable.setCorreo(tfCorreo.getText());
+        nuevoResponsable.setTelefono(tfTelefono.getText());
+        nuevoResponsable.setIdOrganizacion(organizacionSeleccionada.getIdOrganizacion());
+        
+        return nuevoResponsable;
+    }
+    
+    private void registrarResponsable(ResponsableProyecto responsable) {
+        try {
+            ResultadoOperacion resultado = ResponsableProyectoDAO.registrarResponsable(responsable);
+            if (!resultado.isError()) {
+                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
+                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                observador.operacionExitosa();
+                cerrarVentana();
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
+                        resultado.getMensaje(), Alert.AlertType.ERROR);
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
+                    "Se perdió la conexión. Inténtalo de nuevo.", Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void cerrarVentana() {
+        Utilidad.getEscenarioComponente(tfNombre).close();
+    }
+
+    
+    
     
 }
