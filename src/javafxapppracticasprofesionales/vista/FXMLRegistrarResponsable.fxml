@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLRegistrarResponsableController">
    <children>
-      <Label layoutX="32.0" layoutY="55.0" prefHeight="50.0" prefWidth="618.0" text="Nuevo Responsable del Proyecto" textOverrun="WORD_ELLIPSIS">
+      <Label fx:id="lbTitulo" layoutX="32.0" layoutY="55.0" prefHeight="50.0" prefWidth="618.0" text="Nuevo Responsable del Proyecto" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Ebrima Bold" size="34.0" />
          </font>

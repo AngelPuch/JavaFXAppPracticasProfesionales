@@ -121,7 +121,7 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
             Parent vista = loader.load();
             
             FXMLRegistrarResponsableController controller = loader.getController();
-            controller.inicializarInformacion(organizacionSeleccionada, observador);
+            controller.inicializarInformacion(organizacionSeleccionada, observador, null , false);
             
             Stage escenario = new Stage();
             escenario.setTitle("Registrar Responsable del Proyecto");

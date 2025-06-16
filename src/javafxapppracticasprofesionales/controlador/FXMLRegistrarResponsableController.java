@@ -45,6 +45,10 @@ public class FXMLRegistrarResponsableController implements Initializable {
     private Label lbTelefonoError;
     @FXML
     private Label lbCorreoError;
+    @FXML
+    private Label lbTitulo;
+    private ResponsableProyecto responsableActualizar;
+    private boolean esEdicion;
 
     /**
      * Initializes the controller class.
@@ -54,16 +58,27 @@ public class FXMLRegistrarResponsableController implements Initializable {
         // TODO
     }    
     
-    public void inicializarInformacion(OrganizacionVinculada organizacionSeleccionada, INotificacion observador) {
+    public void inicializarInformacion(OrganizacionVinculada organizacionSeleccionada, INotificacion observador, ResponsableProyecto responsableActualizar, boolean esEdicion) {
         this.organizacionSeleccionada = organizacionSeleccionada;
         this.observador = observador;
-}
+        this.responsableActualizar = responsableActualizar;
+        this.esEdicion = esEdicion;
+        if (esEdicion && responsableActualizar != null) {
+            tfNombre.setText(responsableActualizar.getNombre());
+            tfCargo.setText(responsableActualizar.getCargo());
+            tfTelefono.setText(responsableActualizar.getTelefono());
+            tfCorreo.setText(responsableActualizar.getCorreo());
+            lbTitulo.setText("Actualizar Responsable del Proyecto");
+        }
+    }
 
 
     @FXML
     private void btnAceptar(ActionEvent event) {
-        if (validarCampos()) {
+        if (validarCampos() && !esEdicion) {
             registrarResponsable(obtenerResponsableNuevo());
+        } else if (validarCampos() && esEdicion) {
+            actualizarResponsable(obtenerResponsableNuevo());
         }
     }
 
@@ -120,7 +135,9 @@ public class FXMLRegistrarResponsableController implements Initializable {
         nuevoResponsable.setCargo(tfCargo.getText());
         nuevoResponsable.setCorreo(tfCorreo.getText());
         nuevoResponsable.setTelefono(tfTelefono.getText());
-        nuevoResponsable.setIdOrganizacion(organizacionSeleccionada.getIdOrganizacion());
+        if (!esEdicion) {
+            nuevoResponsable.setIdOrganizacion(organizacionSeleccionada.getIdOrganizacion());
+        }
         
         return nuevoResponsable;
     }
@@ -144,11 +161,27 @@ public class FXMLRegistrarResponsableController implements Initializable {
         }
     }
     
+    private void actualizarResponsable(ResponsableProyecto responsable) {
+        try {
+            ResultadoOperacion resultado = ResponsableProyectoDAO.actualizarResponsable(responsable, responsableActualizar.getIdResponsable());
+            if (!resultado.isError()) {
+                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
+                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                observador.operacionExitosa();
+                cerrarVentana();
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
+                        resultado.getMensaje(), Alert.AlertType.ERROR);
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
+                    "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+    
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(tfNombre).close();
     }
-
-    
-    
     
 }
