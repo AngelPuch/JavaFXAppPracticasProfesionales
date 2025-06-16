@@ -85,17 +85,45 @@ public class FXMLInicioSesionController implements Initializable {
     private void irPantallaPrincipal(Usuario usuarioSesion) {
         try {
             Stage escenarioBase = (Stage) pfPassword.getScene().getWindow();
-            FXMLLoader cargador = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLPrincipalCoordinador.fxml"));
+            String fxmlVista;
+            String tituloVentana;
+
+            // Determinar qué vista cargar según el rol del usuario
+            switch (usuarioSesion.getRolPrincipal().toLowerCase()) {
+                case "coordinador":
+                    fxmlVista = "vista/FXMLPrincipalCoordinador.fxml";
+                    tituloVentana = "Menú Principal - Coordinador";
+                    break;
+                case "profesor":
+                    fxmlVista = "vista/FXMLPrincipalProfesor.fxml";
+                    tituloVentana = "Menú Principal - Profesor";
+                    break;
+                default:
+                    AlertaUtilidad.mostrarAlertaSimple("Rol no reconocido",
+                            "El rol '" + usuarioSesion.getRolPrincipal() + "' no tiene una pantalla principal definida.", Alert.AlertType.ERROR);
+                    return;
+            }
+
+            FXMLLoader cargador = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource(fxmlVista));
             Parent vista = cargador.load();
-            
-            FXMLPrincipalCoordinadorController controlador = cargador.getController();
-            controlador.inicializarInformacion(usuarioSesion);
+
+            // Inicializar el controlador específico de la vista cargada
+            if (usuarioSesion.getRolPrincipal().equalsIgnoreCase("coordinador")) {
+                FXMLPrincipalCoordinadorController controlador = cargador.getController();
+                controlador.inicializarInformacion(usuarioSesion);
+            } else if (usuarioSesion.getRolPrincipal().equalsIgnoreCase("profesor")) {
+                FXMLPrincipalProfesorController controlador = cargador.getController();
+                controlador.inicializarInformacion(usuarioSesion);
+            }
+
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
-            escenarioBase.setTitle("Home");
+            escenarioBase.setTitle(tituloVentana);
             escenarioBase.show();
+
         } catch (IOException ex) {
             ex.printStackTrace();
+            AlertaUtilidad.mostrarAlertaSimple("Error de Interfaz", "No se pudo cargar la pantalla principal: " + ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
