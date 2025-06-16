@@ -7,6 +7,7 @@ package javafxapppracticasprofesionales.modelo.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
@@ -76,8 +77,15 @@ public class ProgramarEntregaDAO {
                 for (Grupo grupo : grupos) {
                     sentencia.setString(1, nuevaEntrega.getNombre());
                     sentencia.setString(2, nuevaEntrega.getDescripcion());
-                    sentencia.setString(3, nuevaEntrega.getFechaInicio());
-                    sentencia.setString(4, nuevaEntrega.getFechaFin());
+
+                    // --- CORRECCIÓN AQUÍ ---
+                    // Se convierten las fechas de String a java.sql.Date
+                    LocalDate fechaInicio = LocalDate.parse(nuevaEntrega.getFechaInicio());
+                    LocalDate fechaFin = LocalDate.parse(nuevaEntrega.getFechaFin());
+                    sentencia.setDate(3, java.sql.Date.valueOf(fechaInicio));
+                    sentencia.setDate(4, java.sql.Date.valueOf(fechaFin));
+                    // --- FIN DE LA CORRECCIÓN ---
+
                     sentencia.setInt(5, grupo.getIdGrupo());
                     sentencia.executeUpdate();
                 }
@@ -89,10 +97,22 @@ public class ProgramarEntregaDAO {
 
             } catch (SQLException e) {
                 // 6. Revertir en caso de error
-                resultado.setMensaje("Ocurrió un error y no se pudo completar la operación.");
-                conexionBD.rollback();
+                // --- MEJORA SUGERIDA ---
+                // Se añade el mensaje de la excepción original para facilitar futuras depuraciones.
+                resultado.setMensaje("Ocurrió un error y no se pudo completar la operación: " + e.getMessage());
+                try {
+                    // Solo intenta hacer rollback si la transacción fue iniciada (autocommit es false).
+                    if (conexionBD != null && !conexionBD.getAutoCommit()) {
+                        conexionBD.rollback();
+                    }
+                } catch (SQLException ex) {
+                    // Opcional: Registrar que el rollback falló, aunque la excepción original es más importante.
+                    ex.printStackTrace();
+                }
             } finally {
-                conexionBD.close();
+                if (conexionBD != null) {
+                    conexionBD.close();
+                }
             }
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
