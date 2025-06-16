@@ -4,15 +4,21 @@
  */
 package javafxapppracticasprofesionales.controlador;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.OrganizacionVinculadaDAO;
 import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
@@ -57,7 +63,37 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     @FXML
     private void btnAceptar(ActionEvent event) {
         if (validarCampos()) {
-            registrarOrganizacion(obtenerOrganizacionNueva());
+            OrganizacionVinculada organizacion = obtenerOrganizacionNueva();
+            boolean confirmacionAceptada = mostrarVentanaConfirmacion(organizacion);
+
+            // Solo si el usuario dio clic en "Confirmar", se registra la organización.
+            if (confirmacionAceptada) {
+                registrarOrganizacion(organizacion);
+            }
+        }
+    }
+    
+     private boolean mostrarVentanaConfirmacion(OrganizacionVinculada organizacion) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLConfirmacionRegistroOrganizacion.fxml"));
+            Parent vista = loader.load();
+            
+            FXMLConfirmacionRegistroOrganizacionController controller = loader.getController();
+            controller.inicializarDatos(organizacion);
+            
+            Stage escenario = new Stage();
+            escenario.setTitle("Confirmación de Datos");
+            escenario.setScene(new Scene(vista));
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait(); // <-- La clave: espera a que la ventana se cierre.
+            
+            // Devuelve si el usuario presionó "Confirmar" en la ventana emergente.
+            return controller.isConfirmado();
+            
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de confirmación.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -105,23 +141,30 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     }
     
     private void registrarOrganizacion(OrganizacionVinculada organizacionVinculada) {
-        try {
-            ResultadoOperacion resultado = OrganizacionVinculadaDAO.registrarOrganizacion(organizacionVinculada);
-            if (!resultado.isError()) {
-                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
-                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+    try {
+        ResultadoOperacion resultado = OrganizacionVinculadaDAO.registrarOrganizacion(organizacionVinculada);
+        if (!resultado.isError()) {
+            AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
+                    "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+            
+            // --- VERIFICACIÓN AÑADIDA ---
+            // Solo intenta notificar si hay un observador disponible.
+            if (observador != null) {
                 observador.operacionExitosa();
-                cerrarVentana();
-            } else {
-                AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
-                        resultado.getMensaje(), Alert.AlertType.ERROR);
             }
-        } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
-                    "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
-            e.printStackTrace();
+            
+            cerrarVentana();
+            
+        } else {
+            AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
+                    resultado.getMensaje(), Alert.AlertType.ERROR);
         }
+    } catch (SQLException e) {
+        AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
+                "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
+        e.printStackTrace();
     }
+}
     
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(tfNombre).close();
