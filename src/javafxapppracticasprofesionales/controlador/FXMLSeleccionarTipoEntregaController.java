@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
+import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
@@ -32,6 +33,8 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
     @FXML
     private Label lbTitulo;
     private String tipoEntregaSeleccionado;
+    private Usuario usuarioSesion;
+
 
 
 
@@ -43,6 +46,11 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tipoEntregaSeleccionado = null;
     }    
+    
+    public void inicializarInformacion(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
+}
+
 
     @FXML
     private void btnClicDocIniciales(ActionEvent event) {
@@ -80,13 +88,15 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
                 break;
 
             case "DOCUMENTOS FINALES":
-                System.out.println("Acción para Documentos Finales...");
+                irSiguientePantallaDocumentoFinal();
+
                 // Aquí iría la lógica para abrir la ventana de documentos finales.
                 // Ejemplo: irPantallaDocumentosFinales();
                 break;
 
             case "REPORTES":
-                System.out.println("Acción para Reportes...");
+                irSiguientePantallaDocumentoReporte();
+
                 // Aquí iría la lógica para abrir la ventana de reportes.
                 // Ejemplo: irPantallaReportes();
                 break;
@@ -95,16 +105,6 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
                 AlertaUtilidad.mostrarAlertaSimple("Error", 
                     "Opción no reconocida.", Alert.AlertType.ERROR);
                 break;
-        }
-    }
-
-
-    @FXML
-    private void btnClicCancelar(ActionEvent event) {
-        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
-                "¿Estás seguro de que quieres cancelar?");
-        if (confirmado) {
-            cerrarVentana();
         }
     }
     
@@ -118,9 +118,11 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
             Parent vista = loader.load();
 
             FXMLDocumentoInicialController controller = loader.getController();
+            controller.inicializarInformacion(tipoEntregaSeleccionado, usuarioSesion);  
+
 
             Stage escenario = new Stage();
-            escenario.setTitle("Registrar Nuevo Proyecto - Paso 2");
+            escenario.setTitle("Seleccionar Tipo de Entrega");
             escenario.setScene(new Scene(vista));
             cerrarVentana();
             escenario.show();
@@ -129,4 +131,64 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana." + ex.getMessage(), Alert.AlertType.ERROR);
         }
     } 
+    
+    private void irSiguientePantallaDocumentoFinal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLDocumentoFinal.fxml"));
+            Parent vista = loader.load();
+
+            FXMLDocumentoFinalController controller = loader.getController();
+            controller.inicializarInformacion(tipoEntregaSeleccionado, usuarioSesion); 
+
+
+            Stage escenario = new Stage();
+            escenario.setTitle("Seleccionar Tipo de Entrega");
+            escenario.setScene(new Scene(vista));
+            cerrarVentana();
+            escenario.show();
+
+        } catch (IOException ex) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana." + ex.getMessage(), Alert.AlertType.ERROR);
+        }
+    } 
+    
+    private void irSiguientePantallaDocumentoReporte() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLDocumentoReporte.fxml"));
+            Parent vista = loader.load();
+
+            FXMLDocumentoReporteController controller = loader.getController();
+            controller.inicializarInformacion(tipoEntregaSeleccionado, usuarioSesion);  
+
+
+            Stage escenario = new Stage();
+            escenario.setTitle("Seleccionar Tipo de Entrega");
+            escenario.setScene(new Scene(vista));
+            cerrarVentana();
+            escenario.show();
+
+        } catch (IOException ex) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana." + ex.getMessage(), Alert.AlertType.ERROR);
+        }
+    } 
+
+    @FXML
+    private void btnClicRegresar(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalProfesor.fxml"));
+            Parent vista = loader.load();
+            
+            FXMLPrincipalProfesorController controller = loader.getController();
+            controller.inicializarInformacion(usuarioSesion);
+
+            Stage escenario = new Stage();
+            escenario.setTitle("Menu Principal-Profesor");
+            escenario.setScene(new Scene(vista));
+            cerrarVentana();
+            escenario.show();
+
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo volver a la ventana anterior.", Alert.AlertType.ERROR);
+        }
+    }
 }

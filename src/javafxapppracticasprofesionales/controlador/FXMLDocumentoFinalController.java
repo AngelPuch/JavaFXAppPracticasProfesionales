@@ -28,7 +28,7 @@ import javafxapppracticasprofesionales.utilidad.Utilidad;
  *
  * @author grill
  */
-public class FXMLDocumentoInicialController implements Initializable {
+public class FXMLDocumentoFinalController implements Initializable {
 
     @FXML
     private ListView<TipoDocumento> lvTipoDocumento;
@@ -43,9 +43,9 @@ public class FXMLDocumentoInicialController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }   
+    }    
     
-    public void inicializarInformacion(String tipoEntrega, Usuario usuarioSesion) {
+   public void inicializarInformacion(String tipoEntrega, Usuario usuarioSesion) {
         this.tipoEntrega = tipoEntrega;
         this.usuarioSesion = usuarioSesion;
         cargarDocumentos();
@@ -54,8 +54,8 @@ public class FXMLDocumentoInicialController implements Initializable {
     private void cargarDocumentos() {
         ArrayList<TipoDocumento> documentosPojo = new ArrayList<>();
         
-        if ("DOCUMENTOS INICIALES".equals(tipoEntrega)) {
-            documentosPojo.addAll(TipoDocumento.obtenerTiposDocumentoInicial());
+        if ("DOCUMENTOS FINALES".equals(tipoEntrega)) {
+            documentosPojo.addAll(TipoDocumento.obtenerTiposDocumentoFinal());
         }
         
         lvTipoDocumento.setItems(FXCollections.observableArrayList(documentosPojo));
@@ -85,4 +85,5 @@ public class FXMLDocumentoInicialController implements Initializable {
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(lvTipoDocumento).close();
     }
+    
 }
