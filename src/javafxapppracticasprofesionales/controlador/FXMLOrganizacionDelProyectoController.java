@@ -128,9 +128,8 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
             Stage escenario = new Stage();
             escenario.setTitle("Registrar Responsable del Proyecto");
             escenario.setScene(new Scene(vista));
-            escenario.initModality(Modality.APPLICATION_MODAL);
             cerrarVentana();
-            escenario.showAndWait();
+            escenario.show();
         } catch (IOException ex) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
         }
