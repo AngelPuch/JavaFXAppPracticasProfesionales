@@ -91,7 +91,7 @@ public class ResponsableProyectoDAO {
         ps.setString(1, responsable.getNombre());
         ps.setString(2, responsable.getCargo());
         ps.setString(3, responsable.getCorreo());
-        ps.setInt(4, responsable.getOrganizacionVinculada().getIdOrganizacion());
+        ps.setInt(4, responsable.getIdOrganizacion());
         ps.setString(5, responsable.getTelefono());
 
     }

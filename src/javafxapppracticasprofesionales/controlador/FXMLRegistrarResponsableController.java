@@ -61,14 +61,14 @@ public class FXMLRegistrarResponsableController implements Initializable {
 
 
     @FXML
-    private void clicBtnAceptar(ActionEvent event) {
+    private void btnAceptar(ActionEvent event) {
         if (validarCampos()) {
             registrarResponsable(obtenerResponsableNuevo());
         }
     }
 
     @FXML
-    private void clicBtnCancelar(ActionEvent event) {
+    private void btnCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
                 "¿Estás seguro de que quieres cancelar?");
         if (confirmado) {
@@ -139,7 +139,8 @@ public class FXMLRegistrarResponsableController implements Initializable {
             }
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
-                    "Se perdió la conexión. Inténtalo de nuevo.", Alert.AlertType.ERROR);
+                    "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
     
