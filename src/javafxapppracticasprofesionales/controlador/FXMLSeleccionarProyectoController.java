@@ -74,18 +74,15 @@ public class FXMLSeleccionarProyectoController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLConfirmarAsignacionProyecto.fxml"));
                 Parent vista = loader.load();
             
+                FXMLConfirmarAsignacionProyectoController controller = loader.getController();
+                controller.inicializarInformacion(proyectoSeleccionado, estudianteSeleccionado, observador);
+                
                 Stage escenario = new Stage();
                 escenario.setTitle("Asignar Proyecto a Estudiante - Paso 3");
                 escenario.setScene(new Scene(vista));
                 escenario.initModality(Modality.APPLICATION_MODAL);
                 escenario.showAndWait();
-            
-                FXMLConfirmarAsignacionProyectoController controller = loader.getController();
-                controller.inicializarInformacion(proyectoSeleccionado, estudianteSeleccionado, observador);
                 
-                if (observador != null) {
-                    observador.operacionExitosa();
-                }
                 cerrarVentana();
             } catch (IOException e) {
                 AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de confirmación de asignación.", Alert.AlertType.ERROR);

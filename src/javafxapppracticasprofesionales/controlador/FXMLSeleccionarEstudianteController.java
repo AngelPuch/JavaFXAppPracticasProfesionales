@@ -69,19 +69,16 @@ public class FXMLSeleccionarEstudianteController implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarProyecto.fxml"));
                 Parent vista = loader.load();
+                
+                FXMLSeleccionarProyectoController controller = loader.getController();
+                controller.inicializarInformacion(estudianteSeleccionado, observador);
             
                 Stage escenario = new Stage();
                 escenario.setTitle("Asignar Proyecto a Estudiante - Paso 2");
                 escenario.setScene(new Scene(vista));
                 escenario.initModality(Modality.APPLICATION_MODAL);
                 escenario.showAndWait();
-            
-                FXMLSeleccionarProyectoController controller = loader.getController();
-                controller.inicializarInformacion(estudianteSeleccionado, observador);
                 
-                if (observador != null) {
-                    observador.operacionExitosa();
-                }
                 cerrarVentana();
             } catch (IOException e) {
                 AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de selección de registro.", Alert.AlertType.ERROR);
