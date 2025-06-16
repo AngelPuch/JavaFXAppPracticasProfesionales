@@ -12,17 +12,17 @@ public class Estudiante {
     private String nombre;
     private String matricula;
     private int semestre;
-    private String corre;
+    private String correo;
 
     public Estudiante() {
     }
 
-    public Estudiante(int idEstudiante, String nombre, String matricula, int semestre, String corre) {
+    public Estudiante(int idEstudiante, String nombre, String matricula, int semestre, String correo) {
         this.idEstudiante = idEstudiante;
         this.nombre = nombre;
         this.matricula = matricula;
         this.semestre = semestre;
-        this.corre = corre;
+        this.correo = correo;
     }
 
     public int getIdEstudiante() {
@@ -57,12 +57,12 @@ public class Estudiante {
         this.semestre = semestre;
     }
 
-    public String getCorre() {
-        return corre;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setCorre(String corre) {
-        this.corre = corre;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
     
 }

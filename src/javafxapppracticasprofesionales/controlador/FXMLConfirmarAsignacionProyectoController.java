@@ -88,7 +88,7 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
     
     private void configurarInformacionEstudiante() {
         lbNombreEstudiante.setText(estudianteSeleccionado.getNombre());
-        lbCorreoEstudiante.setText(estudianteSeleccionado.getCorre());
+        lbCorreoEstudiante.setText(estudianteSeleccionado.getCorreo());
         lbMatriculaEstudiante.setText(estudianteSeleccionado.getMatricula());
         lbSemestreEstudiante.setText(String.valueOf(estudianteSeleccionado.getSemestre()));
     }

@@ -73,13 +73,13 @@ public class EstudianteDAO {
         estudiante.setNombre(resultado.getString("nombre"));
         estudiante.setMatricula(resultado.getString("matricula"));
         estudiante.setSemestre(resultado.getInt("semestre"));
-        estudiante.setCorre(resultado.getString("correo"));
+        estudiante.setCorreo(resultado.getString("correo"));
         return estudiante;
     }
     
     private static EstudianteConProyecto convertirRegistroEstudianteConProyecto(ResultSet resultado) throws SQLException {
         EstudianteConProyecto estudianteConProyecto = new EstudianteConProyecto();
-        estudianteConProyecto.setNombreEstudiante(resultado.getString("nombre"));
+        estudianteConProyecto.setNombreEstudiante(resultado.getString("nombreEstudiante"));
         estudianteConProyecto.setMatricula(resultado.getString("matricula"));
         estudianteConProyecto.setNombreProyecto(resultado.getString("nombreProyecto"));
         return estudianteConProyecto;
