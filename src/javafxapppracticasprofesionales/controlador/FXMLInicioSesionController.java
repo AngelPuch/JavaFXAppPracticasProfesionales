@@ -70,7 +70,8 @@ public class FXMLInicioSesionController implements Initializable {
             if (usuarioSesion != null) {
                 SesionUsuario.getInstancia().setUsuarioLogueado(usuarioSesion);
                 AlertaUtilidad.mostrarAlertaSimple("Credenciales correctas", 
-                        "Bienvenido(a) " + usuarioSesion.getUsername() + " al sistema. Roles: " + usuarioSesion.getRoles(), Alert.AlertType.INFORMATION);
+                        "Bienvenido(a) " + usuarioSesion.getNombre() + " al sistema. Rol: " + usuarioSesion.getRolPrincipal(), 
+                        Alert.AlertType.INFORMATION);
                 irPantallaPrincipal(usuarioSesion);
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Credenciales incorrectas", 

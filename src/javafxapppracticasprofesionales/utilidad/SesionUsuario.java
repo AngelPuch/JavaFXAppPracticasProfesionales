@@ -35,10 +35,8 @@ public class SesionUsuario {
      * @return String con el nombre del rol.
      */
     public String getRolUsuario() {
-        if (usuarioLogueado != null && usuarioLogueado.getRoles() != null && !usuarioLogueado.getRoles().isEmpty()) {
-            // En caso de múltiples roles, toma el primero para la conexión.
-            // Puedes añadir lógica más compleja si un usuario necesita cambiar de rol.
-            return usuarioLogueado.getRoles().split(",")[0].trim();
+        if (usuarioLogueado != null && usuarioLogueado.getRolPrincipal() != null) {
+            return usuarioLogueado.getRolPrincipal();
         }
         // Si no hay nadie logueado, se usa el rol por defecto para el login.
         return "login_checker";

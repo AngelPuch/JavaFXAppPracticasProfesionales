@@ -15,39 +15,87 @@ public class InicioSesionDAO {
         Connection conexionBD = ConexionBD.abrirConexion();
 
         if (conexionBD != null) {
-            String sql = "SELECT u.idUsuario, u.username, u.password, u.nombre, " +
-                                  "GROUP_CONCAT(r.nombreRol SEPARATOR ', ') AS roles " +
-                                  "FROM usuario u " +
-                                  "JOIN usuario_rol ur ON u.idUsuario = ur.Usuario_idUsuario " +
-                                  "JOIN rol r ON ur.Rol_idRol = r.idRol " +
-                                  "WHERE u.username = ? " +
-                                  "GROUP BY u.idUsuario";
-            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setString(1, username);
-            ResultSet resultado = sentencia.executeQuery();
-            if (resultado.next()) {
-                String hashGuardada = resultado.getString("password");
-                if (UtilidadPassword.verificarPassword(password, hashGuardada)) {
-                    usuarioSesion = convertirRegistroUsuario(resultado);
+            try {
+                // Paso 1: Verificar credenciales en la tabla 'usuario'
+                String sqlUsuario = "SELECT idUsuario, username, password, nombre FROM usuario WHERE username = ?";
+                PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(sqlUsuario);
+                sentenciaUsuario.setString(1, username);
+                ResultSet resultadoUsuario = sentenciaUsuario.executeQuery();
+
+                if (resultadoUsuario.next()) {
+                    String hashGuardada = resultadoUsuario.getString("password");
+                    if (UtilidadPassword.verificarPassword(password, hashGuardada)) {
+                        usuarioSesion = new Usuario();
+                        usuarioSesion.setIdUsuario(resultadoUsuario.getInt("idUsuario"));
+                        usuarioSesion.setUsername(resultadoUsuario.getString("username"));
+                        usuarioSesion.setNombre(resultadoUsuario.getString("nombre"));
+
+                        // Paso 2: Obtener el rol principal del usuario
+                        String sqlRol = "SELECT r.nombreRol FROM rol r JOIN usuario_rol ur ON r.idRol = ur.Rol_idRol WHERE ur.Usuario_idUsuario = ?";
+                        PreparedStatement sentenciaRol = conexionBD.prepareStatement(sqlRol);
+                        sentenciaRol.setInt(1, usuarioSesion.getIdUsuario());
+                        ResultSet resultadoRol = sentenciaRol.executeQuery();
+
+                        if (resultadoRol.next()) {
+                            String rol = resultadoRol.getString("nombreRol");
+                            usuarioSesion.setRolPrincipal(rol);
+                            
+                            // Paso 3: Buscar el ID del perfil correspondiente según el rol
+                            buscarYAsignarPerfil(conexionBD, usuarioSesion);
+                        }
+                    }
+                }
+            } finally {
+                if (conexionBD != null) {
+                    conexionBD.close();
                 }
             }
-            conexionBD.close();
-            sentencia.close();
-            resultado.close();
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
         return usuarioSesion;
     }
-    
-    private static Usuario convertirRegistroUsuario(ResultSet resultado) throws SQLException{
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(resultado.getInt("idUsuario"));
-        usuario.setUsername(resultado.getString("username"));
-        usuario.setPassword(resultado.getString("password"));
-        usuario.setNombre(resultado.getString("nombre"));
-        usuario.setRoles(resultado.getString("roles"));
-        
-        return usuario;
+
+    private static void buscarYAsignarPerfil(Connection conexion, Usuario usuario) throws SQLException {
+        String sqlPerfil;
+        String idCampoPerfil;
+
+        switch (usuario.getRolPrincipal().toLowerCase()) {
+            case "estudiante":
+                sqlPerfil = "SELECT idEstudiante FROM estudiante WHERE idUsuario = ?";
+                idCampoPerfil = "idEstudiante";
+                break;
+
+            // --- CAMBIO CLAVE: TODOS LOS ROLES DE PERSONAL USAN LA TABLA ACADEMICO ---
+            case "profesor":
+            case "coordinador":
+            case "evaluador": 
+                sqlPerfil = "SELECT idAcademico FROM academico WHERE idUsuario = ?";
+                idCampoPerfil = "idAcademico";
+                break;
+
+            default:
+                return; // Rol sin perfil específico
+        }
+
+        PreparedStatement sentenciaPerfil = conexion.prepareStatement(sqlPerfil);
+        sentenciaPerfil.setInt(1, usuario.getIdUsuario());
+        ResultSet resultadoPerfil = sentenciaPerfil.executeQuery();
+
+        if (resultadoPerfil.next()) {
+            int idPerfil = resultadoPerfil.getInt(idCampoPerfil);
+            switch (usuario.getRolPrincipal().toLowerCase()) {
+                case "estudiante":
+                    usuario.setIdEstudiante(idPerfil);
+                    break;
+
+                // --- CAMBIO CLAVE: TODOS ASIGNAN EL idAcademico ---
+                case "profesor":
+                case "coordinador":
+                case "evaluador":
+                    usuario.setIdAcademico(idPerfil);
+                    break;
+            }
+        }
     }
 }
