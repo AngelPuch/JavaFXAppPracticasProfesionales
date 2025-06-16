@@ -7,6 +7,8 @@ public class ResponsableProyecto {
     private String cargo;
     private String correo;
     private String telefono;
+    private int idOrganizacion; 
+
     private OrganizacionVinculada organizacionVinculada;
 
     public ResponsableProyecto() {
@@ -68,6 +70,12 @@ public class ResponsableProyecto {
         this.telefono = telefono;
     }
     
+     public int getIdOrganizacion() {
+        return idOrganizacion;
+    }
 
+    public void setIdOrganizacion(int idOrganizacion) {
+        this.idOrganizacion = idOrganizacion;
+    }
     
 }

@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLRegistrarResponsableController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLRegistrarResponsableController">
    <children>
       <Label layoutX="32.0" layoutY="55.0" prefHeight="50.0" prefWidth="618.0" text="Nuevo Responsable del Proyecto" textOverrun="WORD_ELLIPSIS">
          <font>
@@ -21,25 +20,27 @@
          </font>
       </Label>
       <TextField fx:id="tfNombre" layoutX="162.0" layoutY="135.0" prefHeight="39.0" prefWidth="442.0" promptText="Juan Lopez Perez" />
-      <TextField fx:id="tfCargo" layoutX="162.0" layoutY="199.0" prefHeight="39.0" prefWidth="442.0" promptText="Auxiliar" />
-      <Label layoutX="76.0" layoutY="201.0" text="Cargo:">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="51.0" layoutY="267.0" text="Telefono:">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfTelefono" layoutX="165.0" layoutY="265.0" prefHeight="39.0" prefWidth="442.0" promptText="1234567890" />
-      <Label layoutX="75.0" layoutY="334.0" text="Correo:">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfCorreo" layoutX="166.0" layoutY="332.0" prefHeight="39.0" prefWidth="442.0" promptText="juanLp@gmail.com" />
       <Button layoutX="687.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #4CAF50;" text="Aceptar" textFill="WHITE" />
       <Button layoutX="574.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnCancelar" style="-fx-background-color: #9E9E9E;" text="Cancelar" textFill="WHITE" />
+      <Label layoutX="76.0" layoutY="193.0" text="Cargo:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfCargo" layoutX="162.0" layoutY="191.0" prefHeight="39.0" prefWidth="442.0" promptText="Auxiliar" />
+      <Label layoutX="49.0" layoutY="241.0" text="Telefono:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfTelefono" layoutX="162.0" layoutY="240.0" prefHeight="39.0" prefWidth="442.0" promptText="12 34 56 78 90" />
+      <TextField fx:id="tfCorreo" layoutX="162.0" layoutY="290.0" prefHeight="39.0" prefWidth="442.0" promptText="jose@gmail.com" />
+      <Label layoutX="72.0" layoutY="292.0" text="Correo:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbTelefonoError" layoutX="620.0" layoutY="246.0" textFill="RED" />
+      <Label fx:id="lbCorreoError" layoutX="620.0" layoutY="296.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -7,9 +7,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
+import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
+import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 public class ResponsableProyectoDAO {
+    
+    public static ResultadoOperacion registrarResponsable(ResponsableProyecto responsable) throws SQLException {
+        ResultadoOperacion resultado = new ResultadoOperacion();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "INSERT INTO responsableproyecto (nombre, cargo, correo, OrganizacionVinculada_idOrganizacionVinculada, telefono)"
+                    + " VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            asignarParametrosResponsable(sentencia, responsable);
+            int filasAfectadas = sentencia.executeUpdate();
+            
+            if (filasAfectadas == 1) {
+                resultado.setIsError(false);
+                resultado.setMensaje("Responsable registrado correctamente.");
+            } else {
+                resultado.setIsError(true);
+                resultado.setMensaje("Lo sentimos, por el momento no se puede registrar el responsable, por favor inténtelo más tarde");
+            }
+          
+            conexionBD.close();
+            sentencia.close();
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return resultado;
+    }
     
     public static ArrayList<ResponsableProyecto> obtenerResponsables() throws SQLException {
         ArrayList<ResponsableProyecto> responsables = new ArrayList<>();
@@ -57,6 +85,16 @@ public class ResponsableProyectoDAO {
             throw new SQLException("Error: Sin conexión a la Base de Datos.");
         }
         return responsables;
+    }
+    
+
+    private static void asignarParametrosResponsable(PreparedStatement ps, ResponsableProyecto responsable) throws SQLException {
+        ps.setString(1, responsable.getNombre());
+        ps.setString(2, responsable.getCargo());
+        ps.setString(3, responsable.getCorreo());
+        ps.setInt(4, responsable.getOrganizacionVinculada().getIdOrganizacion());
+        ps.setString(5, responsable.getTelefono());
+
     }
     
     private static ResponsableProyecto convertirRegistroResponsable(ResultSet resultado, boolean isleerTodo) throws SQLException {
