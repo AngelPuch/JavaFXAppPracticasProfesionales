@@ -71,7 +71,10 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     }
 
     @FXML
-    private void btnClicProgramarEntregas(ActionEvent event) {
+    private void btnClicEntregas(ActionEvent event) {
+        cargarEscenas("vista/FXMLEntregas.fxml");
+        lbNombreVentana.setText("Programar entregas");
+        
     }
 
     @FXML

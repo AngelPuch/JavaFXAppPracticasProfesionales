@@ -32,4 +32,27 @@ public class PeriodoDAO {
         }
         return periodos;
     }
+    
+    public static Periodo obtenerPeriodoActual() throws SQLException {
+        Periodo periodo = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT idPeriodo, nombrePeriodo, fechaInicio, fechaFin FROM periodo ORDER BY fechaInicio DESC LIMIT 1";
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                periodo = new Periodo();
+                periodo.setIdPeriodo(resultado.getInt("idPeriodo"));
+                periodo.setNombrePeriodo(resultado.getString("nombrePeriodo"));
+                periodo.setFechaInicio(resultado.getString("fechaInicio"));
+                periodo.setFechaFin(resultado.getString("fechaFin"));
+            }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return periodo;
+    }
 }

@@ -106,7 +106,7 @@
                                         <Image url="@../recurso/programar_icon.png" />
                                     </image>
                                 </ImageView>
-                                <Button onAction="#btnClicProgramarEntregas" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Programar Entregas">
+                                <Button onAction="#btnClicEntregas" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Entregas">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>

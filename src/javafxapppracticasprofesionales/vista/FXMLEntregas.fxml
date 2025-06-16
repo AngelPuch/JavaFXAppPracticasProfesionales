@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="570.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasController">
+   <children>
+      <Button onAction="#btnClicProgramarEntrega" style="-fx-background-color: #28a745; -fx-font-weight: bold; -fx-background-radius: 5;" text="Programar Nueva Entrega" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="25.0" layoutY="25.0" text="Entregas Programadas" textFill="#333333">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="80.0" text="Documentos Iniciales" textFill="#333333">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvEntregasIniciales" layoutX="25.0" layoutY="105.0" prefHeight="130.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columns>
+            <TableColumn fx:id="colNombreInicial" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinInicial" prefWidth="230.0" text="Fecha de Fin" />
+         </columns>
+      </TableView>
+      <Label layoutX="25.0" layoutY="250.0" text="Reportes" textFill="#333333">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvEntregasReportes" layoutX="25.0" layoutY="275.0" prefHeight="130.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columns>
+            <TableColumn fx:id="colNombreReporte" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioReporte" prefWidth="230.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinReporte" prefWidth="230.0" text="Fecha de Fin" />
+         </columns>
+      </TableView>
+      <Label layoutX="25.0" layoutY="420.0" text="Documentos Finales" textFill="#333333">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvEntregasFinales" layoutX="25.0" layoutY="445.0" prefHeight="130.0" prefWidth="774.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columns>
+            <TableColumn fx:id="colNombreFinal" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioFinal" prefWidth="230.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinFinal" prefWidth="230.0" text="Fecha de Fin" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
