@@ -109,11 +109,10 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
             escenario.setScene(new Scene(vista));
             cerrarVentana();
 
-            escenario.show(); // Muestra la nueva ventana y espera a que se cierre
+            escenario.show();
 
         } catch (IOException ex) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana." + ex.getMessage(), Alert.AlertType.ERROR);
-            ex.printStackTrace(); // Es útil para ver la traza completa del error en la consola
         }
     } 
     
