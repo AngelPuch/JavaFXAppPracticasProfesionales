@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.modelo.pojo.Periodo;
@@ -36,7 +37,7 @@ import javafxapppracticasprofesionales.utilidad.Utilidad;
  *
  * @author grill
  */
-public class FXMLResponsablesController implements Initializable {
+public class FXMLResponsablesController implements Initializable, INotificacion{
 
     @FXML
     private TableView<ResponsableProyecto> tvResponsables;
@@ -91,8 +92,11 @@ public class FXMLResponsablesController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLOrganizacionDelProyecto.fxml"));
             Parent vista = loader.load();
             
+            FXMLOrganizacionDelProyectoController controller = loader.getController();
+            controller.inicializarInformacion(this, false);
+            
             Stage escenario = new Stage();
-            escenario.setTitle("Registrar Nuevo Responsable");
+            escenario.setTitle("Organizacion del Responsable");
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
@@ -102,6 +106,11 @@ public class FXMLResponsablesController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de registro.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void operacionExitosa() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

@@ -62,7 +62,7 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
             if (isRegistrarProyecto) {
                 irSiguientePantallaRegistrarProyecto(organizacionSeleccionada);
             } else {
-                //irSiguientePantallaRegistrarResponsable(organizacionSeleccionada);
+                irSiguientePantallaRegistrarResponsable(organizacionSeleccionada);
             }
         } else {
             AlertaUtilidad.mostrarAlertaSimple("Selección requerida", 
@@ -98,10 +98,10 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
     
     private void irSiguientePantallaRegistrarProyecto(OrganizacionVinculada organizacionSeleccionada) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLResponsableDelProyecto.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLRegistrarProyecto.fxml"));
             Parent vista = loader.load();
             
-            FXMLResponsableDelProyectoController controller = loader.getController();
+            FXMLRegistrarResponsableController controller = loader.getController();
             controller.inicializarInformacion(organizacionSeleccionada, observador);
             
             Stage escenario = new Stage();
@@ -114,4 +114,25 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
         }
     }   
+    
+    private void irSiguientePantallaRegistrarResponsable(OrganizacionVinculada organizacionSeleccionada) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLRegistrarResponsable.fxml"));
+            Parent vista = loader.load();
+            
+            FXMLRegistrarResponsableController controller = loader.getController();
+            controller.inicializarInformacion(organizacionSeleccionada, observador);
+            
+            Stage escenario = new Stage();
+            escenario.setTitle("Registrar Responsable del Proyecto");
+            escenario.setScene(new Scene(vista));
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            cerrarVentana();
+            escenario.showAndWait();
+        } catch (IOException ex) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
+        }
+    }   
+    
+    
 }

@@ -6,7 +6,12 @@ package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
+import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 
 /**
  * FXML Controller class
@@ -15,6 +20,18 @@ import javafx.fxml.Initializable;
  */
 public class FXMLRegistrarResponsableController implements Initializable {
 
+    @FXML
+    private TextField tfNombre;
+    @FXML
+    private TextField tfCargo;
+    @FXML
+    private TextField tfTelefono;
+    @FXML
+    private TextField tfCorreo;
+    
+    private OrganizacionVinculada organizacionSeleccionada;
+    private INotificacion observador;
+
     /**
      * Initializes the controller class.
      */
@@ -22,5 +39,19 @@ public class FXMLRegistrarResponsableController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void inicializarInformacion(OrganizacionVinculada organizacionSeleccionada, INotificacion observador) {
+        this.organizacionSeleccionada = organizacionSeleccionada;
+        this.observador = observador;
+}
+
+
+    @FXML
+    private void btnAceptar(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnCancelar(ActionEvent event) {
+    }
     
 }
