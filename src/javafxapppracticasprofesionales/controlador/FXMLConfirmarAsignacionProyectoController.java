@@ -47,14 +47,15 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        configurarInformacionEstudiante();
-        configurarInformacionProyecto();
+        
     }    
     
     public void inicializarInformacion(Proyecto proyectoSeleccionado, Estudiante estudianteSeleccionado, INotificacion observador) {
         this.proyectoSeleccionado = proyectoSeleccionado;
         this.estudianteSeleccionado = estudianteSeleccionado;
         this.observador = observador;
+        configurarInformacionEstudiante();
+        configurarInformacionProyecto();
     }
 
     @FXML

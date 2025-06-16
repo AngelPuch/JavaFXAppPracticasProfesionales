@@ -54,14 +54,14 @@ public class FXMLEstudiantesConProyectoController implements Initializable, INot
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEstudiante.fxml"));
             Parent vista = loader.load();
             
+            FXMLSeleccionarEstudianteController controller = loader.getController();
+            controller.inicializarInformacion(this);
+            
             Stage escenario = new Stage();
             escenario.setTitle("Asignar Proyecto a Estudiante - Paso 1");
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
-            
-            FXMLSeleccionarEstudianteController controller = loader.getController();
-            controller.inicializarInformacion(this);
             
             cargarEstudiantesConProyecto();
             
