@@ -1,5 +1,6 @@
 package javafxapppracticasprofesionales.controlador;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -7,11 +8,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
@@ -30,13 +36,13 @@ public class FXMLSeleccionarEstudianteController implements Initializable {
     @FXML
     private TableView<Estudiante> tvEstudiantes;
     @FXML
-    private TableColumn<Estudiante, String> colNombre;
+    private TableColumn colNombre;
     @FXML
-    private TableColumn<Estudiante, Integer> colSemestre;
+    private TableColumn colSemestre;
     @FXML
-    private TableColumn<Estudiante, String> colCorreo;
+    private TableColumn colCorreo;
     @FXML
-    private TableColumn<Estudiante, String> colMatricula;
+    private TableColumn colMatricula;
 
     private ObservableList<Estudiante> listaEstudiantes;
     private INotificacion observador;
@@ -60,7 +66,26 @@ public class FXMLSeleccionarEstudianteController implements Initializable {
     private void btnClicContinuar(ActionEvent event) {
         Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
         if (estudianteSeleccionado != null) {
-            // Aquí puedes agregar la lógica para continuar con el estudiante seleccionado
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarProyecto.fxml"));
+                Parent vista = loader.load();
+            
+                Stage escenario = new Stage();
+                escenario.setTitle("Asignar Proyecto a Estudiante - Paso 2");
+                escenario.setScene(new Scene(vista));
+                escenario.initModality(Modality.APPLICATION_MODAL);
+                escenario.showAndWait();
+            
+                FXMLSeleccionarProyectoController controller = loader.getController();
+                controller.inicializarInformacion(estudianteSeleccionado, observador);
+                
+                if (observador != null) {
+                    observador.operacionExitosa();
+                }
+                cerrarVentana();
+            } catch (IOException e) {
+                AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de selección de registro.", Alert.AlertType.ERROR);
+            }
         } else {
             AlertaUtilidad.mostrarAlertaSimple("Selección requerida", "Debes seleccionar un estudiante para continuar.", Alert.AlertType.WARNING);
         }
