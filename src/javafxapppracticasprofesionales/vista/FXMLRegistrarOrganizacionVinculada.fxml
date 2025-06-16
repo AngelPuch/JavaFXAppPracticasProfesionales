@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLRegistrarOrganizacionVinculadaController">
+   <children>
+      <Label layoutX="42.0" layoutY="65.0" prefHeight="50.0" prefWidth="618.0" text="Nueva Organizacion Vinculada" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Ebrima Bold" size="34.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfNombre" layoutX="172.0" layoutY="145.0" prefHeight="39.0" prefWidth="442.0" promptText="Juan Lopez Perez" />
+      <Label layoutX="61.0" layoutY="147.0" text="Nombre:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="61.0" layoutY="210.0" text="Direccion:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfDireccion" layoutX="172.0" layoutY="208.0" prefHeight="39.0" prefWidth="442.0" promptText="Callejón del Diamante #22, Zona Centro" />
+      <TextField fx:id="tfTelefono" layoutX="174.0" layoutY="270.0" prefHeight="39.0" prefWidth="442.0" promptText="12 34 56 78 90" />
+      <Label layoutX="61.0" layoutY="271.0" text="Telefono:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Button layoutX="660.0" layoutY="469.0" mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #4CAF50;" text="Aceptar" textFill="WHITE" />
+      <Button layoutX="524.0" layoutY="469.0" mnemonicParsing="false" onAction="#btnCancelar" style="-fx-background-color: #9E9E9E;" text="Cancelar" textFill="WHITE" />
+      <Label fx:id="lbTelefonoError" layoutX="630.0" layoutY="275.0" prefHeight="29.0" prefWidth="46.0" textFill="RED" />
+   </children>
+</AnchorPane>

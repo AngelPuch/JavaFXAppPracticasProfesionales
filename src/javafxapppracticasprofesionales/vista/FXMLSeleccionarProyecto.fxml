@@ -6,16 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarProyectoController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarProyectoController">
     <children>
       <Label layoutX="14.0" layoutY="14.0" text="Asignar Proyecto (Paso 2 de 3): Seleccionar Proyecto" />
       <TableView fx:id="tvProyectos" layoutX="19.0" layoutY="66.0" prefHeight="342.0" prefWidth="787.0">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="169.0" text="Nombre" />
-          <TableColumn fx:id="colDescripcion" minWidth="0.0" prefWidth="173.0" text="Descripción" />
-            <TableColumn fx:id="colNumeroCupos" prefWidth="211.0" text="Número de cupos" />
-            <TableColumn fx:id="colEstado" prefWidth="102.0" text="Estado" />
-            <TableColumn fx:id="colObjetivo" prefWidth="131.0" text="Objetivo" />
+          <TableColumn fx:id="colOrganizacion" minWidth="0.0" prefWidth="214.0" text="Organizacion" />
+            <TableColumn fx:id="colCupos" prefWidth="214.0" text="Número de cupos" />
+            <TableColumn fx:id="colObjetivo" prefWidth="189.0" text="Objetivo" />
         </columns>
       </TableView>
       <Button layoutX="515.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; fx-background-radius: 5;" text="Cancelar" textFill="WHITE" />

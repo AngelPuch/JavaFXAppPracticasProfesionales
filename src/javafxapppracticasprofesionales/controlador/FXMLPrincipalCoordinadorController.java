@@ -55,7 +55,8 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
 
     @FXML
     private void btnClicOrganizaciones(ActionEvent event) {
-        
+        cargarEscenas("vista/FXMLOrganizacionesVinculadas.fxml");
+        lbNombreVentana.setText("Gestión de Organizaciones Vinculadas");
     }
 
     @FXML

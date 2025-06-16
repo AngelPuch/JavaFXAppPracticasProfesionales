@@ -63,7 +63,7 @@ public class FXMLEstudiantesConProyectoController implements Initializable, INot
             FXMLSeleccionarEstudianteController controller = loader.getController();
             controller.inicializarInformacion(this);
             
-            //refrescarTabla();
+            cargarEstudiantesConProyecto();
             
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de registro.", Alert.AlertType.ERROR);
@@ -89,6 +89,6 @@ public class FXMLEstudiantesConProyectoController implements Initializable, INot
 
     @Override
     public void operacionExitosa() {
-        //refrescarTabla();
+        cargarEstudiantesConProyecto();
     }
 }
