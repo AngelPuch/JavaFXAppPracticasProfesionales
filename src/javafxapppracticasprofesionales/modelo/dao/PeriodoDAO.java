@@ -14,13 +14,15 @@ public class PeriodoDAO {
         ArrayList<Periodo> periodos = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT idPeriodo, nombrePeriodo FROM periodo ORDER BY fechaInicio DESC";
+            String sql = "SELECT idPeriodo, nombrePeriodo, fechaInicio, fechaFin FROM periodo ORDER BY fechaInicio DESC";
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
             ResultSet resultado = sentencia.executeQuery();
             while (resultado.next()) {
                 Periodo periodo = new Periodo();
                 periodo.setIdPeriodo(resultado.getInt("idPeriodo"));
                 periodo.setNombrePeriodo(resultado.getString("nombrePeriodo"));
+                periodo.setFechaInicio(resultado.getString("fechaInicio"));
+                periodo.setFechaFin(resultado.getString("fechaFin"));
                 periodos.add(periodo);
             }
             conexionBD.close();

@@ -16,26 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLProyectosController">
    <children>
-      <HBox alignment="CENTER_LEFT" spacing="15.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="25.0">
-         <children>
-            <Label text="Filtrar por periodo:">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="cbPeriodos" prefWidth="300.0" promptText="Selecciona un periodo" />
-            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Proyecto">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </HBox>
-      <TableView fx:id="tvProyectos" prefHeight="400.0" prefWidth="760.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="85.0">
+      <TableView fx:id="tvProyectos" layoutY="61.0" prefHeight="409.0" prefWidth="760.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="61.0">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="240.0" text="Nombre Proyecto" />
           <TableColumn fx:id="colOrganizacion" prefWidth="170.0" text="Organización" />
@@ -47,5 +28,10 @@
             <Label text="No hay proyectos para mostrar en el periodo seleccionado." />
          </placeholder>
       </TableView>
+      <Button layoutX="619.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Proyecto">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
