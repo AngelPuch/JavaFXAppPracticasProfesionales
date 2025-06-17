@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -25,14 +26,16 @@ public class FXMLTipoDeDocumentoController implements Initializable {
     @FXML
     private ListView<TipoDocumento> lvTipoDocumento;
     private String tipoEntrega;
+    private INotificacion observador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // La inicialización se maneja en el método inicializarInformacion
     }
 
-    public void inicializarInformacion(String tipoEntrega) {
+    public void inicializarInformacion(String tipoEntrega, INotificacion observador) {
         this.tipoEntrega = tipoEntrega;
+        this.observador = observador;
         cargarDocumentos();
     }
 
@@ -44,8 +47,7 @@ public class FXMLTipoDeDocumentoController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLProgramarEntrega.fxml"));
                 Parent vista = loader.load();
                 FXMLProgramarEntregaController controller = loader.getController();
-                // Se pasa directamente el nombre del documento seleccionado
-                controller.inicializarInformacion(tipoEntrega, docSeleccionado.getNombre());
+                controller.inicializarInformacion(tipoEntrega, docSeleccionado.getNombre(), observador);
 
                 Stage escenario = new Stage();
                 escenario.setTitle("Programar Entrega");

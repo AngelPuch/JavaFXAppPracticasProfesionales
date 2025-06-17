@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
@@ -22,11 +23,16 @@ public class FXMLTipoDeEntregaController implements Initializable {
 
     @FXML
     private ListView<String> lvTipoEntrega;
+    private INotificacion observador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarTiposDeEntrega();
     }    
+    
+    public void inicializarInformacion(INotificacion observador) {
+        this.observador = observador;
+    }
     
     private void cargarTiposDeEntrega(){
         ObservableList<String> tipos = FXCollections.observableArrayList();
@@ -42,7 +48,7 @@ public class FXMLTipoDeEntregaController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLTipoDeDocumento.fxml"));
                 Parent vista = loader.load();
                 FXMLTipoDeDocumentoController controller = loader.getController();
-                controller.inicializarInformacion(tipoSeleccionado);
+                controller.inicializarInformacion(tipoSeleccionado, observador);
                 
                 Stage escenario = new Stage();
                 escenario.setTitle("Seleccionar Tipo de Documento");

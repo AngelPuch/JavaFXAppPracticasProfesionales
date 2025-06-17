@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
@@ -36,7 +32,7 @@ public class FXMLRegistrarProyectoController implements Initializable {
     @FXML
     private TextArea taObjetivo;
     @FXML
-    private TextField tfCupos; // Este es tu nuevo campo para los cupos
+    private TextField tfCupos; 
 
     private OrganizacionVinculada organizacion;
     private ResponsableProyecto responsable;
@@ -47,7 +43,6 @@ public class FXMLRegistrarProyectoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // El método para configurar el Spinner ya no es necesario.
     }
 
     public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable,
@@ -74,20 +69,22 @@ public class FXMLRegistrarProyectoController implements Initializable {
     }
 
     private boolean validarCampos() {
-        // Validar que ningún campo de texto principal esté vacío
-        if (tfNombre.getText().isEmpty() || taDescripcion.getText().isEmpty()
-                || taObjetivo.getText().isEmpty() || tfCupos.getText().isEmpty()) {
+        if (tfNombre.getText().isEmpty() || tfCupos.getText().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
-                    "Existen campos vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
 
-        // Validar que los cupos sean un número entero positivo
         try {
             int cupos = Integer.parseInt(tfCupos.getText());
             if (cupos <= 0) {
                 AlertaUtilidad.mostrarAlertaSimple("Datos inválidos",
                         "El número de cupos debe ser un entero positivo mayor a cero.", Alert.AlertType.WARNING);
+                return false;
+            }
+            if (cupos > 5) {
+                AlertaUtilidad.mostrarAlertaSimple("Datos inválidos",
+                        "El número límite de cupos es 5 por proyecto.", Alert.AlertType.WARNING);
                 return false;
             }
         } catch (NumberFormatException e) {
@@ -104,7 +101,6 @@ public class FXMLRegistrarProyectoController implements Initializable {
         nuevoProyecto.setNombre(tfNombre.getText());
         nuevoProyecto.setDescripcion(taDescripcion.getText());
         nuevoProyecto.setObjetivo(taObjetivo.getText());
-        // Se convierte el texto a entero. La validación previa asegura que esto no fallará.
         nuevoProyecto.setNumeroCupos(Integer.parseInt(tfCupos.getText()));
         nuevoProyecto.setOrganizacion(organizacion);
         nuevoProyecto.setResponsable(responsable);

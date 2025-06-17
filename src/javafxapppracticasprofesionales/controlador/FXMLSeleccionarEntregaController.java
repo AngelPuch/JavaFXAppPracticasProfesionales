@@ -3,6 +3,9 @@ package javafxapppracticasprofesionales.controlador;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -53,7 +56,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     private Button btnContinuar;
     @FXML
     private Button btnCancelar;
-    
+    private INotificacion observador;
     private InfoEstudianteSesion infoSesion;
 
     @Override
@@ -61,6 +64,10 @@ public class FXMLSeleccionarEntregaController implements Initializable {
         configurarTabla();
         Usuario usuarioLogueado = SesionUsuario.getInstancia().getUsuarioLogueado();
         cargarInformacionEstudiante(usuarioLogueado.getIdUsuario());
+    }
+    
+    public void inicializarDatos(INotificacion observador) {
+        this.observador = observador;
     }
     
     private void configurarTabla() {
@@ -80,7 +87,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Información no encontrada", 
                     "No se pudo encontrar la información de inscripción para el estudiante.", Alert.AlertType.ERROR);
-                btnContinuar.setDisable(true); // Deshabilitar botón si no hay info
+                btnContinuar.setDisable(true); 
             }
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudo cargar la información del estudiante.", Alert.AlertType.ERROR);
@@ -90,13 +97,25 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     // Modificado para recibir el idGrupo
     private void cargarEntregas(int idGrupo, int idExpediente) {
         try {
-            // Se obtiene la lista completa de entregas (con su estado)
+            
             ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPendientesEstudiante(idGrupo, idExpediente, "entregadocumentoinicio");
             
-            // --- SE FILTRA LA LISTA PARA MOSTRAR SOLO LAS PENDIENTES ---
+            final LocalDateTime fechaYHoraActual = LocalDateTime.now();
+            
+            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
             ArrayList<Entrega> entregasPendientes = entregasBD.stream()
-                                                              .filter(entrega -> "Sin Entregar".equals(entrega.getEstado()))
-                                                              .collect(Collectors.toCollection(ArrayList::new));
+                    .filter(entrega -> "Sin Entregar".equals(entrega.getEstado()))
+                    .filter(entrega -> {
+                        try {
+                            LocalDateTime fechaFinEntrega = LocalDateTime.parse(entrega.getFechaFin(), formatter);
+                            return fechaFinEntrega.isAfter(fechaYHoraActual);
+                        } catch (DateTimeParseException e) {
+                            
+                            return false;
+                        }
+                    })
+                    .collect(Collectors.toCollection(ArrayList::new));
             
             ObservableList<Entrega> entregasObservable = FXCollections.observableArrayList(entregasPendientes);
             tvEntregas.setItems(entregasObservable);
@@ -119,8 +138,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             Parent vista = loader.load();
 
             FXMLSubirDocumentoController controller = loader.getController();
-            // Pasamos los IDs reales obtenidos de la sesión
-            controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente());
+            controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente(), observador);
 
             Stage escenario = new Stage();
             escenario.setTitle("Subir documento inicial - Paso 2");

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -66,7 +62,6 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
             OrganizacionVinculada organizacion = obtenerOrganizacionNueva();
             boolean confirmacionAceptada = mostrarVentanaConfirmacion(organizacion);
 
-            // Solo si el usuario dio clic en "Confirmar", se registra la organización.
             if (confirmacionAceptada) {
                 registrarOrganizacion(organizacion);
             }
@@ -85,9 +80,8 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
             escenario.setTitle("Confirmación de Datos");
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
-            escenario.showAndWait(); // <-- La clave: espera a que la ventana se cierre.
+            escenario.showAndWait(); 
             
-            // Devuelve si el usuario presionó "Confirmar" en la ventana emergente.
             return controller.isConfirmado();
             
         } catch (IOException e) {
@@ -108,11 +102,9 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     
     private boolean validarCampos() {
         boolean esValido = true;
-
-        // Validar que ningún campo de texto principal esté vacío
-        if (tfNombre.getText().isEmpty() || tfTelefono.getText().isEmpty() || tfDireccion.getText().isEmpty()) {
+        if (tfNombre.getText().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
-                    "Existen campos vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
 
@@ -147,8 +139,7 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
             AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
                     "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
             
-            // --- VERIFICACIÓN AÑADIDA ---
-            // Solo intenta notificar si hay un observador disponible.
+           
             if (observador != null) {
                 observador.operacionExitosa();
             }

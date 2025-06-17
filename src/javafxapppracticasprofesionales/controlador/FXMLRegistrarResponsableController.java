@@ -94,11 +94,9 @@ public class FXMLRegistrarResponsableController implements Initializable {
     private boolean validarCampos() {
         boolean esValido = true;
 
-        // Validar que ningún campo de texto principal esté vacío
-        if (tfNombre.getText().isEmpty() || tfCargo.getText().isEmpty()
-                || tfTelefono.getText().isEmpty() || tfCorreo.getText().isEmpty()) {
+        if (tfNombre.getText().isEmpty() || tfCargo.getText().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
-                    "Existen campos vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
 

@@ -43,9 +43,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     private Usuario usuarioSesion;
     private int idEstudiante;
     private int idExpediente;
-    @FXML
-    private Button btnEvaluarOV;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -68,36 +66,34 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     private void cargarInformacion() {
         if (usuarioSesion != null) {
             lbNombreUsuario.setText(usuarioSesion.toString());
-            try {
-                boolean tieneProyecto = (this.idExpediente > 0); // Una forma más simple de verificar
-                btnEvaluarOV.setDisable(!tieneProyecto);
-                if (!tieneProyecto) {
-                    btnEvaluarOV.setTooltip(new Tooltip("Debes tener un proyecto asignado para poder evaluar."));
-                }
-            } catch (Exception e) {
-                btnEvaluarOV.setDisable(true);
-            }
         }
     }
 
     @FXML
     private void btnClicEvaluarOrganizacionVinculada(ActionEvent event) {
         try {
-            boolean yaEvaluado = EvaluacionDAO.haEvaluadoOVPreviamente(this.idExpediente);
+            int idEstudiante = SesionUsuario.getInstancia().getUsuarioLogueado().getIdEstudiante();
+            boolean tieneProyecto = EstudianteDAO.verificarProyectoAsignado(idEstudiante);
+            if (tieneProyecto) {
+                boolean yaEvaluado = EvaluacionDAO.haEvaluadoOVPreviamente(this.idExpediente);
             
-            if (yaEvaluado) {
-                lbNombreVentana.setText("Evaluación de OV (Realizada)");
-                // Carga la vista que muestra los detalles de la evaluación ya guardada
-                FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
-                Parent root = loader.load();
-                FXMLVerEvaluacionOVController controller = loader.getController();
-                controller.inicializarDatos(this.idExpediente); // Le pasamos el ID para que sepa qué evaluación cargar
-                apCentral.getChildren().setAll(root);
+                if (yaEvaluado) {
+                    lbNombreVentana.setText("Evaluación de OV (Realizada)");
+                    FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
+                    Parent root = loader.load();
+                    FXMLVerEvaluacionOVController controller = loader.getController();
+                    controller.inicializarDatos(this.idExpediente); 
+                    apCentral.getChildren().setAll(root);
+                } else {
+                    lbNombreVentana.setText("Evaluación de OV (Pendiente)");
+                    cargarEscenas("vista/FXMLPreEvaluarOV.fxml");
+                }
             } else {
-                // Carga la vista intermedia que invita al usuario a evaluar
-                lbNombreVentana.setText("Evaluación de OV (Pendiente)");
-                cargarEscenas("vista/FXMLPreEvaluarOV.fxml");
+                AlertaUtilidad.mostrarAlertaSimple("Sin Proyecto Asignado",
+                    "No tienes proyecto asignado, por lo tanto no puedes evaluar a una organización vinculada.",
+                    Alert.AlertType.INFORMATION);
             }
+            
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudo verificar el estado de la evaluación: " + e.getMessage(), Alert.AlertType.ERROR);
         } catch (IOException e) {

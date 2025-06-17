@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
@@ -34,7 +35,7 @@ import javafxapppracticasprofesionales.utilidad.Utilidad;
 * Date: 2025-06-16 
 * Description: Brief description of the file's purpose. 
 */
-public class FXMLEntregasPendientesController implements Initializable {
+public class FXMLEntregasPendientesController implements Initializable, INotificacion {
 
     @FXML
     private TableView<Entrega> tvEntregasIniciales;
@@ -62,11 +63,11 @@ public class FXMLEntregasPendientesController implements Initializable {
     private TableColumn<Entrega, String> colFechaFinFinal;
     private InfoEstudianteSesion infoSesion;
     @FXML
-    private TableColumn<?, ?> colEstadoInicial;
+    private TableColumn<Entrega, String> colEstadoInicial;
     @FXML
-    private TableColumn<?, ?> colEstadoReporte;
+    private TableColumn<Entrega, String> colEstadoReporte;
     @FXML
-    private TableColumn<?, ?> colEstadoFinal;
+    private TableColumn<Entrega, String> colEstadoFinal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,6 +130,9 @@ public class FXMLEntregasPendientesController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEntrega.fxml"));
             Parent vista = loader.load();
             
+            FXMLSeleccionarEntregaController controller = loader.getController();
+            controller.inicializarDatos(this);
+            
             Stage escenario = new Stage();
             escenario.setTitle("Subir documento inicial - Paso 1");
             escenario.setScene(new Scene(vista));
@@ -137,6 +141,11 @@ public class FXMLEntregasPendientesController implements Initializable {
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de selección de entrega.", Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void operacionExitosa() {
+        cargarTodasLasEntregas();
     }
     
 }

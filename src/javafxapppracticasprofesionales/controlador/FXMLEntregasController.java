@@ -15,11 +15,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
-public class FXMLEntregasController implements Initializable {
+public class FXMLEntregasController implements Initializable, INotificacion {
 
     @FXML private TableView<Entrega> tvEntregasIniciales;
     @FXML private TableColumn colNombreInicial, colFechaInicioInicial, colFechaFinInicial;
@@ -66,17 +67,22 @@ public class FXMLEntregasController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLTipoDeEntrega.fxml"));
             Parent vista = loader.load();
             
+            FXMLTipoDeEntregaController controlador = loader.getController();
+            controlador.inicializarInformacion(this);
+            
             Stage escenario = new Stage();
             escenario.setTitle("Programar Nueva Entrega");
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
-            
-            cargarTodasLasEntregas();
-
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se puede mostrar la ventana.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void operacionExitosa() {
+        cargarTodasLasEntregas();
     }
 }

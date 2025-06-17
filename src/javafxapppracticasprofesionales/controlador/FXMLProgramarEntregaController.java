@@ -3,6 +3,7 @@ package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
 import javafxapppracticasprofesionales.modelo.dao.ProgramarEntregaDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
@@ -31,6 +33,7 @@ public class FXMLProgramarEntregaController implements Initializable {
     @FXML
     private DatePicker dpFechaFin;
     private String tipoEntrega;
+    private INotificacion observador;
 
     /**
      * Initializes the controller class.
@@ -40,14 +43,20 @@ public class FXMLProgramarEntregaController implements Initializable {
         // TODO
     }    
     
-    public void inicializarInformacion(String tipoEntrega, String nombreDocumento){
+    public void inicializarInformacion(String tipoEntrega, String nombreDocumento, INotificacion observador){
         this.tipoEntrega = tipoEntrega;
         this.tfNombre.setText(nombreDocumento);
+        this.observador = observador;
     }
     
     private boolean validarCampos(){
-        if(tfNombre.getText().isEmpty() || taDescripcion.getText().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null){
-            AlertaUtilidad.mostrarAlertaSimple("Campos inválidos", "Existen campos vacíos. Por favor, completa toda la información.", Alert.AlertType.WARNING);
+        if(tfNombre.getText().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null){
+            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos", "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+            return false;
+        }
+        LocalDate fechaActual = LocalDate.now();
+        if (dpFechaInicio.getValue().isBefore(fechaActual)) {
+            AlertaUtilidad.mostrarAlertaSimple("Fecha incorrecta", "La fecha de inicio no puede ser anterior a la fecha actual.", Alert.AlertType.WARNING);
             return false;
         }
         if(dpFechaFin.getValue().isBefore(dpFechaInicio.getValue())){
@@ -64,10 +73,6 @@ public class FXMLProgramarEntregaController implements Initializable {
         if (confirmado) {
             cerrarVentana();
         }
-    }
-    
-    private void cerrarVentana(){
-        Utilidad.getEscenarioComponente(tfNombre).close();
     }
 
     @FXML
@@ -87,11 +92,11 @@ public class FXMLProgramarEntregaController implements Initializable {
             nuevaEntrega.setFechaFin(dpFechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
             try{
-                // Se llama al nuevo método transaccional
                 ResultadoOperacion resultado = ProgramarEntregaDAO.programarEntregaPeriodoActual(nuevaEntrega, tablaDestino);
 
                 if(!resultado.isError()){
-                    AlertaUtilidad.mostrarAlertaSimple("Operación Exitosa", resultado.getMensaje(), Alert.AlertType.INFORMATION);
+                    AlertaUtilidad.mostrarAlertaSimple("Operación Exitosa", "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                    observador.operacionExitosa();
                     cerrarVentana();
                 } else {
                     AlertaUtilidad.mostrarAlertaSimple("Error", resultado.getMensaje(), Alert.AlertType.ERROR);
@@ -102,6 +107,10 @@ public class FXMLProgramarEntregaController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+    
+    private void cerrarVentana(){
+        Utilidad.getEscenarioComponente(tfNombre).close();
     }
     
 }

@@ -46,27 +46,24 @@ public class FXMLSubirDocumentoController implements Initializable {
     private Button btnAceptar;
     @FXML
     private Button btnCancelar;
-    
     private int idEntrega;
     private int idExpediente;
     private File archivoSeleccionado;
-
-    // --- INICIO DE LA LÓGICA RECOMENDADA ---
-    // Nombres de los directorios para organizar los archivos fuera del proyecto.
     private static final String DIRECTORIO_PRINCIPAL_APP = "PracticasProfesionales_Documentos";
     private static final String SUBDIRECTORIO_DOCUMENTOS = "DocumentosIniciales";
-    // --- FIN DE LA LÓGICA RECOMENDADA ---
     @FXML
     private TextField tfNombreArchivo;
+    private INotificacion observador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarTiposDocumento();
     }    
     
-    public void inicializarDatos(int idEntrega, int idExpediente) {
+    public void inicializarDatos(int idEntrega, int idExpediente, INotificacion observador) {
         this.idEntrega = idEntrega;
         this.idExpediente = idExpediente;
+        this.observador = observador;
     }
 
     private void cargarTiposDocumento() {
@@ -91,42 +88,38 @@ public class FXMLSubirDocumentoController implements Initializable {
         }
         
         try {
-            // --- CAMBIO 1: SE OBTIENE EL NOMBRE DEL ARCHIVO DESDE EL TEXTFIELD Y SE PRESERVA LA EXTENSIÓN ORIGINAL ---
+            
             String nombreBaseUsuario = tfNombreArchivo.getText().trim();
             String nombreOriginal = archivoSeleccionado.getName();
             String extension = "";
             int i = nombreOriginal.lastIndexOf('.');
             if (i > 0) {
-                extension = nombreOriginal.substring(i); // Incluye el punto, ej: ".pdf"
+                extension = nombreOriginal.substring(i); 
             }
             String nombreFinalArchivo = nombreBaseUsuario + extension;
             
-            // Se obtiene la ruta del directorio destino
             String userHome = System.getProperty("user.home");
             Path directorioPath = Paths.get(userHome, DIRECTORIO_PRINCIPAL_APP, SUBDIRECTORIO_DOCUMENTOS);
             Files.createDirectories(directorioPath);
 
-            // --- CAMBIO 2: SE VERIFICA SI EL ARCHIVO YA EXISTE EN EL DIRECTORIO DESTINO ---
             Path rutaDestino = directorioPath.resolve(nombreFinalArchivo);
             if (Files.exists(rutaDestino)) {
                 AlertaUtilidad.mostrarAlertaSimple("Nombre duplicado", 
                         "Ya existe un archivo con el nombre '" + nombreFinalArchivo + "'. Por favor, elige otro nombre.", 
                         Alert.AlertType.WARNING);
-                return; // Se detiene la ejecución si el archivo ya existe
+                return; 
             }
             
-            // Si no existe, se copia el archivo al nuevo directorio
             Files.copy(archivoSeleccionado.toPath(), rutaDestino, StandardCopyOption.REPLACE_EXISTING);
 
-            // Se preparan los datos para guardar en la BD
             String nombreDocTipo = cbTipoDocumento.getValue().getNombre();
             String rutaParaBD = rutaDestino.toAbsolutePath().toString();
             
-            // --- CAMBIO 3: SE LLAMA AL DAO CON EL NUEVO NOMBRE DE ARCHIVO DEFINIDO POR EL USUARIO ---
             ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(nombreDocTipo, rutaParaBD, nombreFinalArchivo, idEntrega, idExpediente);
 
             if (!resultado.isError()) {
-                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", resultado.getMensaje(), Alert.AlertType.INFORMATION);
+                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                observador.operacionExitosa();
                 cerrarVentana();
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Error", resultado.getMensaje(), Alert.AlertType.ERROR);
@@ -148,7 +141,6 @@ public class FXMLSubirDocumentoController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Archivo requerido", "Debes seleccionar un archivo para subir.", Alert.AlertType.WARNING);
             return false;
         }
-        // --- CAMBIO 4: SE AÑADE LA VALIDACIÓN PARA EL CAMPO DEL NOMBRE DEL ARCHIVO ---
         if (tfNombreArchivo.getText().trim().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Campo requerido", "Debes ingresar un nombre para el archivo.", Alert.AlertType.WARNING);
             return false;
