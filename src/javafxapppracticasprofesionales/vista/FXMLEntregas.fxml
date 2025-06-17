@@ -15,43 +15,52 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasController">
    <children>
-      <Button onAction="#btnClicProgramarEntrega" style="-fx-background-color: #28a745; -fx-font-weight: bold; -fx-background-radius: 5;" text="Programar Nueva Entrega" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <Button layoutY="21.0" onAction="#btnClicProgramarEntrega" style="-fx-background-color: #28a745; -fx-font-weight: bold; -fx-background-radius: 5;" text="Programar Nueva Entrega" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="21.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
       
-      <Label layoutX="25.0" layoutY="50.0" text="Documentos Iniciales" textFill="#333333">
+      <Label layoutX="25.0" layoutY="50.0" text="Documentos Iniciales" textFill="#333333" AnchorPane.leftAnchor="32.0">
          <font><Font name="System Bold" size="14.0" /></font>
       </Label>
-      <TableView fx:id="tvEntregasIniciales" layoutX="25.0" layoutY="75.0" prefHeight="110.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <TableView fx:id="tvEntregasIniciales" layoutX="25.0" layoutY="75.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="75.0">
          <columns>
             <TableColumn fx:id="colNombreInicial" prefWidth="300.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />
             <TableColumn fx:id="colFechaFinInicial" prefWidth="230.0" text="Fecha de Fin" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       
-      <Label layoutX="25.0" layoutY="194.0" text="Reportes" textFill="#333333">
+      <Label layoutX="25.0" layoutY="194.0" text="Reportes" textFill="#333333" AnchorPane.leftAnchor="32.0">
          <font><Font name="System Bold" size="14.0" /></font>
       </Label>
-      <TableView fx:id="tvEntregasReportes" layoutX="25.0" layoutY="220.0" prefHeight="110.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <TableView fx:id="tvEntregasReportes" layoutX="25.0" layoutY="220.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0">
          <columns>
             <TableColumn fx:id="colNombreReporte" prefWidth="300.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioReporte" prefWidth="230.0" text="Fecha de Inicio" />
             <TableColumn fx:id="colFechaFinReporte" prefWidth="230.0" text="Fecha de Fin" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       
-      <Label layoutX="29.0" layoutY="340.0" text="Documentos Finales" textFill="#333333">
+      <Label layoutX="29.0" layoutY="340.0" text="Documentos Finales" textFill="#333333" AnchorPane.leftAnchor="32.0">
          <font><Font name="System Bold" size="14.0" /></font>
       </Label>
-      <TableView fx:id="tvEntregasFinales" layoutX="25.0" layoutY="369.0" prefHeight="110.0" prefWidth="774.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <TableView fx:id="tvEntregasFinales" layoutX="25.0" layoutY="369.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0">
          <columns>
             <TableColumn fx:id="colNombreFinal" prefWidth="300.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioFinal" prefWidth="230.0" text="Fecha de Inicio" />
             <TableColumn fx:id="colFechaFinFinal" prefWidth="230.0" text="Fecha de Fin" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
    </children>
 </AnchorPane>

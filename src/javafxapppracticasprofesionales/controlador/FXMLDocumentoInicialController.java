@@ -49,7 +49,7 @@ public class FXMLDocumentoInicialController implements Initializable {
         this.tipoEntrega = tipoEntrega;
         this.usuarioSesion = usuarioSesion;
         cargarDocumentos();
-}
+    }
     
     private void cargarDocumentos() {
         ArrayList<TipoDocumento> documentosPojo = new ArrayList<>();

@@ -35,10 +35,6 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
     private String tipoEntregaSeleccionado;
     private Usuario usuarioSesion;
 
-
-
-
-
     /**
      * Initializes the controller class.
      */
@@ -169,26 +165,6 @@ public class FXMLSeleccionarTipoEntregaController implements Initializable {
 
         } catch (IOException ex) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana." + ex.getMessage(), Alert.AlertType.ERROR);
-        }
-    } 
-
-    @FXML
-    private void btnClicRegresar(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalProfesor.fxml"));
-            Parent vista = loader.load();
-            
-            FXMLPrincipalProfesorController controller = loader.getController();
-            controller.inicializarInformacion(usuarioSesion);
-
-            Stage escenario = new Stage();
-            escenario.setTitle("Menu Principal-Profesor");
-            escenario.setScene(new Scene(vista));
-            cerrarVentana();
-            escenario.show();
-
-        } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo volver a la ventana anterior.", Alert.AlertType.ERROR);
         }
     }
 }

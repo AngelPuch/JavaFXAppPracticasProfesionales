@@ -23,7 +23,7 @@ public class EstudianteDAO {
         ArrayList<EstudianteConProyecto> estudiantes = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto " +
+            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto, e.semestre, e.correo " +
                          "FROM estudiante e " +
                          "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
                          "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
@@ -176,6 +176,30 @@ public class EstudianteDAO {
         return tieneProyecto;
     }
 
+    public static Estudiante getEstudiantePorMatricula(String matricula) throws SQLException {
+        Estudiante estudiante = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT idEstudiante, nombre, matricula, semestre, correo, idUsuario " +
+                         "FROM estudiante WHERE matricula = ?";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setString(1, matricula);
+                ResultSet resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    estudiante = new Estudiante();
+                    estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
+                    estudiante.setNombre(resultado.getString("nombre"));
+                    estudiante.setMatricula(resultado.getString("matricula"));
+                    estudiante.setSemestre(resultado.getInt("semestre"));
+                    estudiante.setCorreo(resultado.getString("correo"));
+                }
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return estudiante;
+    }
+
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();
         estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
@@ -191,6 +215,8 @@ public class EstudianteDAO {
         estudianteConProyecto.setNombreEstudiante(resultado.getString("nombreEstudiante"));
         estudianteConProyecto.setMatricula(resultado.getString("matricula"));
         estudianteConProyecto.setNombreProyecto(resultado.getString("nombreProyecto"));
+        estudianteConProyecto.setSemestre(resultado.getInt("semestre"));
+        estudianteConProyecto.setCorreo(resultado.getString("correo"));
         return estudianteConProyecto;
     }
 }
