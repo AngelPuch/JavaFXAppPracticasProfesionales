@@ -20,14 +20,16 @@ public class ExpedienteDAO {
                 conexionBD.setAutoCommit(false);
 
                 // Sentencia 1: Asignar el proyecto al expediente del estudiante
-                String sqlAsignar = "UPDATE expediente SET Proyecto_idProyecto = ? WHERE idExpediente = (" +
-                                    "SELECT idExpediente FROM (SELECT ex.idExpediente FROM expediente ex " +
-                                    "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
-                                    "WHERE i.Estudiante_idEstudiante = ? AND ex.Proyecto_idProyecto IS NULL " +
-                                    "ORDER BY ex.idExpediente DESC LIMIT 1) AS temp)";
+                String sqlAsignar = "UPDATE expediente ex " +
+                    "JOIN (SELECT ex.idExpediente FROM expediente ex " +
+                    "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
+                    "WHERE i.Estudiante_idEstudiante = ? AND ex.Proyecto_idProyecto IS NULL " +
+                    "ORDER BY ex.idExpediente DESC LIMIT 1) temp " +
+                    "ON ex.idExpediente = temp.idExpediente " +
+                    "SET ex.Proyecto_idProyecto = ?";
                 PreparedStatement psAsignar = conexionBD.prepareStatement(sqlAsignar);
-                psAsignar.setInt(1, idProyecto);
-                psAsignar.setInt(2, idEstudiante);
+                psAsignar.setInt(1, idEstudiante);
+                psAsignar.setInt(2, idProyecto);
                 int filasAfectadas = psAsignar.executeUpdate();
 
                 if (filasAfectadas > 0) {
