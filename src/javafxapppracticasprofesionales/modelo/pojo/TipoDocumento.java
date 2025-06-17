@@ -4,13 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TipoDocumento {
-
+    private int idTipoDocumento;
     private String nombre;
 
+    public TipoDocumento() {
+    }
+
+    
     public TipoDocumento(String nombre) {
         this.nombre = nombre;
     }
 
+    public TipoDocumento(int idTipoDocumento, String nombre) {
+        this.idTipoDocumento = idTipoDocumento;
+        this.nombre = nombre;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }
@@ -50,4 +60,13 @@ public class TipoDocumento {
         tipos.add(new TipoDocumento("Autoevaluación"));
         return tipos;
     }
+
+    public int getIdTipoDocumento() {
+        return idTipoDocumento;
+    }
+
+    public void setIdTipoDocumento(int idTipoDocumento) {
+        this.idTipoDocumento = idTipoDocumento;
+    }
+    
 }

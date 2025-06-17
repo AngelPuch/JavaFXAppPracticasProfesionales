@@ -13,12 +13,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
+import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
@@ -65,8 +68,20 @@ public class FXMLPrincipalProfesorController implements Initializable {
 
     @FXML
     private void btnClicValidarEntregaDocumentos(ActionEvent event) {
-        cargarEscenas("vista/FXMLSeleccionarTipoEntrega.fxml");
-        lbNombreVentana.setText("Validar Entrega de Documentos");
+            try {
+            // Abrimos la NUEVA ventana, exclusiva para el flujo de validación.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidar_SeleccionarTipoEntrega.fxml"));
+            Parent vista = loader.load();
+
+            Stage escenario = new Stage();
+            escenario.setScene(new Scene(vista));
+            escenario.setTitle("Validar Entregas - Paso 1");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "Error al cargar la ventana: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML

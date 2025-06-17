@@ -7,6 +7,7 @@ public class Academico {
     private String numeroPersonal;
     private String nombre;
     private String correo;
+    private int idUsuario;
 
     public Academico() {
     }
@@ -49,6 +50,15 @@ public class Academico {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
     
     
 }

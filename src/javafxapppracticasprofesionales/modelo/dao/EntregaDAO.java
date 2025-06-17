@@ -151,4 +151,55 @@ public class EntregaDAO {
         }
         return entregas;
     }
+    
+    public static ArrayList<Entrega> obtenerEntregasPorTipo(int idTipoDocumento) throws SQLException {
+        ArrayList<Entrega> entregas = new ArrayList<>();
+        Connection conexion = ConexionBD.abrirConexion();
+
+        if (conexion != null) {
+            String nombreTabla = "";
+            String nombreColumnaId = "";
+
+            switch (idTipoDocumento) {
+                case 1:
+                    nombreTabla = "entregadocumentoinicio";
+                    nombreColumnaId = "idEntregaDocumentoInicio";
+                    break;
+                case 2:
+                    nombreTabla = "entregareporte";
+                    nombreColumnaId = "idEntregaReporte";
+                    break;
+                case 3:
+                    nombreTabla = "entregadocumentofinal";
+                    nombreColumnaId = "idEntregaDocumentoFinal";
+                    break;
+                default:
+                    // Si el tipo no es válido, cerramos la conexión y devolvemos una lista vacía.
+                    conexion.close();
+                    return entregas;
+            }
+
+            String consulta = String.format("SELECT %s, nombre, descripcion, fechaInicio, fechaFin FROM %s",
+                                            nombreColumnaId, nombreTabla);
+
+            try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
+                ResultSet resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    Entrega entrega = new Entrega();
+                    entrega.setIdEntrega(resultado.getInt(nombreColumnaId));
+                    entrega.setNombre(resultado.getString("nombre"));
+                    entrega.setDescripcion(resultado.getString("descripcion"));
+                    // Reemplazo para la línea 192
+                    entrega.setFechaInicio(resultado.getTimestamp("fechaInicio").toLocalDateTime().toLocalDate().toString());
+
+                    // Reemplazo para la línea 193
+                    entrega.setFechaFin(resultado.getTimestamp("fechaFin").toLocalDateTime().toLocalDate().toString());
+                    entregas.add(entrega);
+                }
+            } finally {
+                conexion.close();
+            }
+        }
+        return entregas;
+    }
 }

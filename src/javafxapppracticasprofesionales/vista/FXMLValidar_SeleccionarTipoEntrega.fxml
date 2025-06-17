@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" spacing="15.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLValidar_SeleccionarTipoEntregaController">
+   <children>
+      <Label text="Paso 1: Seleccionar Tipo de Entrega a Validar">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rbDocumentosIniciales" mnemonicParsing="false" text="Documentos Iniciales">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgTipoEntrega" />
+         </toggleGroup>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="rbReportes" mnemonicParsing="false" text="Reportes" toggleGroup="$tgTipoEntrega">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="rbDocumentosFinales" mnemonicParsing="false" text="Documentos Finales" toggleGroup="$tgTipoEntrega">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <Button mnemonicParsing="false" onAction="#btnClicContinuar" prefWidth="80.0" text="Continuar" />
+   </children>
+   <padding>
+      <Insets left="30.0" />
+   </padding>
+</VBox>
