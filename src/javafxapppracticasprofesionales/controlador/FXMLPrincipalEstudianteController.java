@@ -6,6 +6,7 @@ package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,12 +14,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
+import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
@@ -67,6 +71,37 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     
     @FXML
     private void btnClicMiExpediente(ActionEvent event) {
+        try {
+            int idEstudiante = SesionUsuario.getInstancia().getUsuarioLogueado().getIdEstudiante();
+            boolean tieneProyecto = EstudianteDAO.verificarProyectoAsignado(idEstudiante);
+
+            if (tieneProyecto) {
+                // Flujo Normal: Cargar la ventana del expediente
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLMiExpediente.fxml"));
+                Parent vista = loader.load();
+                
+                FXMLMiExpedienteController controller = loader.getController();
+                // Aquí se podría pasar información si fuera necesario.
+                
+                Scene escena = new Scene(vista);
+                Stage escenario = new Stage();
+                escenario.setTitle("Mi Expediente");
+                escenario.setScene(escena);
+                escenario.show();
+                // Opcional: cerrar la ventana principal
+                // Utilidad.getEscenarioComponente(algúnControlEnLaVista).close();
+
+            } else {
+                // No se cumple PRE-1: Mostrar alerta.
+                AlertaUtilidad.mostrarAlertaSimple("Sin Avances",
+                    "No tienes proyecto asignado, por lo tanto no hay avances que mostrar.",
+                    Alert.AlertType.INFORMATION);
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión", "Se perdió la conexión. Inténtalo de nuevo", Alert.AlertType.ERROR);
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana del expediente.", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML

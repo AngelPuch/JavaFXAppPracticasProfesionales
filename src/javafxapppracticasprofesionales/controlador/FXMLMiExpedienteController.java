@@ -82,7 +82,7 @@ public class FXMLMiExpedienteController implements Initializable {
             // CORRECCIÓN: Se obtiene el idEstudiante a través del idUsuario de la sesión
             Estudiante estudianteLogueado = EstudianteDAO.obtenerEstudiantePorIdUsuario(idUsuario);
             if (estudianteLogueado != null) {
-                //this.idExpediente = ExpedienteDAO.obtenerIdExpedienteActivo(estudianteLogueado.getIdEstudiante());
+                this.idExpediente = ExpedienteDAO.obtenerIdExpedienteActivo(estudianteLogueado.getIdEstudiante());
             }
             
             configurarTablas();

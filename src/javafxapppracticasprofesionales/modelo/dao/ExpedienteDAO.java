@@ -118,4 +118,25 @@ public class ExpedienteDAO {
         }
         return idExpediente;
     }
+    
+    public static int obtenerIdExpedienteActivo(int idEstudiante) throws SQLException {
+    int idExpediente = -1;
+    Connection conexionBD = ConexionBD.abrirConexion();
+    if (conexionBD != null) {
+        String sql = "SELECT ex.idExpediente FROM expediente ex " +
+                     "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
+                     "WHERE i.Estudiante_idEstudiante = ? AND ex.Estado_idEstado = 1 " + // 1 = Activo
+                     "ORDER BY ex.idExpediente DESC LIMIT 1";
+        try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+            sentencia.setInt(1, idEstudiante);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                idExpediente = resultado.getInt("idExpediente");
+            }
+        } finally {
+            conexionBD.close();
+        }
+    }
+    return idExpediente;
+}
 }

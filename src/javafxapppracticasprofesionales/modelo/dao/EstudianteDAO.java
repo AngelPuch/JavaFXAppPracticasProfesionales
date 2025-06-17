@@ -149,6 +149,32 @@ public class EstudianteDAO {
         }
         return info;
     }
+    
+    public static boolean verificarProyectoAsignado(int idEstudiante) throws SQLException {
+        boolean tieneProyecto = false;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT COUNT(ex.Proyecto_idProyecto) AS totalProyectos " +
+                         "FROM estudiante e " +
+                         "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
+                         "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
+                         "WHERE e.idEstudiante = ? AND ex.Proyecto_idProyecto IS NOT NULL";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idEstudiante);
+                ResultSet resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    if (resultado.getInt("totalProyectos") > 0) {
+                        tieneProyecto = true;
+                    }
+                }
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return tieneProyecto;
+    }
 
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();
