@@ -16,7 +16,6 @@
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="76.0" text="Tipo de Documento:" />
-      <ComboBox fx:id="cbTipoDocumento" layoutX="200.0" layoutY="72.0" prefWidth="250.0" promptText="Seleccione un tipo..." style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label layoutX="50.0" layoutY="204.0" text="Ruta del Archivo:" />
       <TextField fx:id="tfRutaArchivo" editable="false" layoutX="200.0" layoutY="200.0" prefHeight="25.0" prefWidth="180.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Button fx:id="btnSeleccionarArchivo" layoutX="390.0" layoutY="200.0" mnemonicParsing="false" onAction="#clicSeleccionarArchivo" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Seleccionar..." textFill="WHITE">
@@ -34,7 +33,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="tfNombreArchivo" layoutX="200.0" layoutY="138.0" prefHeight="25.0" prefWidth="250.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <TextField fx:id="tfNombreArchivo" editable="false" layoutX="200.0" layoutY="138.0" prefHeight="25.0" prefWidth="250.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label layoutX="50.0" layoutY="140.0" text="Nombre del Archivo:" />
+      <Label fx:id="lbTipoDocumento" layoutX="195.0" layoutY="76.0" prefHeight="35.0" prefWidth="250.0" />
    </children>
 </AnchorPane>

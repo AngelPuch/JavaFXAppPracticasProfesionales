@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,6 +26,7 @@ import javafxapppracticasprofesionales.modelo.dao.DocumentoInicioDAO;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 /** 
@@ -36,8 +38,7 @@ import javafxapppracticasprofesionales.utilidad.Utilidad;
 */
 public class FXMLSubirDocumentoController implements Initializable {
 
-    @FXML
-    private ComboBox<TipoDocumento> cbTipoDocumento;
+    
     @FXML
     private TextField tfRutaArchivo;
     @FXML
@@ -54,20 +55,21 @@ public class FXMLSubirDocumentoController implements Initializable {
     @FXML
     private TextField tfNombreArchivo;
     private INotificacion observador;
+    @FXML
+    private Label lbTipoDocumento;
+    private String tipoDocumento;
+    private String nombreUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getNombre();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarTiposDocumento();
     }    
     
-    public void inicializarDatos(int idEntrega, int idExpediente, INotificacion observador) {
+    public void inicializarDatos(int idEntrega, int idExpediente, String tipoDocumento, INotificacion observador) {
         this.idEntrega = idEntrega;
         this.idExpediente = idExpediente;
+        this.tipoDocumento = tipoDocumento;
         this.observador = observador;
-    }
-
-    private void cargarTiposDocumento() {
-        cbTipoDocumento.setItems(FXCollections.observableArrayList(TipoDocumento.obtenerTiposDocumentoInicial()));
+        lbTipoDocumento.setText(tipoDocumento);
     }
 
     @FXML
@@ -78,6 +80,7 @@ public class FXMLSubirDocumentoController implements Initializable {
 
         if (archivoSeleccionado != null) {
             tfRutaArchivo.setText(archivoSeleccionado.getAbsolutePath());
+            tfNombreArchivo.setText(tipoDocumento + nombreUsuario);
         }
     }
 
@@ -88,15 +91,13 @@ public class FXMLSubirDocumentoController implements Initializable {
         }
         
         try {
-            
-            String nombreBaseUsuario = tfNombreArchivo.getText().trim();
             String nombreOriginal = archivoSeleccionado.getName();
             String extension = "";
             int i = nombreOriginal.lastIndexOf('.');
             if (i > 0) {
                 extension = nombreOriginal.substring(i); 
             }
-            String nombreFinalArchivo = nombreBaseUsuario + extension;
+            String nombreFinalArchivo = tipoDocumento + "_" + nombreUsuario + extension;
             
             String userHome = System.getProperty("user.home");
             Path directorioPath = Paths.get(userHome, DIRECTORIO_PRINCIPAL_APP, SUBDIRECTORIO_DOCUMENTOS);
@@ -112,7 +113,7 @@ public class FXMLSubirDocumentoController implements Initializable {
             
             Files.copy(archivoSeleccionado.toPath(), rutaDestino, StandardCopyOption.REPLACE_EXISTING);
 
-            String nombreDocTipo = cbTipoDocumento.getValue().getNombre();
+            String nombreDocTipo = tipoDocumento;
             String rutaParaBD = rutaDestino.toAbsolutePath().toString();
             
             ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(nombreDocTipo, rutaParaBD, nombreFinalArchivo, idEntrega, idExpediente);
@@ -133,10 +134,6 @@ public class FXMLSubirDocumentoController implements Initializable {
     }
     
     private boolean validarCampos() {
-        if (cbTipoDocumento.getValue() == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Campo requerido", "Debes seleccionar un tipo de documento.", Alert.AlertType.WARNING);
-            return false;
-        }
         if (archivoSeleccionado == null) {
             AlertaUtilidad.mostrarAlertaSimple("Archivo requerido", "Debes seleccionar un archivo para subir.", Alert.AlertType.WARNING);
             return false;
@@ -158,6 +155,6 @@ public class FXMLSubirDocumentoController implements Initializable {
     }
     
     private void cerrarVentana() {
-        Utilidad.getEscenarioComponente(cbTipoDocumento).close();
+        Utilidad.getEscenarioComponente(tfNombreArchivo).close();
     }
 }

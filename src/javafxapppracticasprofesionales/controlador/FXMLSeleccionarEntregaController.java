@@ -138,7 +138,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             Parent vista = loader.load();
 
             FXMLSubirDocumentoController controller = loader.getController();
-            controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente(), observador);
+            controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente(), entregaSeleccionada.getNombre(), observador);
 
             Stage escenario = new Stage();
             escenario.setTitle("Subir documento inicial - Paso 2");
