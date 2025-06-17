@@ -10,12 +10,11 @@ public class DocumentoEntregado {
     private String matricula;
     private LocalDateTime fechaEntregado;
     private String rutaArchivo;
-    private String tipoDocumento; // "documentoinicio", "reporte" o "documentofinal"
+    private String tipoDocumento; 
 
     public DocumentoEntregado() {
     }
 
-    // Getters y Setters para todas las propiedades
     public int getIdDocumento() {
         return idDocumento;
     }

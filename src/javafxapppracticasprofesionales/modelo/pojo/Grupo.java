@@ -1,9 +1,5 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
-// Asumo que ya existen los POJOs Academico y ExperienciaEducativa
-// import javafxapppracticasprofesionales.modelo.pojo.Academico;
-// import javafxapppracticasprofesionales.modelo.pojo.ExperienciaEducativa;
-
 public class Grupo {
     private int idGrupo;
     private String seccion;

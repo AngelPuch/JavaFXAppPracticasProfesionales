@@ -9,7 +9,6 @@ public class TipoDocumento {
 
     public TipoDocumento() {
     }
-
     
     public TipoDocumento(String nombre) {
         this.nombre = nombre;
@@ -19,8 +18,7 @@ public class TipoDocumento {
         this.idTipoDocumento = idTipoDocumento;
         this.nombre = nombre;
     }
-
-    
+   
     public String getNombre() {
         return nombre;
     }
@@ -67,6 +65,5 @@ public class TipoDocumento {
 
     public void setIdTipoDocumento(int idTipoDocumento) {
         this.idTipoDocumento = idTipoDocumento;
-    }
-    
+    }    
 }

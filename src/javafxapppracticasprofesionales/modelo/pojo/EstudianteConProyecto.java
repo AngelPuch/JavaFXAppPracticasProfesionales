@@ -1,12 +1,5 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
-/** 
-* Project: JavaFX Sales System 
-* File: ClassName.java 
-* Author: Jose Luis Silva Gomez 
-* Date: YYYY-MM-DD 
-* Description: Brief description of the file's purpose. 
-*/
 public class EstudianteConProyecto {
     private String nombreEstudiante;
     private String matricula;

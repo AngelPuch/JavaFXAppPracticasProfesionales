@@ -1,6 +1,5 @@
 package javafxapppracticasprofesionales.utilidad;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
 

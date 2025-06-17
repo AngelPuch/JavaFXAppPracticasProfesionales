@@ -78,8 +78,6 @@ public class Usuario {
         this.idAcademico = idAcademico;
     }
 
-
-
     @Override
     public String toString() {
         return nombre;

@@ -1,6 +1,4 @@
-
 package javafxapppracticasprofesionales.modelo.pojo;
-
 
 public class ProyectoEstado {
     private int idProyectoEstado;
@@ -29,7 +27,4 @@ public class ProyectoEstado {
     public void setNombreEstado(String nombreEstado) {
         this.nombreEstado = nombreEstado;
     }
-    
-    
-    
 }

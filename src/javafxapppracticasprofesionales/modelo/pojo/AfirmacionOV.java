@@ -3,13 +3,7 @@ package javafxapppracticasprofesionales.modelo.pojo;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-/** 
-* Project: JavaFXAppPracticasProfesionales 
-* File: AfirmacionOV.java 
-* Author: Jose Luis Silva Gomez 
-* Date: 2025-06-16 
-* Description: Brief description of the file's purpose. 
-*/
+
 public class AfirmacionOV {
     
     private int idAfirmacion;

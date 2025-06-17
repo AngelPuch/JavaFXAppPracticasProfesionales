@@ -60,8 +60,6 @@ public class Avance {
         this.rutaArchivo = rutaArchivo;
     }
     
-    
-
     @Override
     public String toString() {
         return nombre;

@@ -1,8 +1,6 @@
-
 package javafxapppracticasprofesionales.utilidad;
 
 import org.mindrot.jbcrypt.BCrypt;
-
 
 public class UtilidadPassword {
     public static String hashearPassword(String password) {

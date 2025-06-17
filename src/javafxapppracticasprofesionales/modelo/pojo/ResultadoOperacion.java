@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.modelo.pojo;
 
 public class ResultadoOperacion {
@@ -27,6 +26,5 @@ public class ResultadoOperacion {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
-    }
-    
+    }    
 }

@@ -32,8 +32,6 @@ public class CriterioEvaluacion {
         this.idCriterio = idCriterio;
     }
     
-    
-
     public String getCriterio() {
         return criterio;
     }
@@ -80,7 +78,5 @@ public class CriterioEvaluacion {
 
     public void setNoCompetente(String noCompetente) {
         this.noCompetente = noCompetente;
-    }
-
-    
+    }   
 }

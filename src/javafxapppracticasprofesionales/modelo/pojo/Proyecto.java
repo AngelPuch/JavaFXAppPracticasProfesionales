@@ -89,8 +89,5 @@ public class Proyecto {
     public void setEstado(ProyectoEstado estado) {
         this.estado = estado;
     }
-    
-    
-    
-        
+         
 }
