@@ -28,13 +28,6 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/** 
-* Project: JavaFXAppPracticasProfesionales 
-* File: FXMLEntregasPendientesController.java 
-* Author: Jose Luis Silva Gomez 
-* Date: 2025-06-16 
-* Description: Brief description of the file's purpose. 
-*/
 public class FXMLEntregasPendientesController implements Initializable, INotificacion {
 
     @FXML
@@ -72,7 +65,6 @@ public class FXMLEntregasPendientesController implements Initializable, INotific
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablas();
-        // Obtener la información del estudiante logueado
         Usuario usuarioLogueado = SesionUsuario.getInstancia().getUsuarioLogueado();
         try {
             infoSesion = EstudianteDAO.obtenerInfoEstudianteParaSesion(usuarioLogueado.getIdUsuario());
@@ -87,26 +79,24 @@ public class FXMLEntregasPendientesController implements Initializable, INotific
     }    
 
     private void configurarTablas() {
-        // --- SE AÑADE LA CONFIGURACIÓN PARA LA NUEVA COLUMNA DE ESTADO ---
         colNombreInicial.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioInicial.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFinInicial.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-        colEstadoInicial.setCellValueFactory(new PropertyValueFactory<>("estado")); // <-- NUEVO
+        colEstadoInicial.setCellValueFactory(new PropertyValueFactory<>("estado")); 
 
         colNombreReporte.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioReporte.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFinReporte.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-        colEstadoReporte.setCellValueFactory(new PropertyValueFactory<>("estado")); // <-- NUEVO
+        colEstadoReporte.setCellValueFactory(new PropertyValueFactory<>("estado")); 
 
         colNombreFinal.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioFinal.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFinFinal.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-        colEstadoFinal.setCellValueFactory(new PropertyValueFactory<>("estado")); // <-- NUEVO
+        colEstadoFinal.setCellValueFactory(new PropertyValueFactory<>("estado")); 
     }
 
     private void cargarTodasLasEntregas() {
         try {
-            // --- SE PASA EL ID DEL EXPEDIENTE AL MÉTODO DEL DAO ---
             int idExp = infoSesion.getIdExpediente();
             int idGrp = infoSesion.getIdGrupo();
 

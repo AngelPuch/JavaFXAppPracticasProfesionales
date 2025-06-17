@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
@@ -23,16 +19,10 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author grill
- */
 public class FXMLRegistrarResponsableController implements Initializable {
 
     @FXML
-    private TextField tfNombre;
-    
+    private TextField tfNombre;   
     private OrganizacionVinculada organizacionSeleccionada;
     private INotificacion observador;
     @FXML
@@ -50,9 +40,6 @@ public class FXMLRegistrarResponsableController implements Initializable {
     private ResponsableProyecto responsableActualizar;
     private boolean esEdicion;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

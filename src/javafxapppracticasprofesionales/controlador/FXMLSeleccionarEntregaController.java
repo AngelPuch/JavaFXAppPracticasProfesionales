@@ -33,13 +33,6 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/** 
-* Project: JavaFXAppPracticasProfesionales 
-* File: FXMLSeleccionarEntregaDocumentoInicialController.java 
-* Author: Jose Luis Silva Gomez 
-* Date: 2025-06-16 
-* Description: Brief description of the file's purpose. 
-*/
 public class FXMLSeleccionarEntregaController implements Initializable {
 
     @FXML
@@ -77,12 +70,10 @@ public class FXMLSeleccionarEntregaController implements Initializable {
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
     }
     
-    // Nuevo método para cargar la información del estudiante
     private void cargarInformacionEstudiante(int idUsuario) {
         try {
             this.infoSesion = EstudianteDAO.obtenerInfoEstudianteParaSesion(idUsuario);
             if (this.infoSesion != null) {
-                // Una vez que tenemos la info (especialmente el idGrupo), cargamos las entregas
                 cargarEntregas(this.infoSesion.getIdGrupo(), this.infoSesion.getIdExpediente());
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Información no encontrada", 
@@ -94,7 +85,6 @@ public class FXMLSeleccionarEntregaController implements Initializable {
         }
     }
     
-    // Modificado para recibir el idGrupo
     private void cargarEntregas(int idGrupo, int idExpediente) {
         try {
             

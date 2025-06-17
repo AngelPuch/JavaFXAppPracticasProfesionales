@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -25,11 +21,6 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author grill
- */
 public class FXMLPrincipalProfesorController implements Initializable {
 
     @FXML
@@ -40,10 +31,6 @@ public class FXMLPrincipalProfesorController implements Initializable {
     private AnchorPane apCentral;
     private Usuario usuarioSesion;
 
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -69,7 +56,6 @@ public class FXMLPrincipalProfesorController implements Initializable {
     @FXML
     private void btnClicValidarEntregaDocumentos(ActionEvent event) {
             try {
-            // Abrimos la NUEVA ventana, exclusiva para el flujo de validación.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarSeleccionarTipoEntrega.fxml"));
             Parent vista = loader.load();
 

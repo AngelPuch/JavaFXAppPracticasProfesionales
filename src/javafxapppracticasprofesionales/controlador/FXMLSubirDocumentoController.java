@@ -29,13 +29,6 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/** 
-* Project: JavaFXAppPracticasProfesionales 
-* File: FXMLSubirDocumentoController.java 
-* Author: Jose Luis Silva Gomez 
-* Date: 2025-06-16 
-* Description: Brief description of the file's purpose. 
-*/
 public class FXMLSubirDocumentoController implements Initializable {
 
     

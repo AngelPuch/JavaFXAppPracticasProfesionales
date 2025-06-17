@@ -102,7 +102,6 @@ public class ProyectoDAO {
         Proyecto proyecto = null;
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            // La consulta une expediente y proyecto para obtener los datos del proyecto
             String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo " +
                          "FROM gestionpracticas.proyecto p " +
                          "JOIN gestionpracticas.expediente e ON p.idProyecto = e.Proyecto_idProyecto " +

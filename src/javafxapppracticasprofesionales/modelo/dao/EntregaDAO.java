@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 
-/**
- *
- * @author Dell
- */
 public class EntregaDAO {
     public static ArrayList<Entrega> obtenerEntregasPorGrupo(int idGrupo, String tabla) throws SQLException {
         ArrayList<Entrega> entregas = new ArrayList<>();
@@ -100,7 +96,7 @@ public class EntregaDAO {
                 campoIdEntregaPK = "idEntregaReporte";
                 campoIdDocumentoPK = "idReporte";
                 campoIdEntregaFK = "EntregaReporte_idEntregaReporte";
-            } else { // entregadocumentofinal
+            } else { 
                 tablaDocumento = "documentofinal";
                 campoIdEntregaPK = "idEntregaDocumentoFinal";
                 campoIdDocumentoPK = "idDocumentoFinal";

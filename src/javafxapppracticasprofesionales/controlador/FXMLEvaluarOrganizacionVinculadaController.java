@@ -64,16 +64,11 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     private TableColumn<AfirmacionOV, HBox> colSiempre;
     @FXML
     private TextArea taObservaciones;
-
     private InfoEstudianteSesion infoSesion;
     private ObservableList<AfirmacionOV> listaAfirmaciones;
     private int idExpediente;
     private int idUsuario;
-
-    // ========= INICIO DE LA CORRECCIÓN CLAVE =========
-    // Nuevo mapa para gestionar los ToggleGroups de forma aislada y segura.
     private final Map<AfirmacionOV, ToggleGroup> gruposPorAfirmacion = new HashMap<>();
-    // ========= FIN DE LA CORRECCIÓN CLAVE =========
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,20 +100,14 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
         colSiempre.setCellValueFactory(cellData -> createRadioButtonCell(cellData.getValue(), 5));
     }
 
-    // ========= INICIO DEL MÉTODO CORREGIDO =========
-    // Método completamente reescrito para un manejo robusto de ToggleGroup.
     private SimpleObjectProperty<HBox> createRadioButtonCell(AfirmacionOV afirmacion, int valorRespuesta) {
         RadioButton rb = new RadioButton();
         rb.setUserData(valorRespuesta);
 
-        // computeIfAbsent garantiza que solo se cree UN ToggleGroup por afirmacion (fila).
-        // Si ya existe en el mapa, lo reutiliza. Si no, lo crea, le añade el listener y lo guarda.
         ToggleGroup grupo = gruposPorAfirmacion.computeIfAbsent(afirmacion, af -> {
             ToggleGroup nuevoGrupo = new ToggleGroup();
-            // El listener se añade UNA SOLA VEZ cuando el grupo es creado.
             nuevoGrupo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    // Actualizamos el modelo POJO con el valor seleccionado.
                     afirmacion.setRespuestaSeleccionada((int) newValue.getUserData());
                 }
             });
@@ -127,7 +116,6 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
 
         rb.setToggleGroup(grupo);
 
-        // Si esta fila ya tenía una respuesta guardada, la marcamos.
         if (afirmacion.getRespuestaSeleccionada() == valorRespuesta) {
             rb.setSelected(true);
         }
@@ -136,7 +124,6 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
         hbox.setAlignment(Pos.CENTER);
         return new SimpleObjectProperty<>(hbox);
     }
-    // ========= FIN DEL MÉTODO CORREGIDO =========
 
     private void cargarAfirmaciones() {
         try {

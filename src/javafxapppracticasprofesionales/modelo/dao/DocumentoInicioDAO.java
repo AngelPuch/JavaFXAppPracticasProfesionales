@@ -8,13 +8,6 @@ import java.time.LocalDateTime;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
-/** 
-* Project: JavaFXAppPracticasProfesionales 
-* File: DocumentoInicioDAO.java 
-* Author: Jose Luis Silva Gomez 
-* Date: 2025-06-16 
-* Description: Brief description of the file's purpose. 
-*/
 public class DocumentoInicioDAO {
 
     public static ResultadoOperacion guardarDocumentoInicio(String nombreDocumento, String rutaArchivo, String nombreArchivo, int idEntrega, int idExpediente) throws SQLException {

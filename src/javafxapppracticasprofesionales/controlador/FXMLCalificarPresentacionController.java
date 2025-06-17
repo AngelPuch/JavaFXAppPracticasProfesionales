@@ -78,22 +78,16 @@ public class FXMLCalificarPresentacionController implements Initializable {
     private Proyecto proyecto;
     private int idExpediente;
     
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
 
-        //Aplica la validación a cada campo de puntaje
         agregarValidacionNumerica(tfPuntajeSeguridadDominio);
         agregarValidacionNumerica(tfPuntajeRequisitos);
         agregarValidacionNumerica(tfPuntajeOrtografiaRedaccion);
         agregarValidacionNumerica(tfPuntajeContenido);
         agregarValidacionNumerica(tfPuntajeMetodosTecnicasIS);
 
-        //Añade listeners para recalcular el promedio cada vez que un valor cambia
         tfPuntajeSeguridadDominio.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
         tfPuntajeRequisitos.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
         tfPuntajeOrtografiaRedaccion.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
@@ -129,65 +123,55 @@ public class FXMLCalificarPresentacionController implements Initializable {
             return;
         }
 
-        // 1. Crear el objeto de evaluación principal
         Evaluacion evaluacion = new Evaluacion();
         evaluacion.setCalificacionTotal(Float.parseFloat(lbPromedioPuntaje.getText()));
         evaluacion.setComentarios(taObservacionesYComentarios.getText());
         evaluacion.setMotivo("Evaluación de Presentación de Avances");
-        evaluacion.setIdTipoEvaluacion(2); // ID para 'Evaluacion de Presentacion'
+        evaluacion.setIdTipoEvaluacion(2); 
         evaluacion.setIdUsuario(SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario());
         evaluacion.setIdExpediente(this.idExpediente);
 
-        // 2. Crear y poblar la lista de detalles de la evaluación
         List<EvaluacionDetalle> detalles = new ArrayList<>();
 
-        // Criterio 1: USO DE MÉTODOS Y TÉCNICAS DE LA IS (idCriterio = 1)
         EvaluacionDetalle detalleMetodos = new EvaluacionDetalle();
         detalleMetodos.setIdCriterio(1);
         detalleMetodos.setCalificacion(Float.parseFloat(tfPuntajeMetodosTecnicasIS.getText()));
         detalles.add(detalleMetodos);
         
-        // Criterio 2: REQUISITOS (idCriterio = 2)
         EvaluacionDetalle detalleRequisitos = new EvaluacionDetalle();
         detalleRequisitos.setIdCriterio(2);
         detalleRequisitos.setCalificacion(Float.parseFloat(tfPuntajeRequisitos.getText()));
         detalles.add(detalleRequisitos);
 
-        // Criterio 3: SEGURIDAD Y DOMINIO (idCriterio = 3)
         EvaluacionDetalle detalleDominio = new EvaluacionDetalle();
         detalleDominio.setIdCriterio(3);
         detalleDominio.setCalificacion(Float.parseFloat(tfPuntajeSeguridadDominio.getText()));
         detalles.add(detalleDominio);
 
-        // Criterio 4: CONTENIDO (idCriterio = 4)
         EvaluacionDetalle detalleContenido = new EvaluacionDetalle();
         detalleContenido.setIdCriterio(4);
         detalleContenido.setCalificacion(Float.parseFloat(tfPuntajeContenido.getText()));
         detalles.add(detalleContenido);
 
-        // Criterio 5: ORTOGRAFÍA Y REDACCIÓN (idCriterio = 5)
         EvaluacionDetalle detalleOrtografia = new EvaluacionDetalle();
         detalleOrtografia.setIdCriterio(5);
         detalleOrtografia.setCalificacion(Float.parseFloat(tfPuntajeOrtografiaRedaccion.getText()));
         detalles.add(detalleOrtografia);
         
-        // 3. Añadir la lista de detalles al objeto de evaluación principal
         evaluacion.setDetalles(detalles);
 
-        // 4. Pasar el objeto completo a la ventana de confirmación
         try {
             FXMLLoader cargador = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLConfirmarEvaluacion.fxml"));
             Parent vista = cargador.load();
 
             FXMLConfirmarEvaluacionController controlador = cargador.getController();
-            // El controlador de confirmación ahora recibe el objeto completo
             controlador.inicializarDatos(this.estudiante, this.proyecto, evaluacion);
 
             Stage escenario = new Stage();
             escenario.setTitle("Confirmar Evaluación");
             escenario.setScene(new Scene(vista));
-            Utilidad.getEscenarioComponente(lbNombreEstudiante).getScene().getWindow().hide(); // Se oculta en lugar de cerrar
-            escenario.showAndWait(); // Espera a que la ventana de confirmación se cierre
+            Utilidad.getEscenarioComponente(lbNombreEstudiante).getScene().getWindow().hide();
+            escenario.showAndWait(); 
 
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana de confirmación.", Alert.AlertType.ERROR);

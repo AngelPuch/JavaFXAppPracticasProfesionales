@@ -14,18 +14,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
-/**
- * Project: JavaFXAppPracticasProfesionales
- * File: FXMLPreEvaluarOVController.java
- * Author: Jose Luis Silva Gomez
- * Date: 2025-06-16
- * Description: Brief description of the file's purpose.
- */
 public class FXMLPreEvaluarOVController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

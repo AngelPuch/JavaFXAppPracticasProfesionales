@@ -139,20 +139,17 @@ public class EvaluacionDAO {
             try {
                 conexion.setAutoCommit(false); 
             
-                // --- SE MODIFICA EL SQL PARA INCLUIR LA NUEVA COLUMNA ---
                 String sqlEvaluacion = "INSERT INTO evaluacion (calificacionTotal, fecha, comentarios, Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
                                        "VALUES (?, ?, ?, ?, ?, ?)";
                 
                 PreparedStatement psEvaluacion = conexion.prepareStatement(sqlEvaluacion, Statement.RETURN_GENERATED_KEYS);
             
-                // --- SE AJUSTAN LOS ÍNDICES DE LOS PARÁMETROS ---
-                psEvaluacion.setDouble(1, calificacion); // 1. Se añade la calificación
+                psEvaluacion.setDouble(1, calificacion); 
                 psEvaluacion.setDate(2, Date.valueOf(LocalDate.now()));
                 psEvaluacion.setString(3, observaciones);
                 psEvaluacion.setInt(4, idUsuario);
                 psEvaluacion.setInt(5, idTipoEvaluacion);
                 psEvaluacion.setInt(6, idExpediente);
-                // ----------------------------------------------------
                 
                 psEvaluacion.executeUpdate();
                 
@@ -233,8 +230,6 @@ public class EvaluacionDAO {
         return yaEvaluado;
     }
     
-    // Dentro de la clase EvaluacionDAO.java, añade el siguiente método:
-
     public static ArrayList<Evaluacion> obtenerEvaluacionesPorExpediente(int idExpediente) throws SQLException {
         ArrayList<Evaluacion> evaluaciones = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();

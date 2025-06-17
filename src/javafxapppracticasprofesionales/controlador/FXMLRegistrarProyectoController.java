@@ -18,11 +18,6 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author Dell
- */
 public class FXMLRegistrarProyectoController implements Initializable {
 
     @FXML
@@ -38,9 +33,6 @@ public class FXMLRegistrarProyectoController implements Initializable {
     private ResponsableProyecto responsable;
     private INotificacion observador;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

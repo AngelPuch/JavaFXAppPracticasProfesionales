@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -32,11 +31,8 @@ public class FXMLSeleccionarEstudianteParaEvaluarController implements Initializ
     private TableColumn colMatricula;
     @FXML
     private TableColumn colSemestre;
-
     private ObservableList<Estudiante> listaEstudiantes;
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();

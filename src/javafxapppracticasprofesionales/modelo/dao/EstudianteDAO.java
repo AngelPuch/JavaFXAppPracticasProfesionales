@@ -10,13 +10,6 @@ import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 
-/** 
-* Project: JavaFXAppPracticasProfesionales 
-* File: EstudianteDAO.java 
-* Author: Jose Luis Silva Gomez 
-* Date: 2025-06-16 
-* Description: Brief description of the file's purpose. 
-*/
 public class EstudianteDAO {
 
     public static ArrayList<EstudianteConProyecto> obtenerEstudiantesConProyecto() throws SQLException {

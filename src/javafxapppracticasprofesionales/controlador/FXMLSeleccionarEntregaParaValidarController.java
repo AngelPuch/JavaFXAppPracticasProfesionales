@@ -111,7 +111,6 @@ public class FXMLSeleccionarEntregaParaValidarController implements Initializabl
 
     @Override
     public void operacionExitosa() {
-        //Este método será llamado desde la ventana de validación para refrescar la tabla.
         cargarEntregas();
     }
 }

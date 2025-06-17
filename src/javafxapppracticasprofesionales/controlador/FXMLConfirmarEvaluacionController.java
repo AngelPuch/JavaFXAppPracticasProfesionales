@@ -35,7 +35,6 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     public void inicializarDatos(Estudiante estudiante, Proyecto proyecto, Evaluacion evaluacion) {
@@ -46,7 +45,6 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
         txtComentarios.setText(evaluacion.getComentarios());
         lblCalificacionFinal.setText(String.valueOf(evaluacion.getCalificacionTotal()));
         
-        // Aquí podrías poblar la nueva TableView con evaluacion.getDetalles()
     }
 
     @FXML
@@ -60,7 +58,6 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
     @FXML
     private void btnAceptar(ActionEvent event) {
         try {
-            // La llamada al DAO no cambia, pero el método del DAO ahora hace mucho más.
             ResultadoOperacion resultado = EvaluacionDAO.registrarEvaluacion(this.evaluacion);
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Operación Exitosa", "La evaluación ha sido guardada correctamente.", Alert.AlertType.INFORMATION);
@@ -70,7 +67,7 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
             }
         } catch (SQLException e) {
              AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", e.getMessage(), Alert.AlertType.ERROR);
-             e.printStackTrace(); // Es útil ver el stack trace completo en la consola
+             e.printStackTrace(); 
         }
     }
 }
