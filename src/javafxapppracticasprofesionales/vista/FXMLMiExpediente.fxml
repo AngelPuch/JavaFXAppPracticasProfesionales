@@ -27,9 +27,6 @@
 
                   <Label style="-fx-font-weight: bold; -fx-text-fill: #333333;" text="Correo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                   <Label fx:id="lblCorreo" style="-fx-text-fill: #333333;" text="[Correo]" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                  <Label style="-fx-font-weight: bold; -fx-text-fill: #333333;" text="Horas Acumuladas:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label fx:id="lblHoras" style="-fx-text-fill: #333333;" text="[Horas]" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
                <rowConstraints>
                   <RowConstraints />
