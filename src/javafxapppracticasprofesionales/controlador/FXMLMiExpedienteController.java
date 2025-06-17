@@ -40,8 +40,6 @@ public class FXMLMiExpedienteController implements Initializable {
     @FXML
     private Label lblCorreo;
     @FXML
-    private Label lblHoras;
-    @FXML
     private TabPane tpExpediente;
     @FXML
     private TableView<Avance> tvDocumentosIniciales;
