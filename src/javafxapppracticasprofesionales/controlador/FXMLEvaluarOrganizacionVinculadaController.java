@@ -3,6 +3,8 @@ package javafxapppracticasprofesionales.controlador;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -15,7 +17,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -30,23 +31,13 @@ import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.AfirmacionOV;
 import javafxapppracticasprofesionales.modelo.pojo.EvaluacionOV;
 import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
-import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-
-/**
- * Project: JavaFXAppPracticasProfesionales
- * File: FXMLEvaluarOrganizacionVinculadaController.java
- * Author: Jose Luis Silva Gomez
- * Date: 2025-06-16
- * Description: Brief description of the file's purpose.
- */
 public class FXMLEvaluarOrganizacionVinculadaController implements Initializable {
     
-    // --- Atributos FXML ---
     @FXML
     private Label lbNombreAlumno;
     @FXML
@@ -73,11 +64,16 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     private TableColumn<AfirmacionOV, HBox> colSiempre;
     @FXML
     private TextArea taObservaciones;
-    private InfoEstudianteSesion infoSesion;
 
+    private InfoEstudianteSesion infoSesion;
     private ObservableList<AfirmacionOV> listaAfirmaciones;
     private int idExpediente;
     private int idUsuario;
+
+    // ========= INICIO DE LA CORRECCIÓN CLAVE =========
+    // Nuevo mapa para gestionar los ToggleGroups de forma aislada y segura.
+    private final Map<AfirmacionOV, ToggleGroup> gruposPorAfirmacion = new HashMap<>();
+    // ========= FIN DE LA CORRECCIÓN CLAVE =========
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -98,20 +94,6 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
         cargarDatosGenerales();
     }
 
-    private void cargarDatosGenerales() {
-        try {
-            EvaluacionOV datos = EvaluacionDAO.obtenerInfoParaEvaluacion(this.idExpediente);
-            if (datos != null) {
-                lbNombreAlumno.setText(datos.getNombreAlumno());
-                lbMatricula.setText(datos.getMatricula());
-                lbOrganizacion.setText(datos.getNombreOrganizacion());
-                lbProyecto.setText(datos.getNombreProyecto());
-            }
-        } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar los datos generales de la evaluación.", Alert.AlertType.ERROR);
-        }
-    }
-
     private void configurarTabla() {
         colCategoria.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getIdAfirmacion()) + "."));
         colAfirmacion.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescripcion()));
@@ -122,29 +104,67 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
         colMuchasVeces.setCellValueFactory(cellData -> createRadioButtonCell(cellData.getValue(), 4));
         colSiempre.setCellValueFactory(cellData -> createRadioButtonCell(cellData.getValue(), 5));
     }
-    
-    private SimpleObjectProperty<HBox> createRadioButtonCell(AfirmacionOV afirmacion, int valor) {
+
+    // ========= INICIO DEL MÉTODO CORREGIDO =========
+    // Método completamente reescrito para un manejo robusto de ToggleGroup.
+    private SimpleObjectProperty<HBox> createRadioButtonCell(AfirmacionOV afirmacion, int valorRespuesta) {
         RadioButton rb = new RadioButton();
-        rb.setToggleGroup(afirmacion.getGrupoOpciones());
-        rb.setUserData(valor); 
+        rb.setUserData(valorRespuesta);
+
+        // computeIfAbsent garantiza que solo se cree UN ToggleGroup por afirmacion (fila).
+        // Si ya existe en el mapa, lo reutiliza. Si no, lo crea, le añade el listener y lo guarda.
+        ToggleGroup grupo = gruposPorAfirmacion.computeIfAbsent(afirmacion, af -> {
+            ToggleGroup nuevoGrupo = new ToggleGroup();
+            // El listener se añade UNA SOLA VEZ cuando el grupo es creado.
+            nuevoGrupo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    // Actualizamos el modelo POJO con el valor seleccionado.
+                    afirmacion.setRespuestaSeleccionada((int) newValue.getUserData());
+                }
+            });
+            return nuevoGrupo;
+        });
+
+        rb.setToggleGroup(grupo);
+
+        // Si esta fila ya tenía una respuesta guardada, la marcamos.
+        if (afirmacion.getRespuestaSeleccionada() == valorRespuesta) {
+            rb.setSelected(true);
+        }
+
         HBox hbox = new HBox(rb);
         hbox.setAlignment(Pos.CENTER);
         return new SimpleObjectProperty<>(hbox);
     }
+    // ========= FIN DEL MÉTODO CORREGIDO =========
 
     private void cargarAfirmaciones() {
         try {
             listaAfirmaciones = FXCollections.observableArrayList(EvaluacionDAO.obtenerAfirmacionesOV());
             tvAfirmaciones.setItems(listaAfirmaciones);
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar las afirmaciones para la evaluación.", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar las afirmaciones.", Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void cargarDatosGenerales() {
+        try {
+            EvaluacionOV datos = EvaluacionDAO.obtenerInfoParaEvaluacion(this.idExpediente);
+            if (datos != null) {
+                lbNombreAlumno.setText(datos.getNombreAlumno());
+                lbMatricula.setText(datos.getMatricula());
+                lbOrganizacion.setText(datos.getNombreOrganizacion());
+                lbProyecto.setText(datos.getNombreProyecto());
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar los datos de la evaluación.", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void clicAceptar(ActionEvent event) {
         if (!validarRespuestasCompletas()) {
-            AlertaUtilidad.mostrarAlertaSimple("Evaluación Incompleta", "Por favor, responde a todas las afirmaciones antes de guardar.", Alert.AlertType.WARNING);
+            AlertaUtilidad.mostrarAlertaSimple("Evaluación Incompleta", "Por favor, responde a todas las afirmaciones.", Alert.AlertType.WARNING);
             return;
         }
         abrirVentanaConfirmacion();
@@ -152,8 +172,8 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     
     private boolean validarRespuestasCompletas() {
         for (AfirmacionOV afirmacion : listaAfirmaciones) {
-            if (afirmacion.getRespuestaSeleccionada() == 0) { 
-                return false; 
+            if (afirmacion.getRespuestaSeleccionada() == 0) {  
+                return false;  
             }
         }
         return true;
@@ -167,21 +187,22 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             FXMLConfirmarDatosController controller = loader.getController();
             
             String obs = taObservaciones.getText();
-            controller.inicializarDatos(this.listaAfirmaciones, obs, this.idUsuario, this.idExpediente);
+            controller.inicializarDatos(this.listaAfirmaciones, obs, this.idUsuario, this.idExpediente); 
             
             Stage escenario = new Stage();
-            escenario.setTitle("Evaluar Organización Vinculada - Paso 2");
+            escenario.setTitle("Confirmar Evaluación");
             escenario.setScene(new Scene(vista));
-            escenario.initModality(Modality.APPLICATION_MODAL); 
-            cerrarVentana();
+            escenario.initModality(Modality.APPLICATION_MODAL);  
             escenario.showAndWait(); 
-
+            cerrarVentana();
+            
+            
         } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la ventana de confirmación.", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de Interfaz", "No se pudo cargar la ventana de confirmación.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     private void clicCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", 
@@ -193,6 +214,9 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     }
     
     private void cerrarVentana() {
-        Utilidad.getEscenarioComponente(lbProyecto).close();
+        Stage escenario = (Stage) lbProyecto.getScene().getWindow();
+        if (escenario != null) {
+            escenario.close();
+        }
     }
 }
