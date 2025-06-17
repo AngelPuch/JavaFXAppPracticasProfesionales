@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLPreEvaluarOVController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="824.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Aún no has evaluado a la Organización Vinculada." textFill="#555555">
+               <font><Font size="18.0" /></font>
+            </Label>
+            <Label text="Tu retroalimentación es importante para futuros compañeros." textFill="#777777">
+               <font><Font size="14.0" /></font>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#btnClicEvaluar" style="-fx-background-color: #28a745; -fx-font-weight: bold;" text="Evaluar Organización Vinculada" textFill="WHITE">
+               <font><Font size="14.0" /></font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

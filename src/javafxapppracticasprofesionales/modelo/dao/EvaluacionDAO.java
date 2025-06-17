@@ -55,7 +55,7 @@ public class EvaluacionDAO {
         ArrayList<AfirmacionOV> afirmaciones = new ArrayList<>();
         Connection conexion = ConexionBD.abrirConexion();
         if (conexion != null) {
-            String consulta = "SELECT idAfirmacion, descripcion, categoria FROM afirmacion_ov ORDER BY categoria, idAfirmacion";
+            String consulta = "SELECT idAfirmacion, descripcion, categoria FROM afirmacion_ov ORDER BY idAfirmacion";
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
             while (resultado.next()) {
@@ -88,9 +88,12 @@ public class EvaluacionDAO {
             ResultSet resultado = sentencia.executeQuery();
             if (resultado.next()) {
                 info = new EvaluacionOV();
-                // ... Aquí debes crear los setters en EvaluacionOV y usarlos:
-                // info.setNombreAlumno(resultado.getString("nombre_alumno"));
-                // etc...
+                 info.setNombreAlumno(resultado.getString("nombre_alumno"));
+            info.setMatricula(resultado.getString("matricula"));
+            info.setNombreOrganizacion(resultado.getString("nombre_ov"));
+            info.setNombreProyecto(resultado.getString("nombre_proyecto"));
+            info.setResponsableProyecto(resultado.getString("nombre_responsable"));
+            info.setHorasCubiertas(resultado.getInt("horasAcumuladas"));
             }
             conexion.close();
         }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -15,12 +11,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
+import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
+import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
@@ -42,6 +41,10 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     @FXML
     private AnchorPane apCentral;
     private Usuario usuarioSesion;
+    private int idEstudiante;
+    private int idExpediente;
+    @FXML
+    private Button btnEvaluarOV;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,17 +53,57 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     
     public void inicializarInformacion(Usuario usuarioSesion) {
         this.usuarioSesion = usuarioSesion;
+        try {
+            InfoEstudianteSesion info = EstudianteDAO.obtenerInfoEstudianteParaSesion(this.usuarioSesion.getIdUsuario());
+            if (info != null && info.getIdExpediente() > 0) {
+                this.idEstudiante = info.getIdEstudiante();
+                this.idExpediente = info.getIdExpediente();
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudo cargar la información del estudiante.", Alert.AlertType.ERROR);
+        }
         cargarInformacion();
     }
     
     private void cargarInformacion() {
         if (usuarioSesion != null) {
             lbNombreUsuario.setText(usuarioSesion.toString());
+            try {
+                boolean tieneProyecto = (this.idExpediente > 0); // Una forma más simple de verificar
+                btnEvaluarOV.setDisable(!tieneProyecto);
+                if (!tieneProyecto) {
+                    btnEvaluarOV.setTooltip(new Tooltip("Debes tener un proyecto asignado para poder evaluar."));
+                }
+            } catch (Exception e) {
+                btnEvaluarOV.setDisable(true);
+            }
         }
     }
 
     @FXML
     private void btnClicEvaluarOrganizacionVinculada(ActionEvent event) {
+        try {
+            boolean yaEvaluado = EvaluacionDAO.haEvaluadoOVPreviamente(this.idExpediente);
+            
+            if (yaEvaluado) {
+                lbNombreVentana.setText("Evaluación de OV (Realizada)");
+                // Carga la vista que muestra los detalles de la evaluación ya guardada
+                FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
+                Parent root = loader.load();
+                FXMLVerEvaluacionOVController controller = loader.getController();
+                controller.inicializarDatos(this.idExpediente); // Le pasamos el ID para que sepa qué evaluación cargar
+                apCentral.getChildren().setAll(root);
+            } else {
+                // Carga la vista intermedia que invita al usuario a evaluar
+                lbNombreVentana.setText("Evaluación de OV (Pendiente)");
+                cargarEscenas("vista/FXMLPreEvaluarOV.fxml");
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudo verificar el estado de la evaluación: " + e.getMessage(), Alert.AlertType.ERROR);
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la vista correspondiente: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
     }
 
     @FXML

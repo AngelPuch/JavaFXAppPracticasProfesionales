@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLVerEvaluacionOVController">
+   <children>
+      <Label layoutX="25.0" layoutY="25.0" text="Detalle de tu Evaluación a la OV" textFill="#17428a">
+         <font><Font name="System Bold" size="22.0" /></font>
+      </Label>
+      <TableView fx:id="tvRespuestas" layoutX="25.0" layoutY="70.0" prefHeight="400.0" prefWidth="650.0">
+        <columns>
+          <TableColumn fx:id="colAfirmacion" prefWidth="550.0" text="Afirmación Evaluada" />
+          <TableColumn fx:id="colRespuesta" prefWidth="100.0" text="Tu Respuesta" />
+        </columns>
+         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
+      </TableView>
+   </children>
+</AnchorPane>

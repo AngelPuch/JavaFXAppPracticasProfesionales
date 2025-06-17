@@ -27,7 +27,7 @@
                               <Image url="@../recurso/proyecto_icon.png" />
                            </image>
                         </ImageView>
-                        <Button onAction="#btnClicEvaluarOrganizacionVinculada" prefHeight="5.0" prefWidth="162.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Evaluar Organizacion Vinculada" wrapText="true">
+                        <Button fx:id="btnEvaluarOV" onAction="#btnClicEvaluarOrganizacionVinculada" prefHeight="5.0" prefWidth="162.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Evaluacion OV" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
