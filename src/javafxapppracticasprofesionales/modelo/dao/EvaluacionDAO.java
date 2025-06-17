@@ -2,7 +2,9 @@ package javafxapppracticasprofesionales.modelo.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
@@ -39,5 +41,34 @@ public class EvaluacionDAO {
             resultado.setMensaje("No hay conexión con la base de datos.");
         }
         return resultado;
+    }
+    
+    public static ArrayList<Evaluacion> obtenerEvaluacionesPorExpediente(int idExpediente) throws SQLException {
+        ArrayList<Evaluacion> evaluaciones = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT idEvaluacion, calificacionTotal, fecha, motivo, comentarios, " +
+                         "Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente " +
+                         "FROM evaluacion WHERE Expediente_idExpediente = ?";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idExpediente);
+                ResultSet resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    Evaluacion evaluacion = new Evaluacion();
+                    evaluacion.setIdEvaluacion(resultado.getInt("idEvaluacion"));
+                    evaluacion.setCalificacionTotal(resultado.getFloat("calificacionTotal"));
+                    evaluacion.setFecha(resultado.getString("fecha"));
+                    evaluacion.setMotivo(resultado.getString("motivo"));
+                    evaluacion.setComentarios(resultado.getString("comentarios"));
+                    evaluacion.setIdUsuario(resultado.getInt("Usuario_idUsuario"));
+                    evaluacion.setIdTipoEvaluacion(resultado.getInt("TipoEvaluacion_idTipoEvaluacion"));
+                    evaluacion.setIdExpediente(resultado.getInt("Expediente_idExpediente"));
+                    evaluaciones.add(evaluacion);
+                }
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return evaluaciones;
     }
 }

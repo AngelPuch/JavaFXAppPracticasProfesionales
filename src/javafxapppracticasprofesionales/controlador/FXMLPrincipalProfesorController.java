@@ -33,10 +33,9 @@ public class FXMLPrincipalProfesorController implements Initializable {
     private Label lbNombreVentana;
     @FXML
     private Label lbNombreUsuario;
+    @FXML
     private AnchorPane apCentral;
     private Usuario usuarioSesion;
-    @FXML
-    private VBox vbBox;
 
 
     /**
@@ -90,7 +89,7 @@ public class FXMLPrincipalProfesorController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource(ruta));
             Parent root = loader.load();
-            vbBox.getChildren().setAll(root);
+            apCentral.getChildren().setAll(root);
             AnchorPane.setTopAnchor(root, 0.0);
             AnchorPane.setBottomAnchor(root, 0.0);
             AnchorPane.setLeftAnchor(root, 0.0);
