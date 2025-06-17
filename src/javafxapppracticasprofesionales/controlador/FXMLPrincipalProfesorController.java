@@ -70,7 +70,7 @@ public class FXMLPrincipalProfesorController implements Initializable {
     private void btnClicValidarEntregaDocumentos(ActionEvent event) {
             try {
             // Abrimos la NUEVA ventana, exclusiva para el flujo de validación.
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidar_SeleccionarTipoEntrega.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarSeleccionarTipoEntrega.fxml"));
             Parent vista = loader.load();
 
             Stage escenario = new Stage();

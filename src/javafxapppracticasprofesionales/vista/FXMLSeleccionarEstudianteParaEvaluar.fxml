@@ -11,7 +11,7 @@
             <TableColumn fx:id="colSemestre" prefWidth="150.0" text="Semestre" />
         </columns>
       </TableView>
-      <Button layoutX="503.0" layoutY="354.0" onAction="#btnClicContinuar" text="Continuar" />
-      <Button layoutX="428.0" layoutY="354.0" onAction="#btnClicCancelar" text="Cancelar" />
+      <Button layoutX="503.0" layoutY="354.0" onAction="#btnClicContinuar" text="Continuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" textFill="WHITE" />
+      <Button layoutX="428.0" layoutY="354.0" onAction="#btnClicCancelar" text="Cancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" textFill="WHITE" />
    </children>
 </AnchorPane>

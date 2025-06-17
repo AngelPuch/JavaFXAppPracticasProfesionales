@@ -83,7 +83,15 @@ public class FXMLConfirmarDatosController implements Initializable {
     @FXML
     private void clicGuardar(ActionEvent event) {
         try {
-            ResultadoOperacion resultado = EvaluacionDAO.guardarEvaluacionOV(idUsuario, idExpediente, comentarios, listaAfirmaciones);
+            double sumaRespuestas = 0;
+            for (AfirmacionOV afirmacion : listaAfirmaciones) {
+                sumaRespuestas += afirmacion.getRespuestaSeleccionada();
+            }
+            double calificacionPromedio = 0;
+            if (!listaAfirmaciones.isEmpty()) {
+                calificacionPromedio = sumaRespuestas / listaAfirmaciones.size();
+            }
+            ResultadoOperacion resultado = EvaluacionDAO.guardarEvaluacionOV(idUsuario, idExpediente, comentarios, listaAfirmaciones, calificacionPromedio);
             
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Operación Exitosa", "Operación realizada correctamente.", Alert.AlertType.INFORMATION);

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -7,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarEntregaParaValidarController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarEntregaParaValidarController">
    <children>
       <Label fx:id="lblTitulo" layoutX="24.0" layoutY="24.0" text="Seleccionar Entrega a Validar">
          <font>
@@ -21,7 +25,7 @@
             <TableColumn fx:id="colFechaEntrega" prefWidth="180.0" text="Fecha de Entrega" />
         </columns>
       </TableView>
-      <Button layoutX="502.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnClicContinuar" text="Continuar" />
-      <Button layoutX="24.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnClicCancelar" text="Cancelar" />
+      <Button layoutX="502.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnClicContinuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Continuar" textFill="WHITE" />
+      <Button layoutX="393.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -129,24 +129,31 @@ public class EvaluacionDAO {
         return info;
     }
     
-    public static ResultadoOperacion guardarEvaluacionOV(int idUsuario, int idExpediente, String observaciones, List<AfirmacionOV> afirmaciones) throws SQLException {
+    public static ResultadoOperacion guardarEvaluacionOV(int idUsuario, int idExpediente, String observaciones, List<AfirmacionOV> afirmaciones, double calificacion) throws SQLException {
         ResultadoOperacion resultado = new ResultadoOperacion();
         resultado.setIsError(true);
         Connection conexion = ConexionBD.abrirConexion();
         if (conexion != null) {
             int idTipoEvaluacion = 1; 
-            
+        
             try {
                 conexion.setAutoCommit(false); 
+            
+                // --- SE MODIFICA EL SQL PARA INCLUIR LA NUEVA COLUMNA ---
+                String sqlEvaluacion = "INSERT INTO evaluacion (calificacionTotal, fecha, comentarios, Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
+                                       "VALUES (?, ?, ?, ?, ?, ?)";
                 
-                String sqlEvaluacion = "INSERT INTO evaluacion (fecha, comentarios, Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
-                                       "VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement psEvaluacion = conexion.prepareStatement(sqlEvaluacion, Statement.RETURN_GENERATED_KEYS);
-                psEvaluacion.setDate(1, Date.valueOf(LocalDate.now()));
-                psEvaluacion.setString(2, observaciones);
-                psEvaluacion.setInt(3, idUsuario);
-                psEvaluacion.setInt(4, idTipoEvaluacion);
-                psEvaluacion.setInt(5, idExpediente);
+            
+                // --- SE AJUSTAN LOS ÍNDICES DE LOS PARÁMETROS ---
+                psEvaluacion.setDouble(1, calificacion); // 1. Se añade la calificación
+                psEvaluacion.setDate(2, Date.valueOf(LocalDate.now()));
+                psEvaluacion.setString(3, observaciones);
+                psEvaluacion.setInt(4, idUsuario);
+                psEvaluacion.setInt(5, idTipoEvaluacion);
+                psEvaluacion.setInt(6, idExpediente);
+                // ----------------------------------------------------
+                
                 psEvaluacion.executeUpdate();
                 
                 ResultSet generatedKeys = psEvaluacion.getGeneratedKeys();
@@ -155,7 +162,7 @@ public class EvaluacionDAO {
                     
                     String sqlDetalle = "INSERT INTO evaluacion_ov_detalle (idEvaluacion, idAfirmacion, respuesta) VALUES (?, ?, ?)";
                     PreparedStatement psDetalle = conexion.prepareStatement(sqlDetalle);
-                    
+                
                     for (AfirmacionOV afirmacion : afirmaciones) {
                         psDetalle.setInt(1, idEvaluacionGenerado);
                         psDetalle.setInt(2, afirmacion.getIdAfirmacion());
@@ -163,7 +170,7 @@ public class EvaluacionDAO {
                         psDetalle.addBatch();
                     }
                     psDetalle.executeBatch();
-                    
+                
                     conexion.commit(); 
                     resultado.setIsError(false);
                     resultado.setMensaje("Evaluación guardada correctamente.");
