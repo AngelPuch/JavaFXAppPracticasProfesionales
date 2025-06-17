@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -87,12 +86,14 @@ public class FXMLCalificarPresentacionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
 
+        //Aplica la validación a cada campo de puntaje
         agregarValidacionNumerica(tfPuntajeSeguridadDominio);
         agregarValidacionNumerica(tfPuntajeRequisitos);
         agregarValidacionNumerica(tfPuntajeOrtografiaRedaccion);
         agregarValidacionNumerica(tfPuntajeContenido);
         agregarValidacionNumerica(tfPuntajeMetodosTecnicasIS);
 
+        //Añade listeners para recalcular el promedio cada vez que un valor cambia
         tfPuntajeSeguridadDominio.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
         tfPuntajeRequisitos.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
         tfPuntajeOrtografiaRedaccion.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
@@ -118,7 +119,7 @@ public class FXMLCalificarPresentacionController implements Initializable {
 
     @FXML
     private void btnClicAceptar(ActionEvent event) {
-        if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || /*...otras validaciones...*/ tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
+        if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || tfPuntajeRequisitos.getText().isEmpty() || tfPuntajeSeguridadDominio.getText().isEmpty() || tfPuntajeContenido.getText().isEmpty() || tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "Existen campos inválidos. Por favor corrige tu información.", Alert.AlertType.WARNING);
             return;
         }
@@ -224,44 +225,63 @@ public class FXMLCalificarPresentacionController implements Initializable {
 
         for (TextField campo : camposPuntaje) {
             String texto = campo.getText();
-            if (texto != null && !texto.isEmpty() && !"1".equals(texto)) {
+            if (texto != null && !texto.isEmpty()) {
                 try {
                     puntajeTotal += Double.parseDouble(texto);
                     camposValidos++;
                 } catch (NumberFormatException e) {
+                    // Ignorar campos con formato incorrecto para el cálculo del promedio
                 }
             }
         }
         if (camposValidos > 0) {
             double promedio = puntajeTotal / camposValidos;
-            lbPromedioPuntaje.setText(String.format("%.1f", promedio));
+            lbPromedioPuntaje.setText(String.format("%.2f", promedio));
         } else {
-            lbPromedioPuntaje.setText("0.0");
+            lbPromedioPuntaje.setText("0.00");
         }
     }
 
+    /**
+    * Configura un filtro para un TextField que solo permite números decimales
+    * en el rango de 5.0 a 10.0, con hasta dos decimales.
+    */
     private void agregarValidacionNumerica(TextField campoTexto) {
         UnaryOperator<TextFormatter.Change> filtro = change -> {
             String nuevoTexto = change.getControlNewText();
-            if (nuevoTexto.matches("($|[5-9]|1|10)")) {
+            // Regex para validar números decimales entre 5 y 10, o el número 10.0
+            // Permite un solo punto decimal y hasta dos dígitos decimales.
+            if (nuevoTexto.matches("^(?:[5-9](\\.\\d{0,2})?|10(\\.0{0,2})?|)$")) {
                 return change;
             }
             return null;
         };
+
         TextFormatter<String> formateadorTexto = new TextFormatter<>(filtro);
         campoTexto.setTextFormatter(formateadorTexto);
 
+        // Listener para validar el rango cuando el campo pierde el foco
         campoTexto.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                if ("1".equals(campoTexto.getText())) {
-                    campoTexto.setText("");
-                    AlertaUtilidad.mostrarAlertaSimple("Error de puntuación", "La puntuación mínima es 5.",
-                            Alert.AlertType.ERROR);
+            if (!newValue) { // Si el campo pierde el foco
+                String texto = campoTexto.getText();
+                if (!texto.isEmpty()) {
+                    try {
+                        double valor = Double.parseDouble(texto);
+                        if (valor < 5.0 || valor > 10.0) {
+                            AlertaUtilidad.mostrarAlertaSimple("Valor fuera de rango", "La calificación debe estar entre 5.0 y 10.0.",
+                                    Alert.AlertType.ERROR);
+                            campoTexto.setText(""); // Limpia el campo si el valor es inválido
+                        }
+                    } catch (NumberFormatException e) {
+                        // Esto no debería ocurrir gracias al filtro, pero es una buena práctica
+                        AlertaUtilidad.mostrarAlertaSimple("Formato incorrecto", "El valor ingresado no es un número válido.",
+                                Alert.AlertType.ERROR);
+                        campoTexto.setText("");
+                    }
                 }
             }
         });
     }
-
 
     private void configurarTabla() {
         colCriterio.setCellValueFactory(new PropertyValueFactory<>("criterio"));
@@ -275,62 +295,56 @@ public class FXMLCalificarPresentacionController implements Initializable {
     private void cargarInformacionTabla() {
         criterios = FXCollections.observableArrayList();
         try {
-            // 1. Obtiene la lista de criterios base desde la BD (ej. id=1, nombre='USO DE MÉTODOS...')
             ArrayList<CriterioEvaluacion> criteriosBD = CriterioEvaluacionDAO.obtenerCriteriosRubrica();
 
-            // Verificación para asegurar que la BD regresó los 5 criterios esperados
             if (criteriosBD.size() < 5) {
                 AlertaUtilidad.mostrarAlertaSimple("Error de Datos", 
                     "La cantidad de criterios en la base de datos no coincide con los 5 esperados en la aplicación.", Alert.AlertType.ERROR);
                 return;
             }
 
-            // 2. Asigna las descripciones estáticas a cada criterio cargado
-
             // CRITERIO 1: USO DE MÉTODOS Y TÉCNICAS DE LA IS
             CriterioEvaluacion critMetodos = criteriosBD.get(0);
-            critMetodos.setCompetente("Los métodos y técnicas de la IS optimizan el aseguramiento de calidad y se han aplicado de manera correcta."); // 
-            critMetodos.setIndependiente("Los métodos y técnicas de la IS, son adecuados y se han aplicado de manera correcta."); // 
-            critMetodos.setBasicoAvanzado("Los métodos y técnicas de la IS, son adecuados, aunque se presentan algunas deficiencias en su aplicación."); // 
-            critMetodos.setBasicoMinimo("Los métodos y técnicas de la IS, no son adecuados, pero se han aplicado de manera correcta."); // 
-            critMetodos.setNoCompetente("No se han aplicado métodos y técnicas de la IS."); // 
+            critMetodos.setCompetente("Los métodos y técnicas de la IS optimizan el aseguramiento de calidad y se han aplicado de manera correcta."); 
+            critMetodos.setIndependiente("Los métodos y técnicas de la IS, son adecuados y se han aplicado de manera correcta."); 
+            critMetodos.setBasicoAvanzado("Los métodos y técnicas de la IS, son adecuados, aunque se presentan algunas deficiencias en su aplicación."); 
+            critMetodos.setBasicoMinimo("Los métodos y técnicas de la IS, no son adecuados, pero se han aplicado de manera correcta."); 
+            critMetodos.setNoCompetente("No se han aplicado métodos y técnicas de la IS."); 
 
             // CRITERIO 2: REQUISITOS
             CriterioEvaluacion critRequisitos = criteriosBD.get(1);
-            critRequisitos.setCompetente("Cumplió con todos los requisitos. Excedió las expectativas."); // 
-            critRequisitos.setIndependiente("Todos los requisitos fueron cumplidos."); // 
-            critRequisitos.setBasicoAvanzado("No cumple satisfactoriamente con un requisito."); // 
-            critRequisitos.setBasicoMinimo("Más de un requisito no fue cumplido satisfactoriamente."); // 
-            critRequisitos.setNoCompetente("Más de dos requisitos no fueron cumplidos satisfactoriamente."); // 
+            critRequisitos.setCompetente("Cumplió con todos los requisitos. Excedió las expectativas.");
+            critRequisitos.setIndependiente("Todos los requisitos fueron cumplidos."); 
+            critRequisitos.setBasicoAvanzado("No cumple satisfactoriamente con un requisito."); 
+            critRequisitos.setBasicoMinimo("Más de un requisito no fue cumplido satisfactoriamente."); 
+            critRequisitos.setNoCompetente("Más de dos requisitos no fueron cumplidos satisfactoriamente."); 
 
             // CRITERIO 3: SEGURIDAD Y DOMINIO
             CriterioEvaluacion critDominio = criteriosBD.get(2);
-            critDominio.setCompetente("El dominio del tema es excelente, la exposición es dada con seguridad."); // 
-            critDominio.setIndependiente("Se posee un dominio adecuado y la exposición fue fluida."); // 
-            critDominio.setBasicoAvanzado("Aunque con algunos fallos en el dominio, la exposición fue fluida."); // 
-            critDominio.setBasicoMinimo("Se demuestra falta de dominio y una exposición deficiente."); // 
-            critDominio.setNoCompetente("No existe dominio sobre el tema y la exposición es deficiente."); // 
+            critDominio.setCompetente("El dominio del tema es excelente, la exposición es dada con seguridad."); 
+            critDominio.setIndependiente("Se posee un dominio adecuado y la exposición fue fluida."); 
+            critDominio.setBasicoAvanzado("Aunque con algunos fallos en el dominio, la exposición fue fluida."); 
+            critDominio.setBasicoMinimo("Se demuestra falta de dominio y una exposición deficiente."); 
+            critDominio.setNoCompetente("No existe dominio sobre el tema y la exposición es deficiente."); 
 
             // CRITERIO 4: CONTENIDO
             CriterioEvaluacion critContenido = criteriosBD.get(3);
-            critContenido.setCompetente("Cubre los temas a profundidad con detalles y ejemplos. El conocimiento del tema es excelente."); // 
-            critContenido.setIndependiente("Incluye conocimiento básico sobre el tema. El contenido parece ser bueno."); // 
-            critContenido.setBasicoAvanzado("Incluye información esencial sobre el tema, pero tiene 1-2 errores en los hechos."); // 
-            critContenido.setBasicoMinimo("El contenido es mínimo y tiene tres errores en los hechos."); // 
-            critContenido.setNoCompetente("El contenido es mínimo y tiene varios errores en los hechos."); // 
+            critContenido.setCompetente("Cubre los temas a profundidad con detalles y ejemplos. El conocimiento del tema es excelente."); 
+            critContenido.setIndependiente("Incluye conocimiento básico sobre el tema. El contenido parece ser bueno.");
+            critContenido.setBasicoAvanzado("Incluye información esencial sobre el tema, pero tiene 1-2 errores en los hechos.");
+            critContenido.setBasicoMinimo("El contenido es mínimo y tiene tres errores en los hechos."); 
+            critContenido.setNoCompetente("El contenido es mínimo y tiene varios errores en los hechos."); 
 
             // CRITERIO 5: ORTOGRAFÍA Y REDACCIÓN
             CriterioEvaluacion critOrtografia = criteriosBD.get(4);
-            critOrtografia.setCompetente("No hay errores de gramática, ortografía o puntuación."); // 
-            critOrtografia.setIndependiente("Casi no hay errores de gramática, ortografía o puntuación."); // 
-            critOrtografia.setBasicoAvanzado("Algunos errores de gramáticas, ortografía o puntuación."); // 
-            critOrtografia.setBasicoMinimo("Varios errores de gramática, ortografía o puntuación."); // 
-            critOrtografia.setNoCompetente("Demasiados errores de gramática, ortografía o puntuación."); // 
+            critOrtografia.setCompetente("No hay errores de gramática, ortografía o puntuación."); 
+            critOrtografia.setIndependiente("Casi no hay errores de gramática, ortografía o puntuación."); 
+            critOrtografia.setBasicoAvanzado("Algunos errores de gramáticas, ortografía o puntuación."); 
+            critOrtografia.setBasicoMinimo("Varios errores de gramática, ortografía o puntuación."); 
+            critOrtografia.setNoCompetente("Demasiados errores de gramática, ortografía o puntuación."); 
 
-            // 3. Agrega todos los criterios ya "decorados" a la lista observable
             criterios.addAll(criteriosBD);
 
-            // 4. Muestra la información en la tabla
             tvRubricaEvaluacion.setItems(criterios);
 
         } catch (SQLException e) {
@@ -338,5 +352,4 @@ public class FXMLCalificarPresentacionController implements Initializable {
                 "No se pudieron cargar los criterios de evaluación desde la base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
         } 
     }
-
 }
