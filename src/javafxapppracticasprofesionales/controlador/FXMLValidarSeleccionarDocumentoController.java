@@ -27,7 +27,7 @@ import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
-public class FXMLValidar_SeleccionarDocumentoController implements Initializable {
+public class FXMLValidarSeleccionarDocumentoController implements Initializable {
 
     @FXML
     private Label lblTitulo;
@@ -122,7 +122,18 @@ public class FXMLValidar_SeleccionarDocumentoController implements Initializable
     }
 
     @FXML
-    private void btnClicRegresar(ActionEvent event) {
-        // Lógica para regresar a la ventana anterior
+private void btnClicRegresar(ActionEvent event) {
+    try {
+        Stage escenarioActual = (Stage) lblTitulo.getScene().getWindow();
+        Parent vistaAnterior = FXMLLoader.load(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarSeleccionarTipoEntrega.fxml"));
+
+        Scene escenaAnterior = new Scene(vistaAnterior);
+        escenarioActual.setTitle("Validar Entregas - Paso 1");
+
+        escenarioActual.setScene(escenaAnterior);
+
+    } catch (IOException e) {
+        AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la ventana anterior: " + e.getMessage(), Alert.AlertType.ERROR);
     }
+}
 }

@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
-public class FXMLValidar_SeleccionarTipoEntregaController implements Initializable {
+public class FXMLValidarSeleccionarTipoEntregaController implements Initializable {
 
     @FXML
     private RadioButton rbDocumentosIniciales;
@@ -50,9 +50,9 @@ public class FXMLValidar_SeleccionarTipoEntregaController implements Initializab
     
     private void abrirSiguienteVentana(TipoDocumento tipoDoc) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidar_SeleccionarDocumento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarSeleccionarDocumento.fxml"));
             Parent vista = loader.load();
-            FXMLValidar_SeleccionarDocumentoController controlador = loader.getController();
+            FXMLValidarSeleccionarDocumentoController controlador = loader.getController();
             controlador.inicializar(tipoDoc);
             
             Stage escenario = (Stage) rbReportes.getScene().getWindow();
