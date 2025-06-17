@@ -60,6 +60,8 @@ public class FXMLPrincipalProfesorController implements Initializable {
 
     @FXML
     private void btnClicConsultarExpediente(ActionEvent event) {
+        cargarEscenas("vista/FXMLConsultarExpediente.fxml");
+        lbNombreVentana.setText("Consultar expediente de estudiante");
     }
 
     @FXML
