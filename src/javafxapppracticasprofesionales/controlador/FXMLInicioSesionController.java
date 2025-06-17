@@ -15,12 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.dao.InicioSesionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
-import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 
 public class FXMLInicioSesionController implements Initializable {

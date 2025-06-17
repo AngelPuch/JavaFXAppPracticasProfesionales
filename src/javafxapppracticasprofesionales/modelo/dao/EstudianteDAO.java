@@ -101,6 +101,25 @@ public class EstudianteDAO {
         }
         return estudiantes;
     }
+    
+    public static Estudiante obtenerEstudiantePorIdUsuario(int idUsuario) throws SQLException {
+        Estudiante estudiante = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT idEstudiante, nombre, matricula, semestre, correo, idUsuario " +
+                         "FROM estudiante WHERE idUsuario = ?";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idUsuario);
+                ResultSet resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    estudiante = convertirRegistroEstudiante(resultado);
+                }
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return estudiante;
+    }
 
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();

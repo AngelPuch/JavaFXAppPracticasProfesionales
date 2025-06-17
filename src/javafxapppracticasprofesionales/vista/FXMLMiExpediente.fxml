@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLMiExpedienteController">
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+            <Label text="Mi Expediente" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            
+            <GridPane hgap="10" vgap="5">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                </columnConstraints>
+                <children>
+                    <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNombreEstudiante" text="[Nombre del Estudiante]" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Matrícula:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblMatricula" text="[Matrícula]" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Correo:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblCorreo" text="[Correo]" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    
+                    <Label text="Horas Acumuladas:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHoras" text="[Horas]" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <TabPane fx:id="tpExpediente" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab text="Documentos Iniciales">
+                        <content>
+                            <TableView fx:id="tvDocumentosIniciales">
+                                <columns>
+                                    <TableColumn fx:id="colNombreDI" prefWidth="400.0" text="Documento"/>
+                                    <TableColumn fx:id="colFechaDI" prefWidth="200.0" text="Fecha de Entrega"/>
+                                    <TableColumn fx:id="colEstadoDI" prefWidth="150.0" text="Estado"/>
+                                </columns>
+                            </TableView>
+                        </content>
+                    </Tab>
+                    <Tab text="Reportes">
+                        <content>
+                            <TableView fx:id="tvReportes">
+                               <columns>
+                                    <TableColumn fx:id="colNombreR" prefWidth="400.0" text="Reporte"/>
+                                    <TableColumn fx:id="colFechaR" prefWidth="200.0" text="Fecha de Entrega"/>
+                                    <TableColumn fx:id="colEstadoR" prefWidth="150.0" text="Estado"/>
+                                </columns>
+                            </TableView>
+                        </content>
+                    </Tab>
+                    <Tab text="Documentos Finales">
+                        <content>
+                             <TableView fx:id="tvDocumentosFinales">
+                               <columns>
+                                    <TableColumn fx:id="colNombreDF" prefWidth="400.0" text="Documento"/>
+                                    <TableColumn fx:id="colFechaDF" prefWidth="200.0" text="Fecha de Entrega"/>
+                                    <TableColumn fx:id="colEstadoDF" prefWidth="150.0" text="Estado"/>
+                                </columns>
+                            </TableView>
+                        </content>
+                    </Tab>
+                    <Tab text="Evaluaciones">
+                        </Tab>
+                </tabs>
+            </TabPane>
+            
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                 <Button fx:id="btnConsultar" text="Consultar" onAction="#btnClicConsultar" />
+                 <Button fx:id="btnCancelar" text="Cancelar" onAction="#btnClicCancelar" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>
