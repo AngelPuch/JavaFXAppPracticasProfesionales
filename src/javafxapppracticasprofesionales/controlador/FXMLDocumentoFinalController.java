@@ -85,5 +85,9 @@ public class FXMLDocumentoFinalController implements Initializable {
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(lvTipoDocumento).close();
     }
+
+    @FXML
+    private void clicBtnContinuar(ActionEvent event) {
+    }
     
 }

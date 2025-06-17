@@ -17,7 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
@@ -84,6 +86,33 @@ public class FXMLDocumentoReporteController implements Initializable {
     }
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(lvTipoDocumento).close();
+    }
+
+    @FXML
+    private void clicBtnContinuar(ActionEvent event) {
+        TipoDocumento tipoDocumento = lvTipoDocumento.getSelectionModel().getSelectedItem();
+        if(tipoDocumento != null){
+            try {//cambia el getResource
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLRegistrarProyecto.fxml"));
+                Parent vista = loader.load();
+
+                FXMLRegistrarProyectoController controller = loader.getController();
+               // controller.inicializarInformacion(organizacion, responsableSeleccionado, observador);
+
+                Stage escenario = new Stage();
+                escenario.setTitle("Registrar Nuevo Proyecto - Paso 3");
+                escenario.setScene(new Scene(vista));
+                escenario.initModality(Modality.APPLICATION_MODAL);
+                
+                cerrarVentana();
+                escenario.showAndWait();
+                
+            } catch (IOException e) {
+                AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
+            }
+        } else {
+            AlertaUtilidad.mostrarAlertaSimple("Selección requerida", "Debes seleccionar un responsable para continuar.", Alert.AlertType.WARNING);
+        }
     }
     
 }
