@@ -114,7 +114,7 @@ public class FXMLCalificarPresentacionController implements Initializable {
     @FXML
     private void btnClicAceptar(ActionEvent event) {
         if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || tfPuntajeRequisitos.getText().isEmpty() || tfPuntajeSeguridadDominio.getText().isEmpty() || tfPuntajeContenido.getText().isEmpty() || tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "Existen campos inválidos. Por favor corrige tu información.", Alert.AlertType.WARNING);
+            AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "Los calificación de los criterios no puede estar vacía. Por favor corrige tu información.", Alert.AlertType.WARNING);
             return;
         }
 

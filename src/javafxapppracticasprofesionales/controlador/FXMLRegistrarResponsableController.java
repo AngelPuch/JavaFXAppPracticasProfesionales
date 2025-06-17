@@ -62,10 +62,13 @@ public class FXMLRegistrarResponsableController implements Initializable {
 
     @FXML
     private void btnAceptar(ActionEvent event) {
-        if (validarCampos() && !esEdicion) {
-            registrarResponsable(obtenerResponsableNuevo());
-        } else if (validarCampos() && esEdicion) {
-            actualizarResponsable(obtenerResponsableNuevo());
+        boolean camposValidos = validarCampos();
+        if (camposValidos) {
+            if (esEdicion) {
+                actualizarResponsable(obtenerResponsableNuevo());
+            } else {
+                registrarResponsable(obtenerResponsableNuevo());
+            }
         }
     }
 

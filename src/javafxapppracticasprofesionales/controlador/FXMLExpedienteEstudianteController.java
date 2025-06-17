@@ -85,9 +85,16 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     private Tab tabEvaluaciones;
 
     private EstudianteConProyecto estudianteConProyecto;
+    @FXML
+    private Button btnConsultar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tpExpediente.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+                if (newTab != null) {
+                    btnConsultar.setDisable(newTab.equals(tabEvaluaciones));
+                }
+            });
     }
 
     public void inicializarInformacion(EstudianteConProyecto estudiante) {
@@ -157,12 +164,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar una pestaña (Documentos Iniciales, Reportes, etc.).", Alert.AlertType.WARNING);
             return;
         }
-
-        if (pestañaSeleccionada.equals(tabEvaluaciones)) {
-            AlertaUtilidad.mostrarAlertaSimple("No aplicable", "Las evaluaciones no son documentos que se puedan abrir.", Alert.AlertType.INFORMATION);
-            return;
-        }
-
+        
         TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent();
         Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
 

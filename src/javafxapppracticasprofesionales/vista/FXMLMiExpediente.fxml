@@ -94,7 +94,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="tvEvaluaciones" layoutX="14.0" layoutY="54.0" prefHeight="334.0" prefWidth="771.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="54.0">
+                                <TableView fx:id="tvEvaluaciones" prefHeight="334.0" prefWidth="771.0" AnchorPane.bottomAnchor="109.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="0.0">
                                     <columns>
                                         <TableColumn fx:id="colFechaEval" prefWidth="120.0" text="Fecha" />
                                         <TableColumn fx:id="colCalificacionEval" prefWidth="100.0" text="Calificación" />
@@ -102,7 +102,6 @@
                                         <TableColumn fx:id="colEvaluador" prefWidth="250.0" text="Evaluador" />
                                     </columns>
                                 </TableView>
-                                <Label layoutX="14.0" layoutY="25.0" text="Mis Evaluaciones" style="-fx-font-size: 18; -fx-font-weight: bold;" />
                             </children>
                         </AnchorPane>
                     </content>

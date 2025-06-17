@@ -7,9 +7,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="917.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLCalificarPresentacionController">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLCalificarPresentacionController">
     <children>
-        <AnchorPane prefHeight="27.0" prefWidth="917.0" style="-fx-background-color: white;">
+        <AnchorPane prefHeight="27.0" prefWidth="1061.0" style="-fx-background-color: white;">
             <effect>
                 <DropShadow height="9.59" offsetY="1.0" radius="1.8975" width="0.0">
                     <color>
@@ -18,14 +18,14 @@
                 </DropShadow>
             </effect>
             <children>
-                <Label layoutX="759.0" layoutY="6.0" text="Universidad Veracruzana">
+                <Label layoutX="917.0" layoutY="6.0" text="Universidad Veracruzana">
                     <font>
                         <Font name="Arial Bold" size="12.0" />
                     </font>
                 </Label>
             </children>
         </AnchorPane>
-        <TableView fx:id="tvRubricaEvaluacion" focusTraversable="false" layoutX="20.0" layoutY="67.0" prefHeight="300.0" prefWidth="877.0" style="-fx-fixed-cell-size: 100; -fx-background-insets: 0;">
+        <TableView fx:id="tvRubricaEvaluacion" focusTraversable="false" layoutX="20.0" layoutY="67.0" prefHeight="300.0" prefWidth="979.0" style="-fx-fixed-cell-size: 100; -fx-background-insets: 0;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="25.0">
             <columns>
                 <TableColumn fx:id="colCriterio" prefWidth="130.0" sortable="false" style="-fx-wrap-text: true;" text="CRITERIO" />
                 <TableColumn fx:id="colCompetente" prefWidth="135.0" sortable="false" style="-fx-wrap-text: true;" text="COMPETENTE (9.1-10.0)" />
