@@ -44,7 +44,7 @@
                               <Image url="@../recurso/organizacion_icon.png" />
                            </image>
                         </ImageView>
-                        <Button onAction="#btnClicSubirDocIniciales" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Entregas pendientes" wrapText="true">
+                        <Button onAction="#btnClicEntregasPendientes" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Entregas pendientes" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -54,12 +54,24 @@
                         <Insets left="10.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8">
+                  <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="200.0" spacing="8">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                           <image>
+                              <Image url="@../recurso/organizacion_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Button onAction="#btnClicMiExpediente" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Mi expediente" wrapText="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8">
+                  <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="200.0" spacing="8">
                      <padding>
                         <Insets left="10.0" />
                      </padding>

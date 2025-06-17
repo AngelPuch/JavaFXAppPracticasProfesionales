@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasPendientesController">
+   <children>
+      
+      <Label layoutX="25.0" layoutY="23.0" text="Documentos Iniciales" textFill="#333333">
+         <font><Font name="System Bold" size="14.0" /></font>
+      </Label>
+      <TableView fx:id="tvEntregasIniciales" layoutX="25.0" layoutY="50.0" prefHeight="106.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columns>
+            <TableColumn fx:id="colNombreInicial" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinInicial" prefWidth="230.0" text="Fecha de Fin" />
+         </columns>
+         <cursor><Cursor fx:constant="HAND" /></cursor>
+      </TableView>
+      
+      <Label layoutX="29.0" layoutY="191.0" text="Reportes Mensuales" textFill="#333333">
+         <font><Font name="System Bold" size="14.0" /></font>
+      </Label>
+      <TableView fx:id="tvEntregasReportes" layoutX="25.0" layoutY="223.0" prefHeight="97.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columns>
+            <TableColumn fx:id="colNombreReporte" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioReporte" prefWidth="230.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinReporte" prefWidth="230.0" text="Fecha de Fin" />
+         </columns>
+         <cursor><Cursor fx:constant="HAND" /></cursor>
+      </TableView>
+      
+      <Label layoutX="29.0" layoutY="352.0" text="Documentos Finales" textFill="#333333">
+         <font><Font name="System Bold" size="14.0" /></font>
+      </Label>
+      <TableView fx:id="tvEntregasFinales" layoutX="25.0" layoutY="387.0" prefHeight="97.0" prefWidth="774.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columns>
+            <TableColumn fx:id="colNombreFinal" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioFinal" prefWidth="230.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinFinal" prefWidth="230.0" text="Fecha de Fin" />
+         </columns>
+         <cursor><Cursor fx:constant="HAND" /></cursor>
+      </TableView>
+      <Button layoutX="624.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnClicEntregarDocIniciales" prefHeight="27.0" prefWidth="175.0" text="Entregar documentos iniciales" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="624.0" layoutY="189.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="175.0" text="Entregar reportes" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="624.0" layoutY="353.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="175.0" text="Entregar documentos finales" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <Separator layoutX="14.0" layoutY="171.0" prefHeight="7.0" prefWidth="797.0" />
+      <Separator layoutX="15.0" layoutY="333.0" prefHeight="7.0" prefWidth="797.0" />
+   </children>
+</AnchorPane>
