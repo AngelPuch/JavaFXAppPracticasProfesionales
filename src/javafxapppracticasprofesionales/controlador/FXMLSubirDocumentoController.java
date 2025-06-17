@@ -73,7 +73,7 @@ public class FXMLSubirDocumentoController implements Initializable {
 
         if (archivoSeleccionado != null) {
             tfRutaArchivo.setText(archivoSeleccionado.getAbsolutePath());
-            tfNombreArchivo.setText(tipoDocumento + nombreUsuario);
+            tfNombreArchivo.setText(tipoDocumento + "_" + nombreUsuario);
         }
     }
 
