@@ -23,10 +23,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafxapppracticasprofesionales.modelo.dao.AvanceDAO;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.ExpedienteDAO;
-import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO; // Asegúrate de importar el DAO de Evaluación
+import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO; 
 import javafxapppracticasprofesionales.modelo.pojo.Avance;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
-import javafxapppracticasprofesionales.modelo.pojo.Evaluacion; // Asegúrate de importar el POJO de Evaluación
+import javafxapppracticasprofesionales.modelo.pojo.Evaluacion; 
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -72,7 +72,6 @@ public class FXMLMiExpedienteController implements Initializable {
  
     private int idExpediente;
 
-    // Nuevos FXML Injections para la pestaña de Evaluaciones
     @FXML
     private Tab tabEvaluaciones;
     @FXML
@@ -147,22 +146,18 @@ public class FXMLMiExpedienteController implements Initializable {
     }
     
     private void configurarTablas() {
-        // Documentos Iniciales
         colNombreDI.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDI.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDI.setCellValueFactory(new PropertyValueFactory<>("estado"));
         
-        // Reportes
         colNombreR.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaR.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoR.setCellValueFactory(new PropertyValueFactory<>("estado"));
         
-        // Documentos Finales
         colNombreDF.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDF.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDF.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        // Evaluaciones (NUEVO)
         colFechaEval.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colCalificacionEval.setCellValueFactory(new PropertyValueFactory<>("calificacionTotal"));
         colTipoEval.setCellValueFactory(new PropertyValueFactory<>("nombreTipoEvaluacion"));
@@ -179,12 +174,10 @@ public class FXMLMiExpedienteController implements Initializable {
     
     private void cargarTodosLosAvances() throws SQLException {
         if (idExpediente > 0) {
-            // Documentos
             tvDocumentosIniciales.setItems(FXCollections.observableArrayList(AvanceDAO.obtenerDocumentosInicio(idExpediente)));
             tvReportes.setItems(FXCollections.observableArrayList(AvanceDAO.obtenerReportes(idExpediente)));
             tvDocumentosFinales.setItems(FXCollections.observableArrayList(AvanceDAO.obtenerDocumentosFinales(idExpediente)));
 
-            // Evaluaciones (NUEVO)
             tvEvaluaciones.setItems(FXCollections.observableArrayList(EvaluacionDAO.obtenerEvaluacionesPorExpediente(idExpediente)));
         }
     }

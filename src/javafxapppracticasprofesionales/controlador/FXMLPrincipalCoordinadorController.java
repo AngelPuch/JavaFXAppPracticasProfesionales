@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -28,9 +27,6 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     private Label lbNombreUsuario;
     private Usuario usuarioSesion;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

@@ -75,7 +75,6 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML
     private TableColumn<Evaluacion, String> colMotivoEval;
     
-    //Se agregan los fx:id a las pestañas para identificarlas en el método de consulta
     @FXML
     private Tab tabDocIniciales;
     @FXML
@@ -89,7 +88,6 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // La configuración se invoca desde inicializarInformacion
     }
 
     public void inicializarInformacion(EstudianteConProyecto estudiante) {
@@ -100,22 +98,18 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     private void configurarTablas() {
-        // Configuración para Documentos Iniciales
         colNombreDI.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDI.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDI.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        // Configuración para Reportes
         colNombreR.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaR.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoR.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        // Configuración para Documentos Finales
         colNombreDF.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDF.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDF.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        // Configuración para Evaluaciones
         colFechaEval.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colCalificacionEval.setCellValueFactory(new PropertyValueFactory<>("calificacionTotal"));
         colMotivoEval.setCellValueFactory(new PropertyValueFactory<>("motivo"));
@@ -164,13 +158,11 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             return;
         }
 
-        // Verifica si la pestaña seleccionada es la de evaluaciones, que no tiene archivos para abrir.
         if (pestañaSeleccionada.equals(tabEvaluaciones)) {
             AlertaUtilidad.mostrarAlertaSimple("No aplicable", "Las evaluaciones no son documentos que se puedan abrir.", Alert.AlertType.INFORMATION);
             return;
         }
 
-        // Si no es la de evaluaciones, es una de las de documentos (Avance).
         TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent();
         Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
 

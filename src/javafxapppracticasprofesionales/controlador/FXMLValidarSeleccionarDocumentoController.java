@@ -58,13 +58,10 @@ public class FXMLValidarSeleccionarDocumentoController implements Initializable 
     
     private void cargarEntregas() {
         try {
-            // Paso 1: Obtener el id del usuario en sesión.
             int idUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario();
-            // Paso 2: Obtener el objeto Academico completo.
             Academico profesor = AcademicoDAO.obtenerAcademicoPorIdUsuario(idUsuario);
             
             if (profesor != null) {
-                // Paso 3: Llamar al DAO con el ID del tipo y el ID del académico.
                 ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPorTipo(tipoDocumento.getIdTipoDocumento(), profesor.getIdAcademico());
                 listaEntregas = FXCollections.observableArrayList(entregasBD);
                 tvEntregasProgramadas.setItems(listaEntregas);
@@ -81,22 +78,19 @@ public class FXMLValidarSeleccionarDocumentoController implements Initializable 
     private void btnClicContinuar(ActionEvent event) {
         Entrega entregaSeleccionada = tvEntregasProgramadas.getSelectionModel().getSelectedItem();
         if (entregaSeleccionada != null) {
-            // Aquí abrimos la ventana que muestra los estudiantes que han entregado este documento.
-            // Es la misma lógica que te di en respuestas anteriores, ahora conectada al nuevo flujo.
-            
             String[] tablaInfo = new String[3];
              switch (tipoDocumento.getIdTipoDocumento()) {
-                case 1: // Documentos Iniciales
+                case 1: 
                     tablaInfo[0] = "documentoinicio";
                     tablaInfo[1] = "idDocumentoInicio";
                     tablaInfo[2] = "EntregaDocumentoInicio_idEntregaDocumentoInicio";
                     break;
-                case 2: // Reportes
+                case 2: 
                     tablaInfo[0] = "reporte";
                     tablaInfo[1] = "idReporte";
                     tablaInfo[2] = "EntregaReporte_idEntregaReporte";
                     break;
-                case 3: // Documentos Finales
+                case 3: 
                     tablaInfo[0] = "documentofinal";
                     tablaInfo[1] = "idDocumentoFinal";
                     tablaInfo[2] = "EntregaDocumentoFinal_idEntregaDocumentoFinal";

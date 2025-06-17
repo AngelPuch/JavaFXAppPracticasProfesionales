@@ -22,13 +22,6 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * Project: JavaFXAppPracticasProfesionales
- * File: FXMLConfirmarDatosController.java
- * Author: Jose Luis Silva Gomez
- * Date: 2025-06-16
- * Description: Brief description of the file's purpose.
- */
 public class FXMLConfirmarDatosController implements Initializable {
 
     @FXML

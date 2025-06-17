@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -44,9 +43,6 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     private ObservableList<ResponsableProyecto> listaResponsables;
     INotificacion observador;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();

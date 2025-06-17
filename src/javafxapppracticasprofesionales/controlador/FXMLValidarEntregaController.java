@@ -72,7 +72,7 @@ public class FXMLValidarEntregaController implements Initializable {
     
     @FXML
     private void btnClicAprobar(ActionEvent event) {
-        validarDocumento(3); // 3 es el ID para "Aprobado" en la tabla estadodocumento
+        validarDocumento(3); 
     }
     
     @FXML
@@ -81,7 +81,7 @@ public class FXMLValidarEntregaController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Comentario Requerido", "Para rechazar una entrega es obligatorio agregar un comentario de retroalimentación.", javafx.scene.control.Alert.AlertType.WARNING);
             return;
         }
-        validarDocumento(4); // 4 es el ID para "Rechazado con Comentarios"
+        validarDocumento(4); 
     }
     
     private void validarDocumento(int nuevoEstadoId) {

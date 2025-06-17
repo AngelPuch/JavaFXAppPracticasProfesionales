@@ -30,7 +30,6 @@ public class FXMLTipoDeDocumentoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // La inicialización se maneja en el método inicializarInformacion
     }
 
     public void inicializarInformacion(String tipoEntrega, INotificacion observador) {
@@ -41,7 +40,7 @@ public class FXMLTipoDeDocumentoController implements Initializable {
 
     @FXML
     private void btnClicContinuar(ActionEvent event) {
-        TipoDocumento docSeleccionado = lvTipoDocumento.getSelectionModel().getSelectedItem(); // Ahora obtiene un String
+        TipoDocumento docSeleccionado = lvTipoDocumento.getSelectionModel().getSelectedItem(); 
         if (docSeleccionado != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLProgramarEntrega.fxml"));
@@ -79,7 +78,7 @@ public class FXMLTipoDeDocumentoController implements Initializable {
     }
 
     private void cargarDocumentos() {
-        System.out.println("Cargando documentos para: " + tipoEntrega); // debug
+        System.out.println("Cargando documentos para: " + tipoEntrega); 
         ArrayList<TipoDocumento> documentosPojo = new ArrayList<>();
         switch (tipoEntrega) {
             case "DOCUMENTOS INICIALES":

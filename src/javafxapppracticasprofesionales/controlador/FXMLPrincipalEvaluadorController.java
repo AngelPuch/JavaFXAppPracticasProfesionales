@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -26,11 +25,8 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
     private Label lblNombreEvaluador;
     @FXML
     private Button btnEvaluarEstudiante;
-
     private Usuario usuario;
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

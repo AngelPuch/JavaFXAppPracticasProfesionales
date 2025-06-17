@@ -41,9 +41,6 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
     INotificacion observador;
     boolean isRegistrarProyecto;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();

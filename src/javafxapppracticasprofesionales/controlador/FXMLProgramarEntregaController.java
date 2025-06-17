@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
@@ -35,9 +34,6 @@ public class FXMLProgramarEntregaController implements Initializable {
     private String tipoEntrega;
     private INotificacion observador;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

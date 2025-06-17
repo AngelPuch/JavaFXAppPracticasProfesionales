@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
@@ -29,11 +25,6 @@ import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author grill
- */
 public class FXMLOrganizacionesVinculadasController implements Initializable, INotificacion{
 
     @FXML
@@ -47,10 +38,6 @@ public class FXMLOrganizacionesVinculadasController implements Initializable, IN
     @FXML
     private TableColumn colTelefono;
 
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();

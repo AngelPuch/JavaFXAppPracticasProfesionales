@@ -64,7 +64,7 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void validarCredenciales(String username, String password) {
         try {
-            Usuario usuarioSesion = InicioSesionDAO.verificarUsuario(username, password); // Cambio aquí
+            Usuario usuarioSesion = InicioSesionDAO.verificarUsuario(username, password); 
             if (usuarioSesion != null) {
                 SesionUsuario.getInstancia().setUsuarioLogueado(usuarioSesion);
                 AlertaUtilidad.mostrarAlertaSimple("Credenciales correctas", 
@@ -84,7 +84,6 @@ public class FXMLInicioSesionController implements Initializable {
         Stage escenarioPrincipal = (Stage) tfUsuario.getScene().getWindow();
         escenarioPrincipal.setTitle("Pantalla Principal");
 
-        // Se asume que el primer rol es el principal para la redirección
         String primerRol = usuario.getRolPrincipal();
 
         try {
@@ -118,7 +117,6 @@ public class FXMLInicioSesionController implements Initializable {
                     escenarioPrincipal.setScene(escenaEstudiante);
                     break;
 
-                // CASO AÑADIDO PARA EL EVALUADOR
                 case "evaluador":
                     loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalEvaluador.fxml"));
                     Parent vistaEvaluador = loader.load();

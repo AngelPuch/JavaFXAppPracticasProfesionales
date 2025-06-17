@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.modelo.dao;
 
 import java.sql.Connection;

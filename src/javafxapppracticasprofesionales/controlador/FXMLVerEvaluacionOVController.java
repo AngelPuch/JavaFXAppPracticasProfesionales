@@ -15,13 +15,6 @@ import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.RespuestaGuardadaOV;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
-/**
- * Project: JavaFXAppPracticasProfesionales
- * File: FXMLVerEvaluacionOVController.java
- * Author: Jose Luis Silva Gomez
- * Date: 2025-06-16
- * Description: Brief description of the file's purpose.
- */
 public class FXMLVerEvaluacionOVController implements Initializable {
 
     @FXML

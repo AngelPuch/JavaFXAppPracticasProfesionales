@@ -23,13 +23,6 @@ import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
-/** 
-* Project: JavaFX Sales System 
-* File: ClassName.java 
-* Author: Jose Luis Silva Gomez 
-* Date: YYYY-MM-DD 
-* Description: Brief description of the file's purpose. 
-*/
 public class FXMLEstudiantesConProyectoController implements Initializable, INotificacion {
 
     @FXML

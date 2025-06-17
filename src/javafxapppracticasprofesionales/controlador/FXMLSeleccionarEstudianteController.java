@@ -24,13 +24,6 @@ import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/** 
-* Project: JavaFX Sales System 
-* File: ClassName.java 
-* Author: Jose Luis Silva Gomez 
-* Date: YYYY-MM-DD 
-* Description: Brief description of the file's purpose. 
-*/
 public class FXMLSeleccionarEstudianteController implements Initializable {
 
     @FXML

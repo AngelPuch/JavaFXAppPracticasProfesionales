@@ -24,11 +24,6 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author grill
- */
 public class FXMLRegistrarOrganizacionVinculadaController implements Initializable {
 
     @FXML
@@ -42,10 +37,6 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     private INotificacion observador;
     private OrganizacionVinculada organizacionVinculada;
 
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
