@@ -91,7 +91,7 @@ public class FXMLSeleccionarEstudianteController implements Initializable {
     private void configurarTabla() {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
-        colCorreo.setCellValueFactory(new PropertyValueFactory<>("corre"));
+        colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
     }
     

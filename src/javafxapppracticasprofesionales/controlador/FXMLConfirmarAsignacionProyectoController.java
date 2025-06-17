@@ -70,7 +70,7 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
     @FXML
     private void btnClicAceptar(ActionEvent event) {
         try {
-            ResultadoOperacion resultado = ExpedienteDAO.asignarProyectoAEstudiante(estudianteSeleccionado.getIdEstudiante(), proyectoSeleccionado.getIdProyecto());
+            ResultadoOperacion resultado = ExpedienteDAO.asignarProyectoAEstudiante(proyectoSeleccionado.getIdProyecto(), estudianteSeleccionado.getIdEstudiante());
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
                         "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
