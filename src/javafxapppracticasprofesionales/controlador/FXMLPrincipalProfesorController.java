@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
@@ -32,9 +33,10 @@ public class FXMLPrincipalProfesorController implements Initializable {
     private Label lbNombreVentana;
     @FXML
     private Label lbNombreUsuario;
-    @FXML
     private AnchorPane apCentral;
     private Usuario usuarioSesion;
+    @FXML
+    private VBox vbBox;
 
 
     /**
@@ -86,7 +88,7 @@ public class FXMLPrincipalProfesorController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource(ruta));
             Parent root = loader.load();
-            apCentral.getChildren().setAll(root);
+            vbBox.getChildren().setAll(root);
             AnchorPane.setTopAnchor(root, 0.0);
             AnchorPane.setBottomAnchor(root, 0.0);
             AnchorPane.setLeftAnchor(root, 0.0);

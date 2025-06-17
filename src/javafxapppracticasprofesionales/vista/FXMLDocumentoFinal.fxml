@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLDocumentoFinalController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLDocumentoFinalController">
    <children>
       <Label layoutX="191.0" layoutY="59.0" text="Seleccionar Tipo de Documento">
          <font>
@@ -17,5 +16,10 @@
       </Label>
       <ListView fx:id="lvTipoDocumento" disable="false" layoutX="232.0" layoutY="173.0" prefHeight="150.0" prefWidth="400.0" />
       <Button layoutX="555.0" layoutY="413.0" mnemonicParsing="false" onAction="#btnClicRegresar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" textFill="WHITE" />
+      <Button layoutX="679.0" layoutY="413.0" mnemonicParsing="false" onAction="#clicBtnContinuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Continuar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

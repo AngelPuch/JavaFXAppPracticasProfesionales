@@ -110,7 +110,12 @@ public class FXMLInicioSesionController implements Initializable {
                     break;
 
                 case "estudiante":
-                    // Lógica para redirigir al estudiante
+                    loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalEstudiante.fxml"));
+                    Parent vistaEstudiante = loader.load();
+                    FXMLPrincipalEstudianteController controllerEstudiante = loader.getController();
+                    controllerEstudiante.inicializarInformacion(usuario);
+                    Scene escenaEstudiante = new Scene(vistaEstudiante);
+                    escenarioPrincipal.setScene(escenaEstudiante);
                     break;
 
                 // CASO AÑADIDO PARA EL EVALUADOR

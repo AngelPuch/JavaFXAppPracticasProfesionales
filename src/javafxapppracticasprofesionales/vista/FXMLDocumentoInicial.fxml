@@ -16,5 +16,10 @@
          </font>
       </Label>
       <Button layoutX="560.0" layoutY="445.0" mnemonicParsing="false" onAction="#btnClicRegresar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" textFill="WHITE" />
+      <Button layoutX="675.0" layoutY="445.0" mnemonicParsing="false" onAction="#clicBtnContinuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Continuar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
