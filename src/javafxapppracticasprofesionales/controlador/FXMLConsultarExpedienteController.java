@@ -65,14 +65,13 @@ public class FXMLConsultarExpedienteController implements Initializable {
                 Parent vista = loader.load();
 
                 FXMLExpedienteEstudianteController controller = loader.getController();
-               // controller.inicializarInformacion(organizacion, responsableSeleccionado, observador);
+                controller.inicializarInformacion(estudianteSeleccionado);
 
                 Stage escenario = new Stage();
-                escenario.setTitle("Consultar Expediente de Estudiante");
+                escenario.setTitle("Expediente Estudiante");
                 escenario.setScene(new Scene(vista));
                 escenario.initModality(Modality.APPLICATION_MODAL);
                 
-                cerrarVentana();
                 escenario.showAndWait();
                 
             } catch (IOException e) {

@@ -23,7 +23,7 @@ public class EstudianteDAO {
         ArrayList<EstudianteConProyecto> estudiantes = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto " +
+            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto, e.semestre, e.correo " +
                          "FROM estudiante e " +
                          "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
                          "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
@@ -191,6 +191,8 @@ public class EstudianteDAO {
         estudianteConProyecto.setNombreEstudiante(resultado.getString("nombreEstudiante"));
         estudianteConProyecto.setMatricula(resultado.getString("matricula"));
         estudianteConProyecto.setNombreProyecto(resultado.getString("nombreProyecto"));
+        estudianteConProyecto.setSemestre(resultado.getInt("semestre"));
+        estudianteConProyecto.setCorreo(resultado.getString("correo"));
         return estudianteConProyecto;
     }
 }
