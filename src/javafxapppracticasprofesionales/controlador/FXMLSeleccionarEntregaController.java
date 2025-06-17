@@ -113,6 +113,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente());
 
             Stage escenario = (Stage) btnContinuar.getScene().getWindow();
+            escenario.setTitle("Subir documento inicial - Paso 2");
             escenario.setScene(new Scene(vista));
             escenario.setTitle("Subir Documento");
             escenario.show();

@@ -60,9 +60,13 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }
 
     @FXML
-    private void btnClicSubirDocIniciales(ActionEvent event) {
-        cargarEscenas("vista/FXMLSeleccionarEntrega.fxml");
-        lbNombreVentana.setText("Entregar Documentos Iniciales");
+    private void btnClicEntregasPendientes(ActionEvent event) {
+        cargarEscenas("vista/FXMLEntregasPendientes.fxml");
+        lbNombreVentana.setText("Entregas Pendientes");
+    }
+    
+    @FXML
+    private void btnClicMiExpediente(ActionEvent event) {
     }
 
     @FXML
