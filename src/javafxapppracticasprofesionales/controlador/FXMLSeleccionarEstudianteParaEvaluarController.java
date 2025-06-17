@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
@@ -56,8 +57,9 @@ public class FXMLSeleccionarEstudianteParaEvaluarController implements Initializ
                 Stage escenario = new Stage();
                 escenario.setTitle("Calificar Presentación");
                 escenario.setScene(new Scene(vista));
-                Utilidad.getEscenarioComponente(tvEstudiantes).close();
                 escenario.show();
+                Utilidad.getEscenarioComponente(tvEstudiantes).close();
+                
             } catch (IOException e) {
                 AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana de calificación.", Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -69,7 +71,7 @@ public class FXMLSeleccionarEstudianteParaEvaluarController implements Initializ
 
     @FXML
     private void btnClicCancelar(ActionEvent event) {
-        // Lógica para regresar al menú principal del evaluador
+        Utilidad.getEscenarioComponente(tvEstudiantes).close();
     }
     
     private void configurarTabla() {

@@ -14,8 +14,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLPrincipalEvaluadorController implements Initializable {
@@ -59,7 +61,18 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
 
     @FXML
     private void btnClicCerrarSesion(ActionEvent event) {
-        Utilidad.getEscenarioComponente(lblNombreEvaluador).close();
+        try {
+            SesionUsuario.getInstancia().cerrarSesion();
+            FXMLLoader cargador = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLInicioSesion.fxml"));
+            Parent vistaInicioSesion = cargador.load();
+            Scene escenaInicio = new Scene(vistaInicioSesion);
+            Stage escenarioActual = Utilidad.getEscenarioComponente(lblNombreEvaluador);
+            escenarioActual.setScene(escenaInicio);
+            escenarioActual.setTitle("Inicio de sesión");
+            escenarioActual.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

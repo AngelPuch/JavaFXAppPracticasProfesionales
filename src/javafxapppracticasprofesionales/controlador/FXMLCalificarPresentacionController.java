@@ -111,19 +111,8 @@ public class FXMLCalificarPresentacionController implements Initializable {
 
     @FXML
     private void btnClisCancelar(ActionEvent event) {
-        try {
-            if (AlertaUtilidad.mostrarAlertaConfirmacion("Salir de la evaluacion", null ,"¿Estás seguro que quieres cancelar?")) {
-                Stage escenarioListaEstudiantes = (Stage) lbNombreEstudiante.getScene().getWindow();
-                FXMLLoader cargador = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("view/evaluator/FXMLEvaluatorMainScreen.fxml"));
-                Parent vistaInicioSesion = cargador.load();
-                Scene escenaPrincipal = new Scene(vistaInicioSesion);
-                escenarioListaEstudiantes.setScene(escenaPrincipal);
-                escenarioListaEstudiantes.setTitle("Página Principal");
-                escenarioListaEstudiantes.show();
-            }
-        } catch (IOException ex) {
-            AlertaUtilidad.mostrarAlertaSimple("Error al cargar", "Lo sentimos por el momento no se pudo "
-                    + "mostrar la ventana", Alert.AlertType.ERROR);
+        if (AlertaUtilidad.mostrarAlertaConfirmacion("Salir de la evaluacion", null ,"¿Estás seguro que quieres cancelar?")) {
+                Utilidad.getEscenarioComponente(lbPromedioPuntaje).close();
         }
     }
 
