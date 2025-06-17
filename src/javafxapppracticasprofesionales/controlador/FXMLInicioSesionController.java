@@ -103,7 +103,12 @@ public class FXMLInicioSesionController implements Initializable {
                     break;
 
                 case "profesor":
-                    // Lógica para redirigir al profesor
+                    loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalProfesor.fxml"));
+                    Parent vistaProfesor = loader.load();
+                    FXMLPrincipalProfesorController controllerProfesor = loader.getController();
+                    controllerProfesor.inicializarInformacion(usuario);
+                    Scene escenaProfesor = new Scene(vistaProfesor);
+                    escenarioPrincipal.setScene(escenaProfesor);
                     break;
 
                 case "estudiante":
