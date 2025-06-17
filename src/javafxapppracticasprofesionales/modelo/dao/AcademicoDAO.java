@@ -9,13 +9,6 @@ import javafxapppracticasprofesionales.modelo.pojo.Academico;
 
 public class AcademicoDAO {
 
-    /**
-     * Busca y devuelve un objeto Academico a partir del idUsuario asociado.
-     * Esto es útil para obtener el idAcademico del usuario logueado.
-     * * @param idUsuario El ID del usuario que corresponde al académico.
-     * @return Un objeto Academico con todos sus datos, o null si no se encuentra.
-     * @throws SQLException Si ocurre un error de base de datos.
-     */
     public static Academico obtenerAcademicoPorIdUsuario(int idUsuario) throws SQLException {
         Academico academico = null;
         Connection conexion = ConexionBD.abrirConexion();

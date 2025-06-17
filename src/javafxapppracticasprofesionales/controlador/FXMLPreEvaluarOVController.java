@@ -42,7 +42,6 @@ public class FXMLPreEvaluarOVController implements Initializable {
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
-            // TODO: Aquí podrías añadir lógica para recargar la vista principal si es necesario.
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la ventana de evaluación.", Alert.AlertType.ERROR);
             e.printStackTrace();

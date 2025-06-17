@@ -1,4 +1,3 @@
-// Archivo: JavaFXAppPracticasProfesionales/src/javafxapppracticasprofesionales/modelo/dao/AvanceDAO.java
 package javafxapppracticasprofesionales.modelo.dao;
 
 import java.sql.Connection;
@@ -12,7 +11,6 @@ import javafxapppracticasprofesionales.modelo.pojo.Avance;
 public class AvanceDAO {
 
     public static ArrayList<Avance> obtenerDocumentosInicio(int idExpediente) throws SQLException {
-        // CORRECCIÓN: Se añade 'di.rutaArchivo' a la consulta
         String sql = "SELECT di.idDocumentoInicio AS id, di.nombre, DATE_FORMAT(di.fechaEntregado, '%d-%m-%Y') AS fecha, " +
                      "ed.nombreEstado AS estado, di.rutaArchivo " +
                      "FROM documentoinicio di " +
@@ -22,7 +20,6 @@ public class AvanceDAO {
     }
 
     public static ArrayList<Avance> obtenerReportes(int idExpediente) throws SQLException {
-        // CORRECCIÓN: Se añade 'r.rutaArchivo' a la consulta
         String sql = "SELECT r.idReporte AS id, r.nombreArchivo AS nombre, DATE_FORMAT(r.fechaEntregado, '%d-%m-%Y') AS fecha, " +
                      "ed.nombreEstado AS estado, r.rutaArchivo " +
                      "FROM reporte r " +
@@ -32,7 +29,6 @@ public class AvanceDAO {
     }
     
     public static ArrayList<Avance> obtenerDocumentosFinales(int idExpediente) throws SQLException {
-        // CORRECCIÓN: Se añade 'df.rutaArchivo' a la consulta
         String sql = "SELECT df.idDocumentoFinal AS id, df.nombreDocumento AS nombre, DATE_FORMAT(df.fechaEntregado, '%d-%m-%Y') AS fecha, " +
                      "ed.nombreEstado AS estado, df.rutaArchivo " +
                      "FROM documentofinal df " +
@@ -54,7 +50,7 @@ public class AvanceDAO {
                     avance.setNombre(resultado.getString("nombre"));
                     avance.setFechaEntrega(resultado.getString("fecha"));
                     avance.setEstado(resultado.getString("estado"));
-                    avance.setRutaArchivo(resultado.getString("rutaArchivo")); // <--- CORRECCIÓN: Se obtiene la ruta
+                    avance.setRutaArchivo(resultado.getString("rutaArchivo")); 
                     avances.add(avance);
                 }
             } finally {

@@ -13,11 +13,7 @@ import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 public class ProyectoDAO {
-
-    /**
-     * Obtiene todos los proyectos cuyo estado es 'Disponible'.
-     * Ya no filtra por periodo escolar.
-     */
+    
     public static ArrayList<Proyecto> obtenerTodosLosProyectosActivos() throws SQLException {
         ArrayList<Proyecto> proyectos = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
@@ -46,9 +42,6 @@ public class ProyectoDAO {
         return proyectos;
     }
     
-    /**
-     * Obtiene los proyectos que están 'Disponibles' y tienen cupos libres para ser asignados.
-     */
     public static ArrayList<Proyecto> obtenerProyectosDisponiblesParaAsignar() throws SQLException {
         ArrayList<Proyecto> proyectos = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();

@@ -16,7 +16,6 @@ public class InicioSesionDAO {
 
         if (conexionBD != null) {
             try {
-                // Paso 1: Verificar credenciales en la tabla 'usuario'
                 String sqlUsuario = "SELECT idUsuario, username, password, nombre FROM usuario WHERE username = ?";
                 PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(sqlUsuario);
                 sentenciaUsuario.setString(1, username);
@@ -30,7 +29,6 @@ public class InicioSesionDAO {
                         usuarioSesion.setUsername(resultadoUsuario.getString("username"));
                         usuarioSesion.setNombre(resultadoUsuario.getString("nombre"));
 
-                        // Paso 2: Obtener el rol principal del usuario
                         String sqlRol = "SELECT r.nombreRol FROM rol r JOIN usuario_rol ur ON r.idRol = ur.Rol_idRol WHERE ur.Usuario_idUsuario = ?";
                         PreparedStatement sentenciaRol = conexionBD.prepareStatement(sqlRol);
                         sentenciaRol.setInt(1, usuarioSesion.getIdUsuario());
@@ -40,7 +38,6 @@ public class InicioSesionDAO {
                             String rol = resultadoRol.getString("nombreRol");
                             usuarioSesion.setRolPrincipal(rol);
                             
-                            // Paso 3: Buscar el ID del perfil correspondiente según el rol
                             buscarYAsignarPerfil(conexionBD, usuarioSesion);
                         }
                     }
@@ -66,7 +63,7 @@ public class InicioSesionDAO {
                 idCampoPerfil = "idEstudiante";
                 break;
 
-            // --- CAMBIO CLAVE: TODOS LOS ROLES DE PERSONAL USAN LA TABLA ACADEMICO ---
+            
             case "profesor":
             case "coordinador":
             case "evaluador": 
@@ -75,7 +72,7 @@ public class InicioSesionDAO {
                 break;
 
             default:
-                return; // Rol sin perfil específico
+                return; 
         }
 
         PreparedStatement sentenciaPerfil = conexion.prepareStatement(sqlPerfil);
@@ -89,7 +86,6 @@ public class InicioSesionDAO {
                     usuario.setIdEstudiante(idPerfil);
                     break;
 
-                // --- CAMBIO CLAVE: TODOS ASIGNAN EL idAcademico ---
                 case "profesor":
                 case "coordinador":
                 case "evaluador":
