@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLResponsablesController">
    <children>
-      <TableView fx:id="tvResponsables" layoutX="37.0" layoutY="87.0" prefHeight="396.0" prefWidth="766.0">
+      <TableView fx:id="tvResponsables" layoutX="37.0" layoutY="61.0" prefHeight="409.0" prefWidth="760.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="61.0">
          <columns>
             <TableColumn fx:id="colNombre" prefWidth="131.0" text="Nombre" />
             <TableColumn fx:id="colCargo" prefWidth="122.0" text="Cargo" />
@@ -18,12 +18,12 @@
             <TableColumn fx:id="colOrganizacion" maxWidth="602.0" prefWidth="262.0" text="Organizacion Vinculada" />
          </columns>
       </TableView>
-      <Button layoutX="609.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Responsable">
+      <Button layoutX="609.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Responsable" AnchorPane.rightAnchor="32.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="431.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnClicActualizar" style="-fx-background-color: #ffae3f; -fx-text-fill: white; -fx-background-radius: 5;" text="🔁 Actualizar Responsable">
+      <Button layoutX="422.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicActualizar" style="-fx-background-color: #ffae3f; -fx-text-fill: white; -fx-background-radius: 5;" text="🔁 Actualizar Responsable">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

@@ -7,17 +7,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLOrganizacionesVinculadasController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLOrganizacionesVinculadasController">
    <children>
-      <TableView fx:id="tvOrganizacionesVinculadas" layoutX="29.0" layoutY="154.0" prefHeight="396.0" prefWidth="766.0">
+      <TableView fx:id="tvOrganizacionesVinculadas" layoutX="29.0" layoutY="61.0" prefHeight="409.0" prefWidth="760.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="61.0">
          <columns>
             <TableColumn fx:id="colNombre" prefWidth="254.0" text="Nombre" />
             <TableColumn fx:id="colDireccion" prefWidth="309.0" text="Direccion" />
             <TableColumn fx:id="colTelefono" minWidth="0.0" prefWidth="202.0" text="Telefono" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-      <Button layoutX="540.0" layoutY="87.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nueva Organizacion Vinculada">
+      <Button layoutX="540.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nueva Organizacion Vinculada">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
