@@ -35,16 +35,34 @@ public class FXMLProgramarEntregaController implements Initializable {
     private DatePicker dpFechaFin;
     private String tipoEntrega;
     private INotificacion observador;
+    private String nombreDocumentoPrefijo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
-    public void inicializarInformacion(String tipoEntrega, String nombreDocumento, INotificacion observador){
+    public void inicializarInformacion(String tipoEntrega, String nombreDocumento, INotificacion observador) {
         this.tipoEntrega = tipoEntrega;
-        this.tfNombre.setText(nombreDocumento);
         this.observador = observador;
+
+        this.nombreDocumentoPrefijo = nombreDocumento + "_";
+        this.tfNombre.setText(nombreDocumentoPrefijo);
+
+        tfNombre.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || !newValue.startsWith(nombreDocumentoPrefijo)) {
+                javafx.application.Platform.runLater(() -> {
+                    tfNombre.setText(oldValue);
+                });
+            }
+        });
+        tfNombre.caretPositionProperty().addListener((observable, oldPosition, newPosition) -> {
+            if (newPosition.intValue() < nombreDocumentoPrefijo.length()) {
+                javafx.application.Platform.runLater(() -> {
+                    tfNombre.positionCaret(tfNombre.getText().length());
+                });
+            }
+        });
     }
     
     private boolean validarCampos(){

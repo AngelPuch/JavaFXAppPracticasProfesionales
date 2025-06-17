@@ -35,6 +35,6 @@
       </Button>
       <TextField fx:id="tfNombreArchivo" editable="false" layoutX="200.0" layoutY="138.0" prefHeight="25.0" prefWidth="250.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label layoutX="50.0" layoutY="140.0" text="Nombre del Archivo:" />
-      <Label fx:id="lbTipoDocumento" layoutX="195.0" layoutY="76.0" prefHeight="35.0" prefWidth="250.0" />
+      <Label fx:id="lbTipoDocumento" layoutX="200.0" layoutY="72.0" prefHeight="25.0" prefWidth="250.0" />
    </children>
 </AnchorPane>

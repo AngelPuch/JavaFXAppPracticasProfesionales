@@ -97,6 +97,12 @@ public class FXMLMiExpedienteController implements Initializable {
             configurarTablas();
             cargarDatosEstudiante(estudianteLogueado);
             cargarTodosLosAvances();
+            
+            tpExpediente.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+                if (newTab != null) {
+                    btnConsultar.setDisable(newTab.equals(tabEvaluaciones));
+                }
+            });
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
                 "No fue posible conectar con la base de datos. Inténtelo de nuevo o contacte al administrador.", 
@@ -109,11 +115,6 @@ public class FXMLMiExpedienteController implements Initializable {
         Tab pestañaSeleccionada = tpExpediente.getSelectionModel().getSelectedItem();
         if (pestañaSeleccionada == null) {
             AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar una pestaña (Documentos Iniciales, Reportes, etc.).", Alert.AlertType.WARNING);
-            return;
-        }
-
-        if (pestañaSeleccionada.equals(tabEvaluaciones)) {
-            AlertaUtilidad.mostrarAlertaSimple("Acción no disponible", "La consulta de detalles de evaluaciones se realiza desde otra ventana.", Alert.AlertType.INFORMATION);
             return;
         }
 
