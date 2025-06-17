@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
+import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 
 /** 
 * Project: JavaFX Sales System 
@@ -100,6 +101,35 @@ public class EstudianteDAO {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
         return estudiantes;
+    }
+    
+    public static InfoEstudianteSesion obtenerInfoEstudianteParaSesion(int idUsuario) throws SQLException {
+        InfoEstudianteSesion info = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            try {
+                // Esta consulta une las tablas para encontrar toda la información necesaria
+                String sql = "SELECT e.idEstudiante, i.grupoEE_idgrupoEE, ex.idExpediente " +
+                             "FROM estudiante e " +
+                             "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
+                             "LEFT JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
+                             "WHERE e.idUsuario = ?";
+                
+                PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+                sentencia.setInt(1, idUsuario);
+                ResultSet resultado = sentencia.executeQuery();
+                
+                if (resultado.next()) {
+                    info = new InfoEstudianteSesion();
+                    info.setIdEstudiante(resultado.getInt("idEstudiante"));
+                    info.setIdGrupo(resultado.getInt("grupoEE_idgrupoEE"));
+                    info.setIdExpediente(resultado.getInt("idExpediente"));
+                }
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return info;
     }
 
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {

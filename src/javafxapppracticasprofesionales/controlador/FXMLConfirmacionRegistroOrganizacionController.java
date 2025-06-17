@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxapppracticasprofesionales.controlador;
 
 import java.net.URL;
@@ -14,11 +10,13 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 
-/**
- * FXML Controller class
- *
- * @author grill
- */
+/** 
+* Project: JavaFX Sales System 
+* File: ClassName.java 
+* Author: Jose Luis Silva Gomez 
+* Date: YYYY-MM-DD 
+* Description: Brief description of the file's purpose. 
+*/
 public class FXMLConfirmacionRegistroOrganizacionController implements Initializable {
 
     @FXML

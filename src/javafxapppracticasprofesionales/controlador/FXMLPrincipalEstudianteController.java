@@ -14,30 +14,46 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author grill
- */
+/** 
+* Project: JavaFXAppPracticasProfesionales 
+* File: FXMLPrincipalEstudianteController.java 
+* Author: Jose Luis Silva Gomez 
+* Date: 2025-06-16 
+* Description: Brief description of the file's purpose. 
+*/
 public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private Label lbNombreVentana;
     @FXML
     private Label lbNombreUsuario;
+    @FXML
+    private VBox apCentral;
+    private Usuario usuarioSesion;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void inicializarInformacion(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
+        cargarInformacion();
+    }
+    
+    private void cargarInformacion() {
+        if (usuarioSesion != null) {
+            lbNombreUsuario.setText(usuarioSesion.toString());
+        }
+    }
 
     @FXML
     private void btnClicEvaluarOrganizacionVinculada(ActionEvent event) {
@@ -45,6 +61,8 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private void btnClicSubirDocIniciales(ActionEvent event) {
+        cargarEscenas("vista/FXMLSeleccionarEntrega.fxml");
+        lbNombreVentana.setText("Entregar Documentos Iniciales");
     }
 
     @FXML
@@ -62,5 +80,20 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
+    private void cargarEscenas(String ruta) {
+        try {
+            FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource(ruta));
+            Parent root = loader.load();
+            apCentral.getChildren().setAll(root);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     
 }

@@ -44,7 +44,7 @@
                               <Image url="@../recurso/organizacion_icon.png" />
                            </image>
                         </ImageView>
-                        <Button onAction="#btnClicSubirDocIniciales" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Subir documentos iniciales" wrapText="true">
+                        <Button onAction="#btnClicSubirDocIniciales" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Entregas pendientes" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -112,7 +112,7 @@
             <Label fx:id="lbNombreUsuario" layoutX="270.0" layoutY="42.0" prefHeight="17.0" prefWidth="306.0" />
          </children>
       </AnchorPane>
-      <VBox alignment="CENTER" layoutX="200.0" layoutY="100.0" prefHeight="500.0" prefWidth="824.0" spacing="20.0">
+      <VBox fx:id="apCentral" alignment="CENTER" layoutX="200.0" layoutY="100.0" prefHeight="500.0" prefWidth="824.0" spacing="20.0">
          <children>
             <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
                <image>
