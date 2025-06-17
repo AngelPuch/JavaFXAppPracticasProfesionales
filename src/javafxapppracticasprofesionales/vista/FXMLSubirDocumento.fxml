@@ -8,21 +8,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="327.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSubirDocumentoController">
+<AnchorPane prefHeight="327.0" prefWidth="537.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSubirDocumentoController">
    <children>
-      <Label layoutX="174.0" layoutY="26.0" text="Subir Documento">
+      <Label layoutX="50.0" layoutY="25.0" text="Subir Documento" textFill="#333333">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="50.0" layoutY="76.0" text="Nombre del Documento:" />
-      <ComboBox fx:id="cbTipoDocumento" layoutX="200.0" layoutY="72.0" prefWidth="250.0" promptText="Seleccione un tipo..." />
-      <Label layoutX="50.0" layoutY="204.0" text="Archivo:" />
-      <TextField fx:id="tfRutaArchivo" editable="false" layoutX="110.0" layoutY="200.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button fx:id="btnSeleccionarArchivo" layoutX="370.0" layoutY="200.0" mnemonicParsing="false" onAction="#clicSeleccionarArchivo" text="Seleccionar..." />
-      <Button fx:id="btnAceptar" layoutX="404.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicAceptar" text="Aceptar" />
-      <Button fx:id="btnCancelar" layoutX="325.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
-      <TextField fx:id="tfNombreArchivo" layoutX="182.0" layoutY="138.0" prefHeight="25.0" prefWidth="250.0" />
-      <Label layoutX="50.0" layoutY="140.0" text="Nombre archivo:" />
+      <Label layoutX="50.0" layoutY="76.0" text="Tipo de Documento:" />
+      <ComboBox fx:id="cbTipoDocumento" layoutX="200.0" layoutY="72.0" prefWidth="250.0" promptText="Seleccione un tipo..." style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <Label layoutX="50.0" layoutY="204.0" text="Ruta del Archivo:" />
+      <TextField fx:id="tfRutaArchivo" editable="false" layoutX="200.0" layoutY="200.0" prefHeight="25.0" prefWidth="180.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <Button fx:id="btnSeleccionarArchivo" layoutX="390.0" layoutY="200.0" mnemonicParsing="false" onAction="#clicSeleccionarArchivo" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Seleccionar..." textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnAceptar" layoutX="404.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aceptar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnCancelar" layoutX="315.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="tfNombreArchivo" layoutX="200.0" layoutY="138.0" prefHeight="25.0" prefWidth="250.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <Label layoutX="50.0" layoutY="140.0" text="Nombre del Archivo:" />
    </children>
 </AnchorPane>
