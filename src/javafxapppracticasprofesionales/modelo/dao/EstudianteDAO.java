@@ -66,6 +66,41 @@ public class EstudianteDAO {
         }
         return estudiantes;
     }
+    
+    public static ArrayList<Estudiante> obtenerEstudiantesParaEvaluar() throws SQLException {
+        ArrayList<Estudiante> estudiantes = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT DISTINCT e.idEstudiante, e.nombre, e.matricula, e.semestre, e.correo, u.idUsuario " +
+                         "FROM estudiante e " +
+                         "JOIN usuario u ON e.idUsuario = u.idUsuario " +
+                         "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
+                         "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
+                         "WHERE ex.Proyecto_idProyecto IS NOT NULL;";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+                 ResultSet resultado = sentencia.executeQuery()) {
+
+                while (resultado.next()) {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
+                    estudiante.setNombre(resultado.getString("nombre"));
+                    estudiante.setMatricula(resultado.getString("matricula"));
+                    estudiante.setSemestre(resultado.getInt("semestre"));
+                    estudiante.setCorreo(resultado.getString("correo"));
+                    // Este dato es útil para asociar la evaluación con el usuario que la realiza
+                    // En este contexto, sería el id del usuario del evaluador.
+                    // Aquí lo usamos para obtener el id de usuario del estudiante si fuera necesario.
+                    // Para este CU, el id importante es el del evaluador logueado.
+                    estudiantes.add(estudiante);
+                }
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return estudiantes;
+    }
 
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();

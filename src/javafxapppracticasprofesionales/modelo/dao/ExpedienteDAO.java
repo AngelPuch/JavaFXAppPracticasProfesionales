@@ -2,6 +2,7 @@ package javafxapppracticasprofesionales.modelo.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
@@ -91,5 +92,30 @@ public class ExpedienteDAO {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
         return resultado;
+    }
+    
+    public static int obtenerIdExpedientePorEstudiante(int idEstudiante) throws SQLException {
+        int idExpediente = 0;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            // La consulta navega desde estudiante -> inscripcion -> expediente para encontrar el ID
+            String sql = "SELECT ex.idExpediente " +
+                         "FROM gestionpracticas.expediente ex " +
+                         "JOIN gestionpracticas.inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
+                         "WHERE i.Estudiante_idEstudiante = ?;";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idEstudiante);
+                try (ResultSet resultado = sentencia.executeQuery()) {
+                    if (resultado.next()) {
+                        idExpediente = resultado.getInt("idExpediente");
+                    }
+                }
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return idExpediente;
     }
 }

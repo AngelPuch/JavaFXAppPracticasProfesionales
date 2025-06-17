@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarEstudianteParaEvaluarController">
+   <children>
+      <Label layoutX="24.0" layoutY="25.0" text="Seleccionar Estudiante a Evaluar" />
+      <TableView fx:id="tvEstudiantes" layoutX="24.0" layoutY="58.0" prefHeight="280.0" prefWidth="553.0">
+        <columns>
+          <TableColumn fx:id="colNombre" prefWidth="250.0" text="Nombre" />
+          <TableColumn fx:id="colMatricula" prefWidth="150.0" text="Matrícula" />
+            <TableColumn fx:id="colSemestre" prefWidth="150.0" text="Semestre" />
+        </columns>
+      </TableView>
+      <Button layoutX="503.0" layoutY="354.0" onAction="#btnClicContinuar" text="Continuar" />
+      <Button layoutX="428.0" layoutY="354.0" onAction="#btnClicCancelar" text="Cancelar" />
+   </children>
+</AnchorPane>
