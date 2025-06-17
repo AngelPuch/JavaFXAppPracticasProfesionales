@@ -14,9 +14,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
+import javafxapppracticasprofesionales.modelo.dao.PeriodoDAO;
 import javafxapppracticasprofesionales.modelo.dao.ProgramarEntregaDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.modelo.pojo.Grupo;
+import javafxapppracticasprofesionales.modelo.pojo.Periodo;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -59,6 +61,27 @@ public class FXMLProgramarEntregaController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Fechas incorrectas", "La fecha de fin no puede ser anterior a la fecha de inicio.", Alert.AlertType.WARNING);
             return false;
         }
+        
+        try {
+            Periodo periodoActual = PeriodoDAO.obtenerPeriodoActual();
+            if (periodoActual != null && periodoActual.getFechaFin() != null) {
+                LocalDate fechaFinPeriodo = LocalDate.parse(periodoActual.getFechaFin());
+                if (dpFechaFin.getValue().isAfter(fechaFinPeriodo)) {
+                    AlertaUtilidad.mostrarAlertaSimple("Fecha Fuera de Periodo", 
+                        "La fecha de fin de la entrega no puede ser posterior a la fecha de finalización del periodo escolar actual (" 
+                        + fechaFinPeriodo.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ").", 
+                        Alert.AlertType.WARNING);
+                    return false;
+                }
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Error de Periodo", "No se pudo obtener la información del periodo escolar actual. No se puede programar la entrega.", Alert.AlertType.ERROR);
+                return false;
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudo verificar la fecha del periodo escolar. Error: " + e.getMessage(), Alert.AlertType.ERROR);
+            return false;
+        }
+        
         return true;
     }
 
