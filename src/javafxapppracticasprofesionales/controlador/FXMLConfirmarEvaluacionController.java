@@ -45,6 +45,8 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
         lblProyecto.setText(proyecto.getNombre());
         txtComentarios.setText(evaluacion.getComentarios());
         lblCalificacionFinal.setText(String.valueOf(evaluacion.getCalificacionTotal()));
+        
+        // Aquí podrías poblar la nueva TableView con evaluacion.getDetalles()
     }
 
     @FXML
@@ -57,18 +59,18 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
 
     @FXML
     private void btnAceptar(ActionEvent event) {
-        // Paso 6: El evaluador da clic en "Aceptar"
-        // Paso 7: Se guarda la evaluación
         try {
+            // La llamada al DAO no cambia, pero el método del DAO ahora hace mucho más.
             ResultadoOperacion resultado = EvaluacionDAO.registrarEvaluacion(this.evaluacion);
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Operación Exitosa", "La evaluación ha sido guardada correctamente.", Alert.AlertType.INFORMATION);
-                Utilidad.getEscenarioComponente(lblNombreEstudiante).close(); // Termina el caso de uso
+                Utilidad.getEscenarioComponente(lblNombreEstudiante).close();
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Error al Guardar", resultado.getMensaje(), Alert.AlertType.ERROR);
             }
         } catch (SQLException e) {
              AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", e.getMessage(), Alert.AlertType.ERROR);
+             e.printStackTrace(); // Es útil ver el stack trace completo en la consola
         }
     }
 }

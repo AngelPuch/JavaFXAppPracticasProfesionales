@@ -1,6 +1,8 @@
 
 package javafxapppracticasprofesionales.modelo.pojo;
 
+import java.util.List;
+
 public class Evaluacion {
     private int idEvaluacion;
     private float calificacionTotal;
@@ -10,6 +12,7 @@ public class Evaluacion {
     private int idUsuario;
     private int idTipoEvaluacion;
     private int idExpediente;
+    private List<EvaluacionDetalle> detalles;
 
     public Evaluacion() {
     }
@@ -89,4 +92,13 @@ public class Evaluacion {
     public void setIdExpediente(int idExpediente) {
         this.idExpediente = idExpediente;
     }
+
+    public List<EvaluacionDetalle> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<EvaluacionDetalle> detalles) {
+        this.detalles = detalles;
+    }
+    
 }

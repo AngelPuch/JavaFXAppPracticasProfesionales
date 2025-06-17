@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="757.0" prefWidth="917.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLCalificarPresentacionController">
+<AnchorPane prefHeight="600.0" prefWidth="917.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLCalificarPresentacionController">
     <children>
         <AnchorPane prefHeight="27.0" prefWidth="917.0" style="-fx-background-color: white;">
             <effect>
@@ -23,7 +25,7 @@
                 </Label>
             </children>
         </AnchorPane>
-        <TableView fx:id="tvRubricaEvaluacion" focusTraversable="false" layoutX="20.0" layoutY="67.0" prefHeight="401.0" prefWidth="877.0" style="-fx-fixed-cell-size: 100; -fx-background-insets: 0;">
+        <TableView fx:id="tvRubricaEvaluacion" focusTraversable="false" layoutX="20.0" layoutY="67.0" prefHeight="300.0" prefWidth="877.0" style="-fx-fixed-cell-size: 100; -fx-background-insets: 0;">
             <columns>
                 <TableColumn fx:id="colCriterio" prefWidth="130.0" sortable="false" style="-fx-wrap-text: true;" text="CRITERIO" />
                 <TableColumn fx:id="colCompetente" prefWidth="135.0" sortable="false" style="-fx-wrap-text: true;" text="COMPETENTE (9.1-10.0)" />
@@ -42,18 +44,18 @@
             </font>
         </Label>
         <Label fx:id="lbNombreEstudiante" layoutX="584.0" layoutY="41.0" text="Estudiante:" />
-        <Label layoutX="27.0" layoutY="475.0" text="OBSERVACIONES Y COMENTARIOS">
+        <Label layoutX="27.0" layoutY="385.0" text="OBSERVACIONES Y COMENTARIOS">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <VBox layoutX="27.0" layoutY="503.0" prefHeight="117.0" prefWidth="388.0" spacing="5.0">
+        <VBox layoutX="27.0" layoutY="413.0" prefHeight="117.0" prefWidth="388.0" spacing="5.0">
             <children>
                 <Separator prefWidth="200.0" />
                 <TextArea fx:id="taObservacionesYComentarios" prefHeight="124.0" prefWidth="388.0" style="-fx-background-color: white; -fx-border-radius: 4; -fx-border-color: #dedede;" />
             </children>
         </VBox>
-        <GridPane layoutX="502.0" layoutY="487.0" prefHeight="224.0" prefWidth="371.0">
+        <GridPane layoutX="502.0" layoutY="397.0" prefHeight="144.0" prefWidth="371.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="274.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="97.0" />
@@ -91,12 +93,12 @@
                 <TextField fx:id="tfPuntajeOrtografiaRedaccion" alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #dedede; -fx-border-radius: 4;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
-        <Label layoutX="502.0" layoutY="475.0" text="CALIFICACIÓN">
+        <Label layoutX="502.0" layoutY="385.0" text="CALIFICACIÓN">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Button layoutX="819.0" layoutY="718.0" mnemonicParsing="false" onAction="#btnClisCancelar" style="-fx-background-color: #f3f4f6;" text="Cancelar">
+        <Button layoutX="702.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClisCancelar" style="-fx-background-color: #f3f4f6;" text="Cancelar">
             <font>
                 <Font name="Arial Bold" size="14.0" />
             </font>
@@ -108,7 +110,7 @@
                 </DropShadow>
             </effect>
         </Button>
-        <Button layoutX="737.0" layoutY="718.0" mnemonicParsing="false" onAction="#btnClicAceptar" style="-fx-background-color: #146cd0;" text="Aceptar" textFill="WHITE">
+        <Button layoutX="800.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicAceptar" style="-fx-background-color: #146cd0;" text="Aceptar" textFill="WHITE">
             <font>
                 <Font name="Arial Bold" size="14.0" />
             </font>

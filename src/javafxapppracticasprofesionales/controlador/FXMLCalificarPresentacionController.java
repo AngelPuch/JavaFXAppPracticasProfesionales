@@ -36,6 +36,11 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
+import javafxapppracticasprofesionales.modelo.dao.CriterioEvaluacionDAO; 
+import javafxapppracticasprofesionales.modelo.pojo.EvaluacionDetalle;    
+import java.util.List;                                                  
+import java.util.ArrayList;                                             
+
 
 public class FXMLCalificarPresentacionController implements Initializable {
     @FXML
@@ -81,7 +86,6 @@ public class FXMLCalificarPresentacionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        cargarInformacionTabla();
 
         agregarValidacionNumerica(tfPuntajeSeguridadDominio);
         agregarValidacionNumerica(tfPuntajeRequisitos);
@@ -102,6 +106,7 @@ public class FXMLCalificarPresentacionController implements Initializable {
         this.estudiante = estudiante;
         lbNombreEstudiante.setText("Estudiante: " + this.estudiante.getNombre());
         cargarDatosDeExpedienteYProyecto();
+        cargarInformacionTabla();
     }
 
     @FXML
@@ -124,47 +129,78 @@ public class FXMLCalificarPresentacionController implements Initializable {
 
     @FXML
     private void btnClicAceptar(ActionEvent event) {
-        // Validar que se hayan calificado todos los rubros
-        if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || tfPuntajeRequisitos.getText().isEmpty() ||
-            tfPuntajeSeguridadDominio.getText().isEmpty() || tfPuntajeContenido.getText().isEmpty() ||
-            tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
-
-            AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "Existen campos inválidos. "
-                    + "Por favor corrige tu información.", Alert.AlertType.WARNING);
+        if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || /*...otras validaciones...*/ tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
+            AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "Existen campos inválidos. Por favor corrige tu información.", Alert.AlertType.WARNING);
             return;
         }
 
-        // Validar que se pudieron cargar los datos necesarios
         if (this.idExpediente <= 0 || this.proyecto == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de Inicialización", "No se pueden guardar los datos "
-                    + "porque falta información del estudiante o del proyecto.", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de Inicialización", "No se pueden guardar los datos porque falta información del estudiante o del proyecto.", Alert.AlertType.ERROR);
             return;
         }
 
+        // 1. Crear el objeto de evaluación principal
         Evaluacion evaluacion = new Evaluacion();
         evaluacion.setCalificacionTotal(Float.parseFloat(lbPromedioPuntaje.getText()));
         evaluacion.setComentarios(taObservacionesYComentarios.getText());
         evaluacion.setMotivo("Evaluación de Presentación de Avances");
-        evaluacion.setIdTipoEvaluacion(2);
+        evaluacion.setIdTipoEvaluacion(2); // ID para 'Evaluacion de Presentacion'
         evaluacion.setIdUsuario(SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario());
-        evaluacion.setIdExpediente(this.idExpediente); // Se usa el ID real obtenido
+        evaluacion.setIdExpediente(this.idExpediente);
 
+        // 2. Crear y poblar la lista de detalles de la evaluación
+        List<EvaluacionDetalle> detalles = new ArrayList<>();
+
+        // Criterio 1: USO DE MÉTODOS Y TÉCNICAS DE LA IS (idCriterio = 1)
+        EvaluacionDetalle detalleMetodos = new EvaluacionDetalle();
+        detalleMetodos.setIdCriterio(1);
+        detalleMetodos.setCalificacion(Float.parseFloat(tfPuntajeMetodosTecnicasIS.getText()));
+        detalles.add(detalleMetodos);
+        
+        // Criterio 2: REQUISITOS (idCriterio = 2)
+        EvaluacionDetalle detalleRequisitos = new EvaluacionDetalle();
+        detalleRequisitos.setIdCriterio(2);
+        detalleRequisitos.setCalificacion(Float.parseFloat(tfPuntajeRequisitos.getText()));
+        detalles.add(detalleRequisitos);
+
+        // Criterio 3: SEGURIDAD Y DOMINIO (idCriterio = 3)
+        EvaluacionDetalle detalleDominio = new EvaluacionDetalle();
+        detalleDominio.setIdCriterio(3);
+        detalleDominio.setCalificacion(Float.parseFloat(tfPuntajeSeguridadDominio.getText()));
+        detalles.add(detalleDominio);
+
+        // Criterio 4: CONTENIDO (idCriterio = 4)
+        EvaluacionDetalle detalleContenido = new EvaluacionDetalle();
+        detalleContenido.setIdCriterio(4);
+        detalleContenido.setCalificacion(Float.parseFloat(tfPuntajeContenido.getText()));
+        detalles.add(detalleContenido);
+
+        // Criterio 5: ORTOGRAFÍA Y REDACCIÓN (idCriterio = 5)
+        EvaluacionDetalle detalleOrtografia = new EvaluacionDetalle();
+        detalleOrtografia.setIdCriterio(5);
+        detalleOrtografia.setCalificacion(Float.parseFloat(tfPuntajeOrtografiaRedaccion.getText()));
+        detalles.add(detalleOrtografia);
+        
+        // 3. Añadir la lista de detalles al objeto de evaluación principal
+        evaluacion.setDetalles(detalles);
+
+        // 4. Pasar el objeto completo a la ventana de confirmación
         try {
             FXMLLoader cargador = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLConfirmarEvaluacion.fxml"));
             Parent vista = cargador.load();
 
             FXMLConfirmarEvaluacionController controlador = cargador.getController();
+            // El controlador de confirmación ahora recibe el objeto completo
             controlador.inicializarDatos(this.estudiante, this.proyecto, evaluacion);
 
             Stage escenario = new Stage();
             escenario.setTitle("Confirmar Evaluación");
             escenario.setScene(new Scene(vista));
-            Utilidad.getEscenarioComponente(lbNombreEstudiante).close();
-            escenario.show();
+            Utilidad.getEscenarioComponente(lbNombreEstudiante).getScene().getWindow().hide(); // Se oculta en lugar de cerrar
+            escenario.showAndWait(); // Espera a que la ventana de confirmación se cierre
 
         } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana de confirmación.",
-                    Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana de confirmación.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
@@ -249,64 +285,69 @@ public class FXMLCalificarPresentacionController implements Initializable {
 
     private void cargarInformacionTabla() {
         criterios = FXCollections.observableArrayList();
-        ArrayList<CriterioEvaluacion> criteriosFuente = obtenerCriteriosDeFuenteDatos();
-        criterios.addAll(criteriosFuente);
-        tvRubricaEvaluacion.setItems(criterios);
+        try {
+            // 1. Obtiene la lista de criterios base desde la BD (ej. id=1, nombre='USO DE MÉTODOS...')
+            ArrayList<CriterioEvaluacion> criteriosBD = CriterioEvaluacionDAO.obtenerCriteriosRubrica();
+
+            // Verificación para asegurar que la BD regresó los 5 criterios esperados
+            if (criteriosBD.size() < 5) {
+                AlertaUtilidad.mostrarAlertaSimple("Error de Datos", 
+                    "La cantidad de criterios en la base de datos no coincide con los 5 esperados en la aplicación.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // 2. Asigna las descripciones estáticas a cada criterio cargado
+
+            // CRITERIO 1: USO DE MÉTODOS Y TÉCNICAS DE LA IS
+            CriterioEvaluacion critMetodos = criteriosBD.get(0);
+            critMetodos.setCompetente("Los métodos y técnicas de la IS optimizan el aseguramiento de calidad y se han aplicado de manera correcta."); // 
+            critMetodos.setIndependiente("Los métodos y técnicas de la IS, son adecuados y se han aplicado de manera correcta."); // 
+            critMetodos.setBasicoAvanzado("Los métodos y técnicas de la IS, son adecuados, aunque se presentan algunas deficiencias en su aplicación."); // 
+            critMetodos.setBasicoMinimo("Los métodos y técnicas de la IS, no son adecuados, pero se han aplicado de manera correcta."); // 
+            critMetodos.setNoCompetente("No se han aplicado métodos y técnicas de la IS."); // 
+
+            // CRITERIO 2: REQUISITOS
+            CriterioEvaluacion critRequisitos = criteriosBD.get(1);
+            critRequisitos.setCompetente("Cumplió con todos los requisitos. Excedió las expectativas."); // 
+            critRequisitos.setIndependiente("Todos los requisitos fueron cumplidos."); // 
+            critRequisitos.setBasicoAvanzado("No cumple satisfactoriamente con un requisito."); // 
+            critRequisitos.setBasicoMinimo("Más de un requisito no fue cumplido satisfactoriamente."); // 
+            critRequisitos.setNoCompetente("Más de dos requisitos no fueron cumplidos satisfactoriamente."); // 
+
+            // CRITERIO 3: SEGURIDAD Y DOMINIO
+            CriterioEvaluacion critDominio = criteriosBD.get(2);
+            critDominio.setCompetente("El dominio del tema es excelente, la exposición es dada con seguridad."); // 
+            critDominio.setIndependiente("Se posee un dominio adecuado y la exposición fue fluida."); // 
+            critDominio.setBasicoAvanzado("Aunque con algunos fallos en el dominio, la exposición fue fluida."); // 
+            critDominio.setBasicoMinimo("Se demuestra falta de dominio y una exposición deficiente."); // 
+            critDominio.setNoCompetente("No existe dominio sobre el tema y la exposición es deficiente."); // 
+
+            // CRITERIO 4: CONTENIDO
+            CriterioEvaluacion critContenido = criteriosBD.get(3);
+            critContenido.setCompetente("Cubre los temas a profundidad con detalles y ejemplos. El conocimiento del tema es excelente."); // 
+            critContenido.setIndependiente("Incluye conocimiento básico sobre el tema. El contenido parece ser bueno."); // 
+            critContenido.setBasicoAvanzado("Incluye información esencial sobre el tema, pero tiene 1-2 errores en los hechos."); // 
+            critContenido.setBasicoMinimo("El contenido es mínimo y tiene tres errores en los hechos."); // 
+            critContenido.setNoCompetente("El contenido es mínimo y tiene varios errores en los hechos."); // 
+
+            // CRITERIO 5: ORTOGRAFÍA Y REDACCIÓN
+            CriterioEvaluacion critOrtografia = criteriosBD.get(4);
+            critOrtografia.setCompetente("No hay errores de gramática, ortografía o puntuación."); // 
+            critOrtografia.setIndependiente("Casi no hay errores de gramática, ortografía o puntuación."); // 
+            critOrtografia.setBasicoAvanzado("Algunos errores de gramáticas, ortografía o puntuación."); // 
+            critOrtografia.setBasicoMinimo("Varios errores de gramática, ortografía o puntuación."); // 
+            critOrtografia.setNoCompetente("Demasiados errores de gramática, ortografía o puntuación."); // 
+
+            // 3. Agrega todos los criterios ya "decorados" a la lista observable
+            criterios.addAll(criteriosBD);
+
+            // 4. Muestra la información en la tabla
+            tvRubricaEvaluacion.setItems(criterios);
+
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
+                "No se pudieron cargar los criterios de evaluación desde la base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
+        } 
     }
-
-    private ArrayList<CriterioEvaluacion> obtenerCriteriosDeFuenteDatos() {
-        ArrayList<CriterioEvaluacion> listaCriterios = new ArrayList<>();
-
-        listaCriterios.add(new CriterioEvaluacion(
-                "USO DE MÉTODOS Y TÉCNICAS DE LA IS",
-                "Los métodos y técnicas de la IS optimizan el aseguramiento de calidad y se han aplicado de manera correcta.",
-                "Los métodos y técnicas de la IS, son adecuados y se han aplicado de manera correcta.",
-                "Los métodos y técnicas de la IS, son adecuados, aunque se presentan algunas deficiencias en su aplicación.",
-                "Los métodos y técnicas de la IS, no son adecuados, pero se han aplicado de manera correcta.",
-                "No se han aplicado métodos y técnicas de la IS."
-        ));
-
-        listaCriterios.add(new CriterioEvaluacion(
-                "REQUISITOS",
-                "Cumplió con todos los requisitos. Excedió las expectativas.",
-                "Todos los requisitos fueron cumplidos.",
-                "No cumple satisfactoriamente con un requisito.",
-                "Más de un requisito no fue cumplido satisfactoriamente.",
-                "Más de dos requisitos no fueron cumplidos satisfactoriamente."
-        ));
-
-        listaCriterios.add(new CriterioEvaluacion(
-                "SEGURIDAD Y DOMINIO",
-                "El dominio del tema es excelente, la exposición es dada con seguridad.",
-                "Se posee un dominio adecuado y la exposición fue fluida.",
-                "Aunque con algunos fallos en el dominio, la exposición fue fluida.",
-                "Se demuestra falta de dominio y una exposición deficiente.",
-                "No existe dominio sobre el tema y la exposición es deficiente."
-        ));
-
-        listaCriterios.add(new CriterioEvaluacion(
-                "CONTENIDO",
-                "Cubre los temas a profundidad con detalles y ejemplos. El conocimiento del tema es excelente.",
-                "Incluye conocimiento básico sobre el tema. El contenido parece ser bueno.",
-                "Incluye información esencial sobre el tema, pero tiene 1-2 errores en los hechos.",
-                "El contenido es mínimo y tiene tres errores en los hechos.",
-                "El contenido es mínimo y tiene varios errores en los hechos."
-        ));
-
-        listaCriterios.add(new CriterioEvaluacion(
-                "ORTOGRAFÍA Y REDACCIÓN",
-                "No hay errores de gramática, ortografía o puntuación.",
-                "Casi no hay errores de gramática, ortografía o puntuación.",
-                "Algunos errores de gramática, ortografía o puntuación.",
-                "Varios errores de gramática, ortografía o puntuación.",
-                "Demasiados errores de gramática, ortografía o puntuación."
-        ));
-        return listaCriterios;
-    }
-
 
 }
-
-
-    
-

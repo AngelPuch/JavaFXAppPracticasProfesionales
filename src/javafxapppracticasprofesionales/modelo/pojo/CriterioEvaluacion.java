@@ -3,6 +3,7 @@ package javafxapppracticasprofesionales.modelo.pojo;
 
 public class CriterioEvaluacion {
 
+    private int idCriterio;
     private String criterio;
     private String competente;
     private String independiente;
@@ -12,8 +13,9 @@ public class CriterioEvaluacion {
 
     public CriterioEvaluacion() {
     }
-    
-    public CriterioEvaluacion(String criterio, String competente, String independiente, String basicoAvanzado, String basicoMinimo, String noCompetente) {
+
+    public CriterioEvaluacion(int idCriterio, String criterio, String competente, String independiente, String basicoAvanzado, String basicoMinimo, String noCompetente) {
+        this.idCriterio = idCriterio;
         this.criterio = criterio;
         this.competente = competente;
         this.independiente = independiente;
@@ -21,6 +23,16 @@ public class CriterioEvaluacion {
         this.basicoMinimo = basicoMinimo;
         this.noCompetente = noCompetente;
     }
+
+    public int getIdCriterio() {
+        return idCriterio;
+    }
+
+    public void setIdCriterio(int idCriterio) {
+        this.idCriterio = idCriterio;
+    }
+    
+    
 
     public String getCriterio() {
         return criterio;

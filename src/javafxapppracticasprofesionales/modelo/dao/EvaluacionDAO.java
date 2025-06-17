@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.AfirmacionOV;
 import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
+import javafxapppracticasprofesionales.modelo.pojo.EvaluacionDetalle;
 import javafxapppracticasprofesionales.modelo.pojo.EvaluacionOV;
 import javafxapppracticasprofesionales.modelo.pojo.RespuestaGuardadaOV;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
@@ -24,24 +25,57 @@ public class EvaluacionDAO {
         resultado.setIsError(true);
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "INSERT INTO evaluacion (calificacionTotal, fecha, motivo, comentarios, " +
-                         "Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
-                         "VALUES (?, CURDATE(), ?, ?, ?, ?, ?)";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setFloat(1, evaluacion.getCalificacionTotal());
-                sentencia.setString(2, evaluacion.getMotivo());
-                sentencia.setString(3, evaluacion.getComentarios());
-                sentencia.setInt(4, evaluacion.getIdUsuario());
-                sentencia.setInt(5, evaluacion.getIdTipoEvaluacion());
-                sentencia.setInt(6, evaluacion.getIdExpediente());
+            try {
+                // Iniciar transacción
+                conexionBD.setAutoCommit(false);
 
-                int filasAfectadas = sentencia.executeUpdate();
+                // 1. Insertar en la tabla 'evaluacion' y obtener el ID generado
+                String sqlEvaluacion = "INSERT INTO evaluacion (calificacionTotal, fecha, motivo, comentarios, " +
+                                       "Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
+                                       "VALUES (?, CURDATE(), ?, ?, ?, ?, ?)";
+                PreparedStatement psEvaluacion = conexionBD.prepareStatement(sqlEvaluacion, Statement.RETURN_GENERATED_KEYS);
+                psEvaluacion.setFloat(1, evaluacion.getCalificacionTotal());
+                psEvaluacion.setString(2, evaluacion.getMotivo());
+                psEvaluacion.setString(3, evaluacion.getComentarios());
+                psEvaluacion.setInt(4, evaluacion.getIdUsuario());
+                psEvaluacion.setInt(5, evaluacion.getIdTipoEvaluacion());
+                psEvaluacion.setInt(6, evaluacion.getIdExpediente());
+
+                int filasAfectadas = psEvaluacion.executeUpdate();
                 if (filasAfectadas > 0) {
-                    resultado.setIsError(false);
-                    resultado.setMensaje("Evaluación guardada correctamente.");
+                    ResultSet generatedKeys = psEvaluacion.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        int idEvaluacionGenerado = generatedKeys.getInt(1);
+
+                        // 2. Insertar los detalles de la evaluación
+                        String sqlDetalle = "INSERT INTO evaluacion_detalle (idEvaluacion, idCriterio, calificacion) VALUES (?, ?, ?)";
+                        PreparedStatement psDetalle = conexionBD.prepareStatement(sqlDetalle);
+
+                        for (EvaluacionDetalle detalle : evaluacion.getDetalles()) {
+                            psDetalle.setInt(1, idEvaluacionGenerado);
+                            psDetalle.setInt(2, detalle.getIdCriterio());
+                            psDetalle.setFloat(3, detalle.getCalificacion());
+                            psDetalle.addBatch();
+                        }
+                        psDetalle.executeBatch();
+                        psDetalle.close();
+
+                        // Si todo fue exitoso, confirmar la transacción
+                        conexionBD.commit();
+                        resultado.setIsError(false);
+                        resultado.setMensaje("Evaluación guardada correctamente.");
+                    }
+                    generatedKeys.close();
                 } else {
-                    resultado.setMensaje("No se pudo registrar la evaluación.");
+                    resultado.setMensaje("No se pudo registrar la evaluación principal.");
+                    conexionBD.rollback();
                 }
+                psEvaluacion.close();
+
+            } catch (SQLException e) {
+                // Si algo falla, revertir todos los cambios
+                conexionBD.rollback();
+                throw e; // Relanzar la excepción para que el controlador la maneje
             } finally {
                 conexionBD.close();
             }
