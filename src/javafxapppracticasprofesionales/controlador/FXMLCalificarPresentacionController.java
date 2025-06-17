@@ -247,11 +247,15 @@ public class FXMLCalificarPresentacionController implements Initializable {
     * en el rango de 5.0 a 10.0, con hasta dos decimales.
     */
     private void agregarValidacionNumerica(TextField campoTexto) {
+        // La expresión regular original es demasiado estricta.
+        // Original: "^(?:[5-9](\\.\\d{0,2})?|10(\\.0{0,2})?|)$"
+
+        // CORRECCIÓN: Se añade "1|" para permitir que el usuario pueda empezar a escribir "10".
+        final String regex = "^(1|([5-9](\\.\\d{0,2})?)|10(\\.0{0,2})?|)$";
+
         UnaryOperator<TextFormatter.Change> filtro = change -> {
             String nuevoTexto = change.getControlNewText();
-            // Regex para validar números decimales entre 5 y 10, o el número 10.0
-            // Permite un solo punto decimal y hasta dos dígitos decimales.
-            if (nuevoTexto.matches("^(?:[5-9](\\.\\d{0,2})?|10(\\.0{0,2})?|)$")) {
+            if (nuevoTexto.matches(regex)) {
                 return change;
             }
             return null;
@@ -260,20 +264,21 @@ public class FXMLCalificarPresentacionController implements Initializable {
         TextFormatter<String> formateadorTexto = new TextFormatter<>(filtro);
         campoTexto.setTextFormatter(formateadorTexto);
 
-        // Listener para validar el rango cuando el campo pierde el foco
+        // El resto del método para la validación al perder el foco permanece igual.
         campoTexto.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) { // Si el campo pierde el foco
+            if (!newValue) { 
                 String texto = campoTexto.getText();
                 if (!texto.isEmpty()) {
                     try {
                         double valor = Double.parseDouble(texto);
+                        // El valor "1" se permite mientras se escribe, pero al perder el foco
+                        // se valida que el valor final esté en el rango correcto.
                         if (valor < 5.0 || valor > 10.0) {
                             AlertaUtilidad.mostrarAlertaSimple("Valor fuera de rango", "La calificación debe estar entre 5.0 y 10.0.",
                                     Alert.AlertType.ERROR);
-                            campoTexto.setText(""); // Limpia el campo si el valor es inválido
+                            campoTexto.setText(""); 
                         }
                     } catch (NumberFormatException e) {
-                        // Esto no debería ocurrir gracias al filtro, pero es una buena práctica
                         AlertaUtilidad.mostrarAlertaSimple("Formato incorrecto", "El valor ingresado no es un número válido.",
                                 Alert.AlertType.ERROR);
                         campoTexto.setText("");
