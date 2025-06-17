@@ -13,7 +13,9 @@ public class Evaluacion {
     private int idTipoEvaluacion;
     private int idExpediente;
     private List<EvaluacionDetalle> detalles;
-
+    private String nombreTipoEvaluacion;
+    private String nombreEvaluador;
+    
     public Evaluacion() {
     }
 
@@ -99,6 +101,22 @@ public class Evaluacion {
 
     public void setDetalles(List<EvaluacionDetalle> detalles) {
         this.detalles = detalles;
+    }
+
+    public String getNombreTipoEvaluacion() {
+        return nombreTipoEvaluacion;
+    }
+
+    public void setNombreTipoEvaluacion(String nombreTipoEvaluacion) {
+        this.nombreTipoEvaluacion = nombreTipoEvaluacion;
+    }
+
+    public String getNombreEvaluador() {
+        return nombreEvaluador;
+    }
+
+    public void setNombreEvaluador(String nombreEvaluador) {
+        this.nombreEvaluador = nombreEvaluador;
     }
     
 }

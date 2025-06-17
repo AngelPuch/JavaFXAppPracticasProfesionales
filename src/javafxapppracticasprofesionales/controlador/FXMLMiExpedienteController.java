@@ -1,4 +1,3 @@
-
 package javafxapppracticasprofesionales.controlador;
 
 import java.awt.Desktop;
@@ -24,8 +23,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafxapppracticasprofesionales.modelo.dao.AvanceDAO;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.ExpedienteDAO;
+import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO; // Asegúrate de importar el DAO de Evaluación
 import javafxapppracticasprofesionales.modelo.pojo.Avance;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
+import javafxapppracticasprofesionales.modelo.pojo.Evaluacion; // Asegúrate de importar el POJO de Evaluación
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -45,34 +46,46 @@ public class FXMLMiExpedienteController implements Initializable {
     @FXML
     private TableView<Avance> tvDocumentosIniciales;
     @FXML
-    private TableColumn colNombreDI;
+    private TableColumn<Avance, String> colNombreDI;
     @FXML
-    private TableColumn colFechaDI;
+    private TableColumn<Avance, String> colFechaDI;
     @FXML
-    private TableColumn colEstadoDI;
+    private TableColumn<Avance, String> colEstadoDI;
     @FXML
     private TableView<Avance> tvReportes;
     @FXML
-    private TableColumn colNombreR;
+    private TableColumn<Avance, String> colNombreR;
     @FXML
-    private TableColumn colFechaR;
+    private TableColumn<Avance, String> colFechaR;
     @FXML
-    private TableColumn colEstadoR;
+    private TableColumn<Avance, String> colEstadoR;
     @FXML
     private TableView<Avance> tvDocumentosFinales;
     @FXML
-    private TableColumn colNombreDF;
+    private TableColumn<Avance, String> colNombreDF;
     @FXML
-    private TableColumn colFechaDF;
+    private TableColumn<Avance, String> colFechaDF;
     @FXML
-    private TableColumn colEstadoDF;
+    private TableColumn<Avance, String> colEstadoDF;
     @FXML
     private Button btnConsultar;
  
     private int idExpediente;
-    /**
-     * Initializes the controller class.
-     */
+
+    // Nuevos FXML Injections para la pestaña de Evaluaciones
+    @FXML
+    private Tab tabEvaluaciones;
+    @FXML
+    private TableView<Evaluacion> tvEvaluaciones;
+    @FXML
+    private TableColumn<Evaluacion, String> colFechaEval;
+    @FXML
+    private TableColumn<Evaluacion, Float> colCalificacionEval;
+    @FXML
+    private TableColumn<Evaluacion, String> colTipoEval;
+    @FXML
+    private TableColumn<Evaluacion, String> colEvaluador;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -83,7 +96,7 @@ public class FXMLMiExpedienteController implements Initializable {
             }
             
             configurarTablas();
-            cargarDatosEstudiante(estudianteLogueado); // Se pasa el objeto estudiante
+            cargarDatosEstudiante(estudianteLogueado);
             cargarTodosLosAvances();
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
@@ -100,7 +113,12 @@ public class FXMLMiExpedienteController implements Initializable {
             return;
         }
 
-        TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent();
+        if (pestañaSeleccionada.equals(tabEvaluaciones)) {
+            AlertaUtilidad.mostrarAlertaSimple("Acción no disponible", "La consulta de detalles de evaluaciones se realiza desde otra ventana.", Alert.AlertType.INFORMATION);
+            return;
+        }
+
+        TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent().lookup("TableView");
         Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
 
         if (avanceSeleccionado == null) {
@@ -129,17 +147,26 @@ public class FXMLMiExpedienteController implements Initializable {
     }
     
     private void configurarTablas() {
+        // Documentos Iniciales
         colNombreDI.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDI.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDI.setCellValueFactory(new PropertyValueFactory<>("estado"));
         
+        // Reportes
         colNombreR.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaR.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoR.setCellValueFactory(new PropertyValueFactory<>("estado"));
         
+        // Documentos Finales
         colNombreDF.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDF.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDF.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        // Evaluaciones (NUEVO)
+        colFechaEval.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        colCalificacionEval.setCellValueFactory(new PropertyValueFactory<>("calificacionTotal"));
+        colTipoEval.setCellValueFactory(new PropertyValueFactory<>("nombreTipoEvaluacion"));
+        colEvaluador.setCellValueFactory(new PropertyValueFactory<>("nombreEvaluador"));
     }
     
     private void cargarDatosEstudiante(Estudiante estudianteLogueado) {
@@ -152,18 +179,13 @@ public class FXMLMiExpedienteController implements Initializable {
     
     private void cargarTodosLosAvances() throws SQLException {
         if (idExpediente > 0) {
-            ArrayList<Avance> docsInicialesList = AvanceDAO.obtenerDocumentosInicio(idExpediente);
-            ObservableList<Avance> docsInicialesObservable = FXCollections.observableArrayList(docsInicialesList);
-            tvDocumentosIniciales.setItems(docsInicialesObservable);
-            
-            ArrayList<Avance> reportesList = AvanceDAO.obtenerReportes(idExpediente);
-            ObservableList<Avance> reportesObservable = FXCollections.observableArrayList(reportesList);
-            tvReportes.setItems(reportesObservable);
+            // Documentos
+            tvDocumentosIniciales.setItems(FXCollections.observableArrayList(AvanceDAO.obtenerDocumentosInicio(idExpediente)));
+            tvReportes.setItems(FXCollections.observableArrayList(AvanceDAO.obtenerReportes(idExpediente)));
+            tvDocumentosFinales.setItems(FXCollections.observableArrayList(AvanceDAO.obtenerDocumentosFinales(idExpediente)));
 
-            ArrayList<Avance> docsFinalesList = AvanceDAO.obtenerDocumentosFinales(idExpediente);
-            ObservableList<Avance> docsFinalesObservable = FXCollections.observableArrayList(docsFinalesList);
-            tvDocumentosFinales.setItems(docsFinalesObservable);
+            // Evaluaciones (NUEVO)
+            tvEvaluaciones.setItems(FXCollections.observableArrayList(EvaluacionDAO.obtenerEvaluacionesPorExpediente(idExpediente)));
         }
     }
-    
 }

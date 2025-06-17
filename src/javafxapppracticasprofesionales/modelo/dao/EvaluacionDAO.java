@@ -234,14 +234,20 @@ public class EvaluacionDAO {
         }
         return yaEvaluado;
     }
+    
+    // Dentro de la clase EvaluacionDAO.java, añade el siguiente método:
 
     public static ArrayList<Evaluacion> obtenerEvaluacionesPorExpediente(int idExpediente) throws SQLException {
         ArrayList<Evaluacion> evaluaciones = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT idEvaluacion, calificacionTotal, fecha, motivo, comentarios, " +
-                         "Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente " +
-                         "FROM evaluacion WHERE Expediente_idExpediente = ?";
+            String sql = "SELECT e.idEvaluacion, e.calificacionTotal, e.fecha, e.motivo, e.comentarios, " +
+                         "e.Usuario_idUsuario, e.TipoEvaluacion_idTipoEvaluacion, e.Expediente_idExpediente, " +
+                         "te.nombreEvaluacion AS nombreTipoEvaluacion, u.nombre AS nombreEvaluador " +
+                         "FROM evaluacion e " +
+                         "JOIN tipoevaluacion te ON e.TipoEvaluacion_idTipoEvaluacion = te.idTipoEvaluacion " +
+                         "JOIN usuario u ON e.Usuario_idUsuario = u.idUsuario " +
+                         "WHERE e.Expediente_idExpediente = ?";
             try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
                 sentencia.setInt(1, idExpediente);
                 ResultSet resultado = sentencia.executeQuery();
@@ -255,6 +261,8 @@ public class EvaluacionDAO {
                     evaluacion.setIdUsuario(resultado.getInt("Usuario_idUsuario"));
                     evaluacion.setIdTipoEvaluacion(resultado.getInt("TipoEvaluacion_idTipoEvaluacion"));
                     evaluacion.setIdExpediente(resultado.getInt("Expediente_idExpediente"));
+                    evaluacion.setNombreTipoEvaluacion(resultado.getString("nombreTipoEvaluacion"));
+                    evaluacion.setNombreEvaluador(resultado.getString("nombreEvaluador"));
                     evaluaciones.add(evaluacion);
                 }
             } finally {
