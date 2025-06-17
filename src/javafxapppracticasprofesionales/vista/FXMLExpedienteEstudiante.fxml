@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapppracticasprofesionales.controlador.FXMLExpedienteEstudianteController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLExpedienteEstudianteController">
    <children>
       <ListView fx:id="lvDocInicio" layoutX="38.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" />
       <ListView fx:id="lvDocFinal" layoutX="312.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" />
@@ -30,5 +29,9 @@
       </Label>
       <Button layoutX="672.0" layoutY="386.0" mnemonicParsing="false" onAction="#btnClicConsultar" style="-fx-background-color: #5A4FCF; -fx-font-weight: bold; -fx-background-radius: 5;" text="Consultar" textFill="WHITE" />
       <Button layoutX="561.0" layoutY="386.0" mnemonicParsing="false" onAction="#btnClicRegresar" text="Regresar" />
+      <Label fx:id="lbNombre" layoutX="38.0" layoutY="359.0" />
+      <Label fx:id="lbMatricula" layoutX="38.0" layoutY="386.0" />
+      <Label fx:id="lbSemestre" layoutX="38.0" layoutY="412.0" />
+      <Label fx:id="lbCorreo" layoutX="38.0" layoutY="439.0" />
    </children>
 </AnchorPane>
