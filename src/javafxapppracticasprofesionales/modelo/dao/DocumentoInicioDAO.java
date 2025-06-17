@@ -10,7 +10,7 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 /** 
 * Project: JavaFXAppPracticasProfesionales 
-* File: DocumentoInicio.java 
+* File: DocumentoInicioDAO.java 
 * Author: Jose Luis Silva Gomez 
 * Date: 2025-06-16 
 * Description: Brief description of the file's purpose. 
@@ -23,7 +23,6 @@ public class DocumentoInicioDAO {
 
         if (conexionBD != null) {
             try {
-                // El ID 2 corresponde a 'Entregado' en la tabla 'estadodocumento'
                 int idEstadoDocumentoInicial = 2; 
                 String sql = "INSERT INTO documentoinicio " +
                              "(nombre, fechaEntregado, comentarios_validacion, nombreArchivo, rutaArchivo, " +
@@ -32,7 +31,6 @@ public class DocumentoInicioDAO {
 
                 PreparedStatement sentencia = conexionBD.prepareStatement(sql);
                 sentencia.setString(1, nombreDocumento);
-                // Usamos Timestamp para guardar fecha y hora actual
                 sentencia.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now())); 
                 sentencia.setString(3, nombreArchivo);
                 sentencia.setString(4, rutaArchivo);

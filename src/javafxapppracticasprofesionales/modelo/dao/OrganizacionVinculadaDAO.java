@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
-import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 public class OrganizacionVinculadaDAO {

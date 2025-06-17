@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package javafxapppracticasprofesionales.modelo.dao;
 
 import java.sql.Connection;
@@ -29,7 +25,6 @@ public class EntregaDAO {
 
             while(resultado.next()){
                 Entrega entrega = new Entrega();
-                // El nombre del campo ID es diferente en cada tabla
                 if (tabla.equals("entregadocumentoinicio")) {
                     entrega.setIdEntrega(resultado.getInt("idEntregaDocumentoInicio"));
                 } else if (tabla.equals("entregareporte")) {
@@ -90,8 +85,6 @@ public class EntregaDAO {
         ArrayList<Entrega> entregas = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            
-            // --- LÓGICA PARA CONSTRUIR LA CONSULTA DINÁMICA ---
             String tablaDocumento;
             String campoIdEntregaFK;
             String campoIdEntregaPK;
@@ -121,11 +114,10 @@ public class EntregaDAO {
                 "WHERE e.grupoEE_idgrupoEE = ?",
                 campoIdDocumentoPK, tablaEntrega, tablaDocumento, campoIdEntregaPK, campoIdEntregaFK
             );
-            // --- FIN DE LA LÓGICA DE CONSTRUCCIÓN ---
 
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setInt(1, idExpediente); // El idExpediente para el JOIN
-            sentencia.setInt(2, idGrupo);      // El idGrupo para el WHERE
+            sentencia.setInt(1, idExpediente); 
+            sentencia.setInt(2, idGrupo);      
             
             ResultSet resultado = sentencia.executeQuery();
 
@@ -137,7 +129,6 @@ public class EntregaDAO {
                 entrega.setFechaInicio(resultado.getString("fechaInicio"));
                 entrega.setFechaFin(resultado.getString("fechaFin"));
                 
-                // Determinar el estado basado en si se encontró un documento
                 if (resultado.getObject("documento_id") != null) {
                     entrega.setEstado("Entregado");
                 } else {
@@ -178,7 +169,6 @@ public class EntregaDAO {
                     return entregas;
             }
 
-            // Consulta modificada con JOIN para filtrar por el idAcademico
             String consulta = String.format("SELECT t.%s, t.nombre, t.descripcion, t.fechaInicio, t.fechaFin " +
                                             "FROM %s t " +
                                             "JOIN grupoee g ON t.grupoEE_idgrupoEE = g.idgrupoEE " +
@@ -186,7 +176,6 @@ public class EntregaDAO {
                                             nombreColumnaId, nombreTabla);
 
             try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
-                // Se establece el parámetro del idAcademico en la consulta
                 sentencia.setInt(1, idAcademico);
 
                 ResultSet resultado = sentencia.executeQuery();
@@ -195,7 +184,6 @@ public class EntregaDAO {
                     entrega.setIdEntrega(resultado.getInt(nombreColumnaId));
                     entrega.setNombre(resultado.getString("nombre"));
                     entrega.setDescripcion(resultado.getString("descripcion"));
-                    // La corrección del tipo de dato que hicimos antes se mantiene
                     entrega.setFechaInicio(resultado.getTimestamp("fechaInicio").toLocalDateTime().toLocalDate().toString());
                     entrega.setFechaFin(resultado.getTimestamp("fechaFin").toLocalDateTime().toLocalDate().toString());
                     entregas.add(entrega);

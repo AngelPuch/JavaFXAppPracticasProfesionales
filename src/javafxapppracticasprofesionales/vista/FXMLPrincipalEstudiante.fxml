@@ -24,7 +24,7 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@../recurso/proyecto_icon.png" />
+                              <Image url="@../recurso/organizacion_icon.png" />
                            </image>
                         </ImageView>
                         <Button onAction="#btnClicEvaluarOrganizacionVinculada" prefHeight="5.0" prefWidth="162.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Evaluacion OV" wrapText="true">
@@ -41,7 +41,7 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@../recurso/organizacion_icon.png" />
+                              <Image url="@../recurso/asignacion_img.png" />
                            </image>
                         </ImageView>
                         <Button onAction="#btnClicEntregasPendientes" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Entregas pendientes" wrapText="true">
@@ -61,7 +61,7 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@../recurso/organizacion_icon.png" />
+                              <Image url="@../recurso/proyecto_icon.png" />
                            </image>
                         </ImageView>
                         <Button onAction="#btnClicMiExpediente" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Mi expediente" wrapText="true">

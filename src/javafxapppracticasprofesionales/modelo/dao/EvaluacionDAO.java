@@ -26,10 +26,8 @@ public class EvaluacionDAO {
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
             try {
-                // Iniciar transacción
                 conexionBD.setAutoCommit(false);
-
-                // 1. Insertar en la tabla 'evaluacion' y obtener el ID generado
+                
                 String sqlEvaluacion = "INSERT INTO evaluacion (calificacionTotal, fecha, motivo, comentarios, " +
                                        "Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
                                        "VALUES (?, CURDATE(), ?, ?, ?, ?, ?)";
@@ -47,7 +45,6 @@ public class EvaluacionDAO {
                     if (generatedKeys.next()) {
                         int idEvaluacionGenerado = generatedKeys.getInt(1);
 
-                        // 2. Insertar los detalles de la evaluación
                         String sqlDetalle = "INSERT INTO evaluacion_detalle (idEvaluacion, idCriterio, calificacion) VALUES (?, ?, ?)";
                         PreparedStatement psDetalle = conexionBD.prepareStatement(sqlDetalle);
 
@@ -60,7 +57,6 @@ public class EvaluacionDAO {
                         psDetalle.executeBatch();
                         psDetalle.close();
 
-                        // Si todo fue exitoso, confirmar la transacción
                         conexionBD.commit();
                         resultado.setIsError(false);
                         resultado.setMensaje("Evaluación guardada correctamente.");
@@ -73,9 +69,8 @@ public class EvaluacionDAO {
                 psEvaluacion.close();
 
             } catch (SQLException e) {
-                // Si algo falla, revertir todos los cambios
                 conexionBD.rollback();
-                throw e; // Relanzar la excepción para que el controlador la maneje
+                throw e; 
             } finally {
                 conexionBD.close();
             }
@@ -139,13 +134,11 @@ public class EvaluacionDAO {
         resultado.setIsError(true);
         Connection conexion = ConexionBD.abrirConexion();
         if (conexion != null) {
-            // ID 1 Corresponde a "Evaluacion de OV por Estudiante" en tu tabla 'tipoevaluacion'
             int idTipoEvaluacion = 1; 
             
             try {
-                conexion.setAutoCommit(false); // Iniciar transacción
+                conexion.setAutoCommit(false); 
                 
-                // 1. Insertar en la tabla 'evaluacion'
                 String sqlEvaluacion = "INSERT INTO evaluacion (fecha, comentarios, Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
                                        "VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement psEvaluacion = conexion.prepareStatement(sqlEvaluacion, Statement.RETURN_GENERATED_KEYS);
@@ -160,7 +153,6 @@ public class EvaluacionDAO {
                 if (generatedKeys.next()) {
                     int idEvaluacionGenerado = generatedKeys.getInt(1);
                     
-                    // 2. Insertar cada respuesta en 'evaluacion_ov_detalle'
                     String sqlDetalle = "INSERT INTO evaluacion_ov_detalle (idEvaluacion, idAfirmacion, respuesta) VALUES (?, ?, ?)";
                     PreparedStatement psDetalle = conexion.prepareStatement(sqlDetalle);
                     
@@ -172,7 +164,7 @@ public class EvaluacionDAO {
                     }
                     psDetalle.executeBatch();
                     
-                    conexion.commit(); // Confirmar transacción
+                    conexion.commit(); 
                     resultado.setIsError(false);
                     resultado.setMensaje("Evaluación guardada correctamente.");
                 } else {
@@ -180,8 +172,8 @@ public class EvaluacionDAO {
                 }
 
             } catch (SQLException e) {
-                conexion.rollback(); // Revertir en caso de error
-                throw e; // Lanzar la excepción para que el controlador la maneje
+                conexion.rollback(); 
+                throw e;
             } finally {
                 conexion.close();
             }
@@ -219,7 +211,6 @@ public class EvaluacionDAO {
         boolean yaEvaluado = false;
         Connection conexion = ConexionBD.abrirConexion();
         if (conexion != null) {
-            // ID 1 corresponde a "Evaluacion de OV por Estudiante" en tu tabla 'tipoevaluacion'
             String consulta = "SELECT COUNT(*) AS total FROM evaluacion WHERE Expediente_idExpediente = ? AND TipoEvaluacion_idTipoEvaluacion = 1";
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
             sentencia.setInt(1, idExpediente);

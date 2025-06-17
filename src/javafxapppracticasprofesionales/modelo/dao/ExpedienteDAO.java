@@ -16,10 +16,8 @@ public class ExpedienteDAO {
 
         if (conexionBD != null) {
             try {
-                // Iniciar transacción para asegurar que ambas operaciones (asignar y actualizar cupo) se completen
                 conexionBD.setAutoCommit(false);
 
-                // Sentencia 1: Asignar el proyecto al expediente del estudiante
                 String sqlAsignar = "UPDATE expediente ex " +
                     "JOIN (SELECT ex.idExpediente FROM expediente ex " +
                     "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
@@ -33,61 +31,28 @@ public class ExpedienteDAO {
                 int filasAfectadas = psAsignar.executeUpdate();
 
                 if (filasAfectadas > 0) {
-                    // Sentencia 2: Actualizar el número de cupos del proyecto
                     String sqlActualizarCupo = "UPDATE proyecto SET numeroCupos = numeroCupos - 1 WHERE idProyecto = ?";
                     PreparedStatement psActualizarCupo = conexionBD.prepareStatement(sqlActualizarCupo);
                     psActualizarCupo.setInt(1, idProyecto);
                     psActualizarCupo.executeUpdate();
                     
-                    // Si todo fue bien, confirmar la transacción
                     conexionBD.commit();
                     resultado.setIsError(false);
                     resultado.setMensaje("Proyecto asignado correctamente.");
 
                 } else {
-                    // Si no se afectaron filas, significa que no se encontró un expediente válido para asignar
                     resultado.setIsError(true);
                     resultado.setMensaje("No se encontró un expediente activo y sin proyecto para este estudiante.");
-                    // Revertir la transacción por si acaso
                     conexionBD.rollback();
                 }
 
                 psAsignar.close();
 
             } catch (SQLException e) {
-                // Si algo falla, revertir todos los cambios de la transacción
                 conexionBD.rollback();
-                throw e; // Relanzar la excepción para que la capa superior la maneje
             } finally {
                 conexionBD.close();
             }
-        } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
-        }
-        return resultado;
-    }
-
-    public static ResultadoOperacion crearExpedienteVacio(int idInscripcion) throws SQLException {
-        ResultadoOperacion resultado = new ResultadoOperacion();
-        Connection conexionBD = ConexionBD.abrirConexion();
-
-        if (conexionBD != null) {
-            // El estado '1' corresponde a 'Activo' según el script de la BD
-            String sql = "INSERT INTO expediente (Estado_idEstado, Inscripcion_idInscripcion, Proyecto_idProyecto) VALUES (1, ?, NULL)";
-            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setInt(1, idInscripcion);
-            int filasAfectadas = sentencia.executeUpdate();
-
-            if (filasAfectadas == 1) {
-                resultado.setIsError(false);
-                resultado.setMensaje("Expediente inicial creado para la inscripción.");
-            } else {
-                resultado.setIsError(true);
-                resultado.setMensaje("No se pudo crear el expediente inicial.");
-            }
-
-            sentencia.close();
-            conexionBD.close();
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
@@ -98,7 +63,6 @@ public class ExpedienteDAO {
         int idExpediente = 0;
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            // La consulta navega desde estudiante -> inscripcion -> expediente para encontrar el ID
             String sql = "SELECT ex.idExpediente " +
                          "FROM gestionpracticas.expediente ex " +
                          "JOIN gestionpracticas.inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
@@ -120,23 +84,23 @@ public class ExpedienteDAO {
     }
     
     public static int obtenerIdExpedienteActivo(int idEstudiante) throws SQLException {
-    int idExpediente = -1;
-    Connection conexionBD = ConexionBD.abrirConexion();
-    if (conexionBD != null) {
-        String sql = "SELECT ex.idExpediente FROM expediente ex " +
-                     "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
-                     "WHERE i.Estudiante_idEstudiante = ? AND ex.Estado_idEstado = 1 " + // 1 = Activo
-                     "ORDER BY ex.idExpediente DESC LIMIT 1";
-        try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-            sentencia.setInt(1, idEstudiante);
-            ResultSet resultado = sentencia.executeQuery();
-            if (resultado.next()) {
-                idExpediente = resultado.getInt("idExpediente");
+        int idExpediente = -1;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT ex.idExpediente FROM expediente ex " +
+                         "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
+                         "WHERE i.Estudiante_idEstudiante = ? AND ex.Estado_idEstado = 1 " + 
+                         "ORDER BY ex.idExpediente DESC LIMIT 1";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idEstudiante);
+                ResultSet resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    idExpediente = resultado.getInt("idExpediente");
+                }
+            } finally {
+                conexionBD.close();
             }
-        } finally {
-            conexionBD.close();
         }
+        return idExpediente;
     }
-    return idExpediente;
-}
 }

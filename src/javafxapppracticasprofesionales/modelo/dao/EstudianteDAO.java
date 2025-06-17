@@ -11,10 +11,10 @@ import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 
 /** 
-* Project: JavaFX Sales System 
-* File: ClassName.java 
+* Project: JavaFXAppPracticasProfesionales 
+* File: EstudianteDAO.java 
 * Author: Jose Luis Silva Gomez 
-* Date: YYYY-MM-DD 
+* Date: 2025-06-16 
 * Description: Brief description of the file's purpose. 
 */
 public class EstudianteDAO {
@@ -88,10 +88,6 @@ public class EstudianteDAO {
                     estudiante.setMatricula(resultado.getString("matricula"));
                     estudiante.setSemestre(resultado.getInt("semestre"));
                     estudiante.setCorreo(resultado.getString("correo"));
-                    // Este dato es útil para asociar la evaluación con el usuario que la realiza
-                    // En este contexto, sería el id del usuario del evaluador.
-                    // Aquí lo usamos para obtener el id de usuario del estudiante si fuera necesario.
-                    // Para este CU, el id importante es el del evaluador logueado.
                     estudiantes.add(estudiante);
                 }
             } finally {

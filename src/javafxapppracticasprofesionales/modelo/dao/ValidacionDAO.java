@@ -17,12 +17,10 @@ public class ValidacionDAO {
         ArrayList<DocumentoEntregado> documentos = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
 
-        // PASO 1: Obtener el idAcademico del usuario en sesión
         int idUsuarioLogueado = SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario();
         Academico profesorLogueado = AcademicoDAO.obtenerAcademicoPorIdUsuario(idUsuarioLogueado);
 
         if (profesorLogueado == null) {
-            // Si por alguna razón el usuario no es un académico, no se puede continuar.
             throw new SQLException("El usuario actual no es un académico registrado y no puede validar entregas.");
         }
 
@@ -31,7 +29,7 @@ public class ValidacionDAO {
             String nombreTabla = tablaInfo[0];
             String nombreColumnaId = tablaInfo[1];
             String nombreColumnaFkEntrega = tablaInfo[2];
-            int idAcademico = profesorLogueado.getIdAcademico(); // Usamos el ID de académico obtenido
+            int idAcademico = profesorLogueado.getIdAcademico(); 
 
             String sql = String.format(
                 "SELECT doc.%s, est.nombre AS nombreEstudiante, est.matricula, doc.fechaEntregado, doc.rutaArchivo " +
