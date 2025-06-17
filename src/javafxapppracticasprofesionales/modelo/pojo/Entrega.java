@@ -6,15 +6,17 @@ public class Entrega {
     private String descripcion;
     private String fechaInicio;
     private String fechaFin;
+    private String estado;
 
     public Entrega() {}
 
-    public Entrega(int idEntrega, String nombre, String descripcion, String fechaInicio, String fechaFin) {
+    public Entrega(int idEntrega, String nombre, String descripcion, String fechaInicio, String fechaFin, String estado) {
         this.idEntrega = idEntrega;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.estado = estado;
     }
 
     public int getIdEntrega() {
@@ -55,6 +57,14 @@ public class Entrega {
 
     public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     

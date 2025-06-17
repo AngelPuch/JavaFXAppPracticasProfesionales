@@ -61,6 +61,12 @@ public class FXMLEntregasPendientesController implements Initializable {
     @FXML
     private TableColumn<Entrega, String> colFechaFinFinal;
     private InfoEstudianteSesion infoSesion;
+    @FXML
+    private TableColumn<?, ?> colEstadoInicial;
+    @FXML
+    private TableColumn<?, ?> colEstadoReporte;
+    @FXML
+    private TableColumn<?, ?> colEstadoFinal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,34 +86,36 @@ public class FXMLEntregasPendientesController implements Initializable {
     }    
 
     private void configurarTablas() {
-        // Tabla Documentos Iniciales
+        // --- SE AÑADE LA CONFIGURACIÓN PARA LA NUEVA COLUMNA DE ESTADO ---
         colNombreInicial.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioInicial.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFinInicial.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
+        colEstadoInicial.setCellValueFactory(new PropertyValueFactory<>("estado")); // <-- NUEVO
 
-        // Tabla Reportes
         colNombreReporte.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioReporte.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFinReporte.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
+        colEstadoReporte.setCellValueFactory(new PropertyValueFactory<>("estado")); // <-- NUEVO
 
-        // Tabla Documentos Finales
         colNombreFinal.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioFinal.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFinFinal.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
+        colEstadoFinal.setCellValueFactory(new PropertyValueFactory<>("estado")); // <-- NUEVO
     }
 
     private void cargarTodasLasEntregas() {
         try {
-            // Cargar entregas de documentos iniciales
-            ArrayList<Entrega> entregasIniciales = EntregaDAO.obtenerEntregasPorGrupo(infoSesion.getIdGrupo(), "entregadocumentoinicio");
+            // --- SE PASA EL ID DEL EXPEDIENTE AL MÉTODO DEL DAO ---
+            int idExp = infoSesion.getIdExpediente();
+            int idGrp = infoSesion.getIdGrupo();
+
+            ArrayList<Entrega> entregasIniciales = EntregaDAO.obtenerEntregasPendientesEstudiante(idGrp, idExp, "entregadocumentoinicio");
             tvEntregasIniciales.setItems(FXCollections.observableArrayList(entregasIniciales));
 
-            // Cargar entregas de reportes
-            ArrayList<Entrega> entregasReportes = EntregaDAO.obtenerEntregasPorGrupo(infoSesion.getIdGrupo(), "entregareporte");
+            ArrayList<Entrega> entregasReportes = EntregaDAO.obtenerEntregasPendientesEstudiante(idGrp, idExp, "entregareporte");
             tvEntregasReportes.setItems(FXCollections.observableArrayList(entregasReportes));
 
-            // Cargar entregas de documentos finales
-            ArrayList<Entrega> entregasFinales = EntregaDAO.obtenerEntregasPorGrupo(infoSesion.getIdGrupo(), "entregadocumentofinal");
+            ArrayList<Entrega> entregasFinales = EntregaDAO.obtenerEntregasPendientesEstudiante(idGrp, idExp, "entregadocumentofinal");
             tvEntregasFinales.setItems(FXCollections.observableArrayList(entregasFinales));
 
         } catch (SQLException e) {
@@ -126,15 +134,9 @@ public class FXMLEntregasPendientesController implements Initializable {
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
-                
-            cerrarVentana();
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de selección de entrega.", Alert.AlertType.ERROR);
         }
-    }
-
-    private void cerrarVentana() {
-        Utilidad.getEscenarioComponente(tvEntregasFinales).close();
     }
     
 }

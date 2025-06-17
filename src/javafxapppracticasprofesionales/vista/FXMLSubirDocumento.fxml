@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -7,19 +8,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSubirDocumentoController">
+<AnchorPane prefHeight="327.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSubirDocumentoController">
    <children>
       <Label layoutX="174.0" layoutY="26.0" text="Subir Documento">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="50.0" layoutY="95.0" text="Nombre del Documento:" />
-      <ComboBox fx:id="cbTipoDocumento" layoutX="200.0" layoutY="91.0" prefWidth="250.0" promptText="Seleccione un tipo..." />
-      <Label layoutX="50.0" layoutY="145.0" text="Archivo:" />
-      <TextField fx:id="tfRutaArchivo" editable="false" layoutX="110.0" layoutY="141.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button fx:id="btnSeleccionarArchivo" layoutX="370.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicSeleccionarArchivo" text="Seleccionar..." />
-      <Button fx:id="btnAceptar" layoutX="404.0" layoutY="241.0" mnemonicParsing="false" onAction="#clicAceptar" text="Aceptar" />
-      <Button fx:id="btnCancelar" layoutX="325.0" layoutY="241.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
+      <Label layoutX="50.0" layoutY="76.0" text="Nombre del Documento:" />
+      <ComboBox fx:id="cbTipoDocumento" layoutX="200.0" layoutY="72.0" prefWidth="250.0" promptText="Seleccione un tipo..." />
+      <Label layoutX="50.0" layoutY="204.0" text="Archivo:" />
+      <TextField fx:id="tfRutaArchivo" editable="false" layoutX="110.0" layoutY="200.0" prefHeight="25.0" prefWidth="250.0" />
+      <Button fx:id="btnSeleccionarArchivo" layoutX="370.0" layoutY="200.0" mnemonicParsing="false" onAction="#clicSeleccionarArchivo" text="Seleccionar..." />
+      <Button fx:id="btnAceptar" layoutX="404.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicAceptar" text="Aceptar" />
+      <Button fx:id="btnCancelar" layoutX="325.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
+      <TextField fx:id="tfNombreArchivo" layoutX="182.0" layoutY="138.0" prefHeight="25.0" prefWidth="250.0" />
+      <Label layoutX="50.0" layoutY="140.0" text="Nombre archivo:" />
    </children>
 </AnchorPane>

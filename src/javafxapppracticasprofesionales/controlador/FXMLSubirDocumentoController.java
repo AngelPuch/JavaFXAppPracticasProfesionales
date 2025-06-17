@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.DocumentoInicioDAO;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
@@ -45,7 +46,7 @@ public class FXMLSubirDocumentoController implements Initializable {
     private Button btnAceptar;
     @FXML
     private Button btnCancelar;
-
+    
     private int idEntrega;
     private int idExpediente;
     private File archivoSeleccionado;
@@ -55,6 +56,8 @@ public class FXMLSubirDocumentoController implements Initializable {
     private static final String DIRECTORIO_PRINCIPAL_APP = "PracticasProfesionales_Documentos";
     private static final String SUBDIRECTORIO_DOCUMENTOS = "DocumentosIniciales";
     // --- FIN DE LA LÓGICA RECOMENDADA ---
+    @FXML
+    private TextField tfNombreArchivo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,7 +76,6 @@ public class FXMLSubirDocumentoController implements Initializable {
     @FXML
     private void clicSeleccionarArchivo(ActionEvent event) {
         FileChooser dialogo = new FileChooser();
-        dialogo.setTitle("Selecciona tu documento");
         Stage escenario = (Stage) btnSeleccionarArchivo.getScene().getWindow();
         archivoSeleccionado = dialogo.showOpenDialog(escenario);
 
@@ -82,46 +84,52 @@ public class FXMLSubirDocumentoController implements Initializable {
         }
     }
 
-    @FXML
+     @FXML
     private void clicAceptar(ActionEvent event) {
         if (!validarCampos()) {
             return;
         }
         
         try {
-            // 1. Obtener la ruta de la carpeta personal del usuario (ej: "C:\Users\TuUsuario")
-            String userHome = System.getProperty("user.home");
-
-            // 2. Definir y crear la ruta completa del directorio de almacenamiento.
-            // Esto crea una ruta como: "C:\Users\TuUsuario\PracticasProfesionales_Documentos\DocumentosIniciales"
-            Path directorioPath = Paths.get(userHome, DIRECTORIO_PRINCIPAL_APP, SUBDIRECTORIO_DOCUMENTOS);
-            Files.createDirectories(directorioPath); // Crea todos los directorios en la ruta si no existen.
-
-            // 3. Crear un nombre de archivo único para evitar sobreescrituras.
+            // --- CAMBIO 1: SE OBTIENE EL NOMBRE DEL ARCHIVO DESDE EL TEXTFIELD Y SE PRESERVA LA EXTENSIÓN ORIGINAL ---
+            String nombreBaseUsuario = tfNombreArchivo.getText().trim();
             String nombreOriginal = archivoSeleccionado.getName();
             String extension = "";
             int i = nombreOriginal.lastIndexOf('.');
             if (i > 0) {
-                extension = nombreOriginal.substring(i);
+                extension = nombreOriginal.substring(i); // Incluye el punto, ej: ".pdf"
             }
-            String nombreUnico = UUID.randomUUID().toString() + extension;
+            String nombreFinalArchivo = nombreBaseUsuario + extension;
             
-            // 4. Copiar el archivo al nuevo directorio.
-            Path rutaDestino = directorioPath.resolve(nombreUnico);
+            // Se obtiene la ruta del directorio destino
+            String userHome = System.getProperty("user.home");
+            Path directorioPath = Paths.get(userHome, DIRECTORIO_PRINCIPAL_APP, SUBDIRECTORIO_DOCUMENTOS);
+            Files.createDirectories(directorioPath);
+
+            // --- CAMBIO 2: SE VERIFICA SI EL ARCHIVO YA EXISTE EN EL DIRECTORIO DESTINO ---
+            Path rutaDestino = directorioPath.resolve(nombreFinalArchivo);
+            if (Files.exists(rutaDestino)) {
+                AlertaUtilidad.mostrarAlertaSimple("Nombre duplicado", 
+                        "Ya existe un archivo con el nombre '" + nombreFinalArchivo + "'. Por favor, elige otro nombre.", 
+                        Alert.AlertType.WARNING);
+                return; // Se detiene la ejecución si el archivo ya existe
+            }
+            
+            // Si no existe, se copia el archivo al nuevo directorio
             Files.copy(archivoSeleccionado.toPath(), rutaDestino, StandardCopyOption.REPLACE_EXISTING);
 
-            // 5. Preparar los datos para guardar en la BD. La ruta es ABSOLUTA.
+            // Se preparan los datos para guardar en la BD
             String nombreDocTipo = cbTipoDocumento.getValue().getNombre();
             String rutaParaBD = rutaDestino.toAbsolutePath().toString();
             
-            // 6. Llamar al DAO con la nueva ruta absoluta y el nuevo nombre de archivo.
-            ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(nombreDocTipo, rutaParaBD, nombreUnico, idEntrega, idExpediente);
+            // --- CAMBIO 3: SE LLAMA AL DAO CON EL NUEVO NOMBRE DE ARCHIVO DEFINIDO POR EL USUARIO ---
+            ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(nombreDocTipo, rutaParaBD, nombreFinalArchivo, idEntrega, idExpediente);
 
             if (!resultado.isError()) {
-                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", "El documento se ha guardado correctamente.", Alert.AlertType.INFORMATION);
+                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", resultado.getMensaje(), Alert.AlertType.INFORMATION);
                 cerrarVentana();
             } else {
-                AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo guardar la información en la base de datos.", Alert.AlertType.ERROR);
+                AlertaUtilidad.mostrarAlertaSimple("Error", resultado.getMensaje(), Alert.AlertType.ERROR);
             }
 
         } catch (SQLException e) {
@@ -140,12 +148,21 @@ public class FXMLSubirDocumentoController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Archivo requerido", "Debes seleccionar un archivo para subir.", Alert.AlertType.WARNING);
             return false;
         }
+        // --- CAMBIO 4: SE AÑADE LA VALIDACIÓN PARA EL CAMPO DEL NOMBRE DEL ARCHIVO ---
+        if (tfNombreArchivo.getText().trim().isEmpty()) {
+            AlertaUtilidad.mostrarAlertaSimple("Campo requerido", "Debes ingresar un nombre para el archivo.", Alert.AlertType.WARNING);
+            return false;
+        }
         return true;
     }
 
     @FXML
     private void clicCancelar(ActionEvent event) {
-        cerrarVentana();
+        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
+                "¿Estás seguro de que quieres cancelar?");
+        if (confirmado) {
+            cerrarVentana();
+        }
     }
     
     private void cerrarVentana() {

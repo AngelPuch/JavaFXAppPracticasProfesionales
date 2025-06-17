@@ -15,9 +15,10 @@
       </Label>
       <TableView fx:id="tvEntregasIniciales" layoutX="25.0" layoutY="50.0" prefHeight="106.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <columns>
-            <TableColumn fx:id="colNombreInicial" prefWidth="300.0" text="Nombre" />
+            <TableColumn fx:id="colNombreInicial" prefWidth="243.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />
-            <TableColumn fx:id="colFechaFinInicial" prefWidth="230.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colFechaFinInicial" prefWidth="208.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colEstadoInicial" prefWidth="92.0" text="Estado" />
          </columns>
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>
@@ -27,9 +28,10 @@
       </Label>
       <TableView fx:id="tvEntregasReportes" layoutX="25.0" layoutY="223.0" prefHeight="97.0" prefWidth="774.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <columns>
-            <TableColumn fx:id="colNombreReporte" prefWidth="300.0" text="Nombre" />
-            <TableColumn fx:id="colFechaInicioReporte" prefWidth="230.0" text="Fecha de Inicio" />
-            <TableColumn fx:id="colFechaFinReporte" prefWidth="230.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colNombreReporte" prefWidth="244.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioReporte" prefWidth="228.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinReporte" prefWidth="208.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colEstadoReporte" prefWidth="93.0" text="Estado" />
          </columns>
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>
@@ -39,9 +41,10 @@
       </Label>
       <TableView fx:id="tvEntregasFinales" layoutX="25.0" layoutY="387.0" prefHeight="97.0" prefWidth="774.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <columns>
-            <TableColumn fx:id="colNombreFinal" prefWidth="300.0" text="Nombre" />
-            <TableColumn fx:id="colFechaInicioFinal" prefWidth="230.0" text="Fecha de Inicio" />
-            <TableColumn fx:id="colFechaFinFinal" prefWidth="230.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colNombreFinal" prefWidth="241.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioFinal" prefWidth="228.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinFinal" prefWidth="215.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colEstadoFinal" prefWidth="89.0" text="Estado" />
          </columns>
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>

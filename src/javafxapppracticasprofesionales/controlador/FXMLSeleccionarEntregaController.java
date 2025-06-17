@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
@@ -74,7 +76,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             this.infoSesion = EstudianteDAO.obtenerInfoEstudianteParaSesion(idUsuario);
             if (this.infoSesion != null) {
                 // Una vez que tenemos la info (especialmente el idGrupo), cargamos las entregas
-                cargarEntregas(this.infoSesion.getIdGrupo());
+                cargarEntregas(this.infoSesion.getIdGrupo(), this.infoSesion.getIdExpediente());
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Información no encontrada", 
                     "No se pudo encontrar la información de inscripción para el estudiante.", Alert.AlertType.ERROR);
@@ -86,11 +88,19 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     }
     
     // Modificado para recibir el idGrupo
-    private void cargarEntregas(int idGrupo) {
+    private void cargarEntregas(int idGrupo, int idExpediente) {
         try {
-            ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPorGrupo(idGrupo, "entregadocumentoinicio");
-            ObservableList<Entrega> entregasObservable = FXCollections.observableArrayList(entregasBD);
+            // Se obtiene la lista completa de entregas (con su estado)
+            ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPendientesEstudiante(idGrupo, idExpediente, "entregadocumentoinicio");
+            
+            // --- SE FILTRA LA LISTA PARA MOSTRAR SOLO LAS PENDIENTES ---
+            ArrayList<Entrega> entregasPendientes = entregasBD.stream()
+                                                              .filter(entrega -> "Sin Entregar".equals(entrega.getEstado()))
+                                                              .collect(Collectors.toCollection(ArrayList::new));
+            
+            ObservableList<Entrega> entregasObservable = FXCollections.observableArrayList(entregasPendientes);
             tvEntregas.setItems(entregasObservable);
+            
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar las entregas.", Alert.AlertType.ERROR);
         }
@@ -112,10 +122,11 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             // Pasamos los IDs reales obtenidos de la sesión
             controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente());
 
-            Stage escenario = (Stage) btnContinuar.getScene().getWindow();
+            Stage escenario = new Stage();
             escenario.setTitle("Subir documento inicial - Paso 2");
             escenario.setScene(new Scene(vista));
             escenario.setTitle("Subir Documento");
+            cerrarVentana();
             escenario.show();
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la siguiente ventana.", Alert.AlertType.ERROR);
@@ -124,6 +135,11 @@ public class FXMLSeleccionarEntregaController implements Initializable {
 
     @FXML
     private void clicCancelar(ActionEvent event) {
+        cerrarVentana();
+    }
+    
+    private void cerrarVentana() {
         Utilidad.getEscenarioComponente(tvEntregas).close();
     }
+    
 }
