@@ -19,10 +19,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.modelo.dao.AcademicoDAO;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
+import javafxapppracticasprofesionales.modelo.pojo.Academico;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
 public class FXMLValidar_SeleccionarDocumentoController implements Initializable {
 
@@ -55,11 +58,22 @@ public class FXMLValidar_SeleccionarDocumentoController implements Initializable
     
     private void cargarEntregas() {
         try {
-            ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPorTipo(tipoDocumento.getIdTipoDocumento());
-            listaEntregas = FXCollections.observableArrayList(entregasBD);
-            tvEntregasProgramadas.setItems(listaEntregas);
+            // Paso 1: Obtener el id del usuario en sesión.
+            int idUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario();
+            // Paso 2: Obtener el objeto Academico completo.
+            Academico profesor = AcademicoDAO.obtenerAcademicoPorIdUsuario(idUsuario);
+            
+            if (profesor != null) {
+                // Paso 3: Llamar al DAO con el ID del tipo y el ID del académico.
+                ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPorTipo(tipoDocumento.getIdTipoDocumento(), profesor.getIdAcademico());
+                listaEntregas = FXCollections.observableArrayList(entregasBD);
+                tvEntregasProgramadas.setItems(listaEntregas);
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Error","No se encontró el perfil de académico para este usuario.", Alert.AlertType.ERROR);
+            }
+            
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error", e.getMessage(), Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error",e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 

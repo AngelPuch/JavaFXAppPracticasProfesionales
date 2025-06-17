@@ -152,7 +152,7 @@ public class EntregaDAO {
         return entregas;
     }
     
-    public static ArrayList<Entrega> obtenerEntregasPorTipo(int idTipoDocumento) throws SQLException {
+    public static ArrayList<Entrega> obtenerEntregasPorTipo(int idTipoDocumento, int idAcademico) throws SQLException {
         ArrayList<Entrega> entregas = new ArrayList<>();
         Connection conexion = ConexionBD.abrirConexion();
 
@@ -174,25 +174,29 @@ public class EntregaDAO {
                     nombreColumnaId = "idEntregaDocumentoFinal";
                     break;
                 default:
-                    // Si el tipo no es válido, cerramos la conexión y devolvemos una lista vacía.
                     conexion.close();
                     return entregas;
             }
 
-            String consulta = String.format("SELECT %s, nombre, descripcion, fechaInicio, fechaFin FROM %s",
+            // Consulta modificada con JOIN para filtrar por el idAcademico
+            String consulta = String.format("SELECT t.%s, t.nombre, t.descripcion, t.fechaInicio, t.fechaFin " +
+                                            "FROM %s t " +
+                                            "JOIN grupoee g ON t.grupoEE_idgrupoEE = g.idgrupoEE " +
+                                            "WHERE g.Academico_idAcademico = ?",
                                             nombreColumnaId, nombreTabla);
 
             try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
+                // Se establece el parámetro del idAcademico en la consulta
+                sentencia.setInt(1, idAcademico);
+
                 ResultSet resultado = sentencia.executeQuery();
                 while (resultado.next()) {
                     Entrega entrega = new Entrega();
                     entrega.setIdEntrega(resultado.getInt(nombreColumnaId));
                     entrega.setNombre(resultado.getString("nombre"));
                     entrega.setDescripcion(resultado.getString("descripcion"));
-                    // Reemplazo para la línea 192
+                    // La corrección del tipo de dato que hicimos antes se mantiene
                     entrega.setFechaInicio(resultado.getTimestamp("fechaInicio").toLocalDateTime().toLocalDate().toString());
-
-                    // Reemplazo para la línea 193
                     entrega.setFechaFin(resultado.getTimestamp("fechaFin").toLocalDateTime().toLocalDate().toString());
                     entregas.add(entrega);
                 }
