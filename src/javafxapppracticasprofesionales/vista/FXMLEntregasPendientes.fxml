@@ -15,7 +15,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasPendientesController">
    <children>
-      <Button layoutY="21.0" onAction="#btnClicEntregarDocIniciales" style="-fx-background-color: #28a745; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Iniciales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="21.0">
+      <Button layoutY="21.0" onAction="#btnClicEntregarDocIniciales" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Iniciales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="21.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -37,7 +37,7 @@
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>
 
-      <Button layoutY="194.0" style="-fx-background-color: #28a745; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Reportes" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="194.0">
+      <Button layoutY="194.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Reportes" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="194.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -58,7 +58,7 @@
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>
 
-      <Button layoutY="340.0" style="-fx-background-color: #28a745; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Finales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="340.0">
+      <Button layoutY="340.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Finales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="340.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

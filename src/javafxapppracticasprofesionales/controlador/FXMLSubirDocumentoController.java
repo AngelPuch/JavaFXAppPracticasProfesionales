@@ -116,11 +116,11 @@ public class FXMLSubirDocumentoController implements Initializable {
                 observador.operacionExitosa();
                 cerrarVentana();
             } else {
-                AlertaUtilidad.mostrarAlertaSimple("Error", resultado.getMensaje(), Alert.AlertType.ERROR);
+                AlertaUtilidad.mostrarAlertaSimple("Error", "No se puede realizar la entrega de tu documento debido a que no tienes un expediente asignado.", Alert.AlertType.ERROR);
             }
 
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Ocurrió un error con la base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se puede realizar la entrega de tu documento debido a que no tienes un expediente asignado." , Alert.AlertType.ERROR);
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Archivo", "No se pudo guardar el archivo en el directorio: " + e.getMessage(), Alert.AlertType.ERROR);
         }

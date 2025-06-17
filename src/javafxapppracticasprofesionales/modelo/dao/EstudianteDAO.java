@@ -188,6 +188,25 @@ public class EstudianteDAO {
         }
         return estudiante;
     }
+    
+    public static int obtenerHorasAcumuladas(int idExpediente) throws SQLException {
+        int horasAcumuladas = 0;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String consulta = "SELECT horasAcumuladas FROM expediente WHERE idExpediente = ?";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+                sentencia.setInt(1, idExpediente);
+                ResultSet resultado = sentencia.executeQuery();
+
+                if (resultado.next()) {
+                    horasAcumuladas = resultado.getInt("horasAcumuladas");
+                }
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return horasAcumuladas;
+    }
 
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();
