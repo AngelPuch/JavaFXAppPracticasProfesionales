@@ -82,48 +82,54 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
     
-    private void irPantallaPrincipal(Usuario usuarioSesion) {
-        try {
-            Stage escenarioBase = (Stage) pfPassword.getScene().getWindow();
-            String fxmlVista;
-            String tituloVentana;
+    private void irPantallaPrincipal(Usuario usuario) {
+        Stage escenarioPrincipal = (Stage) tfUsuario.getScene().getWindow();
+        escenarioPrincipal.setTitle("Pantalla Principal");
 
-            // Determinar qué vista cargar según el rol del usuario
-            switch (usuarioSesion.getRolPrincipal().toLowerCase()) {
+        // Se asume que el primer rol es el principal para la redirección
+        String primerRol = usuario.getRolPrincipal();
+
+        try {
+            FXMLLoader loader;
+
+            switch (primerRol.toLowerCase()) {
                 case "coordinador":
-                    fxmlVista = "vista/FXMLPrincipalCoordinador.fxml";
-                    tituloVentana = "Menú Principal - Coordinador";
+                    loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalCoordinador.fxml"));
+                    Parent vistaCoordinador = loader.load();
+                    FXMLPrincipalCoordinadorController controllerCoordinador = loader.getController();
+                    controllerCoordinador.inicializarInformacion(usuario);
+                    Scene escenaCoordinador = new Scene(vistaCoordinador);
+                    escenarioPrincipal.setScene(escenaCoordinador);
                     break;
+
                 case "profesor":
-                    fxmlVista = "vista/FXMLPrincipalProfesor.fxml";
-                    tituloVentana = "Menú Principal - Profesor";
+                    // Lógica para redirigir al profesor
                     break;
+
+                case "estudiante":
+                    // Lógica para redirigir al estudiante
+                    break;
+
+                // CASO AÑADIDO PARA EL EVALUADOR
+                case "evaluador":
+                    loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLPrincipalEvaluador.fxml"));
+                    Parent vistaEvaluador = loader.load();
+                    FXMLPrincipalEvaluadorController controllerEvaluador = loader.getController();
+                    controllerEvaluador.inicializarInformacion(usuario);
+                    Scene escenaEvaluador = new Scene(vistaEvaluador);
+                    escenarioPrincipal.setScene(escenaEvaluador);
+                    break;
+
                 default:
-                    AlertaUtilidad.mostrarAlertaSimple("Rol no reconocido",
-                            "El rol '" + usuarioSesion.getRolPrincipal() + "' no tiene una pantalla principal definida.", Alert.AlertType.ERROR);
+                    AlertaUtilidad.mostrarAlertaSimple("Rol no reconocido", "No hay una pantalla principal para el rol: " + primerRol, Alert.AlertType.ERROR);
                     return;
             }
 
-            FXMLLoader cargador = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource(fxmlVista));
-            Parent vista = cargador.load();
+            escenarioPrincipal.show();
 
-            // Inicializar el controlador específico de la vista cargada
-            if (usuarioSesion.getRolPrincipal().equalsIgnoreCase("coordinador")) {
-                FXMLPrincipalCoordinadorController controlador = cargador.getController();
-                controlador.inicializarInformacion(usuarioSesion);
-            } else if (usuarioSesion.getRolPrincipal().equalsIgnoreCase("profesor")) {
-                FXMLPrincipalProfesorController controlador = cargador.getController();
-                controlador.inicializarInformacion(usuarioSesion);
-            }
-
-            Scene escenaPrincipal = new Scene(vista);
-            escenarioBase.setScene(escenaPrincipal);
-            escenarioBase.setTitle(tituloVentana);
-            escenarioBase.show();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            AlertaUtilidad.mostrarAlertaSimple("Error de Interfaz", "No se pudo cargar la pantalla principal: " + ex.getMessage(), Alert.AlertType.ERROR);
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se puede mostrar la pantalla principal.", Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 

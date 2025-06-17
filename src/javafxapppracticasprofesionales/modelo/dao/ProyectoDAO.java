@@ -105,6 +105,36 @@ public class ProyectoDAO {
         return resultado;
     }
     
+    public static Proyecto obtenerProyectoPorIdExpediente(int idExpediente) throws SQLException {
+        Proyecto proyecto = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            // La consulta une expediente y proyecto para obtener los datos del proyecto
+            String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo " +
+                         "FROM gestionpracticas.proyecto p " +
+                         "JOIN gestionpracticas.expediente e ON p.idProyecto = e.Proyecto_idProyecto " +
+                         "WHERE e.idExpediente = ?;";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idExpediente);
+                try (ResultSet resultado = sentencia.executeQuery()) {
+                    if (resultado.next()) {
+                        proyecto = new Proyecto();
+                        proyecto.setIdProyecto(resultado.getInt("idProyecto"));
+                        proyecto.setNombre(resultado.getString("nombre"));
+                        proyecto.setDescripcion(resultado.getString("descripcion"));
+                        proyecto.setNumeroCupos(resultado.getInt("numeroCupos"));
+                        proyecto.setObjetivo(resultado.getString("objetivo"));
+                    }
+                }
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
+        }
+        return proyecto;
+    }
+    
     private static Proyecto convertirRegistroProyecto(ResultSet resultado) throws SQLException {
         Proyecto proyecto = new Proyecto();
         proyecto.setIdProyecto(resultado.getInt("idProyecto"));

@@ -1,0 +1,92 @@
+
+package javafxapppracticasprofesionales.modelo.pojo;
+
+public class Evaluacion {
+    private int idEvaluacion;
+    private float calificacionTotal;
+    private String fecha;
+    private String motivo;
+    private String comentarios;
+    private int idUsuario;
+    private int idTipoEvaluacion;
+    private int idExpediente;
+
+    public Evaluacion() {
+    }
+
+    public Evaluacion(int idEvaluacion, float calificacionTotal, String fecha, String motivo, 
+            String comentarios, int idUsuario, int idTipoEvaluacion, int idExpediente) {
+        this.idEvaluacion = idEvaluacion;
+        this.calificacionTotal = calificacionTotal;
+        this.fecha = fecha;
+        this.motivo = motivo;
+        this.comentarios = comentarios;
+        this.idUsuario = idUsuario;
+        this.idTipoEvaluacion = idTipoEvaluacion;
+        this.idExpediente = idExpediente;
+    }
+
+    public int getIdEvaluacion() {
+        return idEvaluacion;
+    }
+
+    public void setIdEvaluacion(int idEvaluacion) {
+        this.idEvaluacion = idEvaluacion;
+    }
+
+    public float getCalificacionTotal() {
+        return calificacionTotal;
+    }
+
+    public void setCalificacionTotal(float calificacionTotal) {
+        this.calificacionTotal = calificacionTotal;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdTipoEvaluacion() {
+        return idTipoEvaluacion;
+    }
+
+    public void setIdTipoEvaluacion(int idTipoEvaluacion) {
+        this.idTipoEvaluacion = idTipoEvaluacion;
+    }
+
+    public int getIdExpediente() {
+        return idExpediente;
+    }
+
+    public void setIdExpediente(int idExpediente) {
+        this.idExpediente = idExpediente;
+    }
+}

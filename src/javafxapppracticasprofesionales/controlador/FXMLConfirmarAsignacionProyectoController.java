@@ -82,7 +82,7 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
             }
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
-                    "Se perdió la conexión. Inténtalo de nuevo.", Alert.AlertType.ERROR);
+                    "Se perdió la conexión. Inténtalo de nuevo." + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     
