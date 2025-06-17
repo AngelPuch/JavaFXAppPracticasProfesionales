@@ -45,32 +45,30 @@ public class FXMLMiExpedienteController implements Initializable {
     @FXML
     private TableView<Avance> tvDocumentosIniciales;
     @FXML
-    private TableColumn<?, ?> colNombreDI;
+    private TableColumn colNombreDI;
     @FXML
-    private TableColumn<?, ?> colFechaDI;
+    private TableColumn colFechaDI;
     @FXML
-    private TableColumn<?, ?> colEstadoDI;
+    private TableColumn colEstadoDI;
     @FXML
     private TableView<Avance> tvReportes;
     @FXML
-    private TableColumn<?, ?> colNombreR;
+    private TableColumn colNombreR;
     @FXML
-    private TableColumn<?, ?> colFechaR;
+    private TableColumn colFechaR;
     @FXML
-    private TableColumn<?, ?> colEstadoR;
+    private TableColumn colEstadoR;
     @FXML
     private TableView<Avance> tvDocumentosFinales;
     @FXML
-    private TableColumn<?, ?> colNombreDF;
+    private TableColumn colNombreDF;
     @FXML
-    private TableColumn<?, ?> colFechaDF;
+    private TableColumn colFechaDF;
     @FXML
-    private TableColumn<?, ?> colEstadoDF;
+    private TableColumn colEstadoDF;
     @FXML
     private Button btnConsultar;
-    @FXML
-    private Button btnCancelar;
-
+ 
     private int idExpediente;
     /**
      * Initializes the controller class.
@@ -79,7 +77,6 @@ public class FXMLMiExpedienteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             int idUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario();
-            // CORRECCIÓN: Se obtiene el idEstudiante a través del idUsuario de la sesión
             Estudiante estudianteLogueado = EstudianteDAO.obtenerEstudiantePorIdUsuario(idUsuario);
             if (estudianteLogueado != null) {
                 this.idExpediente = ExpedienteDAO.obtenerIdExpedienteActivo(estudianteLogueado.getIdEstudiante());
@@ -129,11 +126,6 @@ public class FXMLMiExpedienteController implements Initializable {
         } catch (Exception e) {
             AlertaUtilidad.mostrarAlertaSimple("Error inesperado", "Ocurrió un error al intentar abrir el archivo.", Alert.AlertType.ERROR);
         }
-    }
-
-    @FXML
-    private void btnClicCancelar(ActionEvent event) {
-        Utilidad.getEscenarioComponente(btnCancelar).close();
     }
     
     private void configurarTablas() {

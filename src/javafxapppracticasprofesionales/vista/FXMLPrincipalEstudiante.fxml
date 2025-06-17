@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLPrincipalEstudianteController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLPrincipalEstudianteController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: #ECEFF1;">
          <children>
@@ -71,16 +71,6 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="200.0" spacing="8">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8.0">
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -124,27 +114,33 @@
             <Label fx:id="lbNombreUsuario" layoutX="270.0" layoutY="42.0" prefHeight="17.0" prefWidth="306.0" />
          </children>
       </AnchorPane>
-      <VBox fx:id="apCentral" alignment="CENTER" layoutX="200.0" layoutY="100.0" prefHeight="500.0" prefWidth="824.0" spacing="20.0">
-         <children>
-            <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recurso/principal_img.png" />
-               </image>
-            </ImageView>
-            <Label text="¡Hola de nuevo, Estudiante!">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <Label text="Selecciona una opción del menú de la izquierda para comenzar a trabajar." textAlignment="CENTER" textFill="#6b6b6b" wrapText="true">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="40.0" right="40.0" />
-         </padding>
-      </VBox>
+      
+      <AnchorPane fx:id="apCentral" layoutX="200.0" layoutY="100.0" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;">
+            <children>
+                <VBox alignment="CENTER" prefHeight="500.0" prefWidth="824.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recurso/principal_img.png" />
+                     </image>
+                        </ImageView>
+                        <Label text="¡Hola de nuevo, Estudiante">
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+                        </Label>
+                        <Label text="Selecciona una opción del menú de la izquierda para comenzar a trabajar." textAlignment="CENTER" textFill="#6b6b6b" wrapText="true">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="40.0" right="40.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </AnchorPane>
+      
    </children>
 </AnchorPane>
