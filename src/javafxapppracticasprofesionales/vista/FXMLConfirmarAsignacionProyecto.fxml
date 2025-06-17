@@ -1,40 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLConfirmarAsignacionProyectoController">
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLConfirmarAsignacionProyectoController">
     <children>
-      <Label layoutX="14.0" layoutY="11.0" text="Asignar Proyecto (Paso 3 de 3): Confirmar Asignación" />
-      <Button layoutX="541.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE" />
-      <Button layoutX="689.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnClicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aceptar" textFill="WHITE" />
-      <Label layoutX="83.0" layoutY="49.0" style="-fx-font-weight: bold;" text="¿Estás seguro de que deseas hacer la siguiente asignación?" />
-      <Label layoutX="83.0" layoutY="92.0" text="ESTUDIANTE" />
-      <Label layoutX="587.0" layoutY="92.0" text="PROYECTO" />
-      <Label layoutX="14.0" layoutY="122.0" text="Nombre:" />
-      <Label layoutX="14.0" layoutY="195.0" text="Semestre:" />
-      <Label layoutX="14.0" layoutY="273.0" text="Correo:" />
-      <Label layoutX="14.0" layoutY="341.0" text="Matrícula:" />
-      <Label fx:id="lbNombreEstudiante" layoutX="14.0" layoutY="157.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbSemestreEstudiante" layoutX="14.0" layoutY="230.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbCorreoEstudiante" layoutX="14.0" layoutY="308.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbMatriculaEstudiante" layoutX="14.0" layoutY="376.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbObjetivo" layoutX="507.0" layoutY="383.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbNumeroCuposProyecto" layoutX="507.0" layoutY="315.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbOrganizacion" layoutX="507.0" layoutY="237.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label fx:id="lbNombreProyecto" layoutX="507.0" layoutY="164.0" prefHeight="35.0" prefWidth="262.0" />
-      <Label layoutX="507.0" layoutY="348.0" text="Objetivo:" />
-      <Label layoutX="507.0" layoutY="280.0" text="Número de cupos:" />
-      <Label layoutX="507.0" layoutY="202.0" text="Organizacion:" />
-      <Label layoutX="507.0" layoutY="129.0" text="Nombre:" />
-      <Label layoutX="371.0" layoutY="180.0" text="→">
-         <font>
-            <Font size="96.0" />
-         </font>
-      </Label>
-   </children>
+        <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label text="Asignar Proyecto (Paso 3 de 3): Confirmar Asignación">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label text="¿Estás seguro de que deseas hacer la siguiente asignación?" />
+                <GridPane hgap="20.0" vgap="10.0" VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <VBox spacing="10.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 15;">
+                            <children>
+                                <Label text="ESTUDIANTE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                                <GridPane hgap="10" vgap="8">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label text="Nombre:" GridPane.rowIndex="0" />
+                                        <Label fx:id="lbNombreEstudiante" text="[Nombre del Estudiante]" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        
+                                        <Label text="Matrícula:" GridPane.rowIndex="1" />
+                                        <Label fx:id="lbMatriculaEstudiante" text="[Matrícula]" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        
+                                        <Label text="Semestre:" GridPane.rowIndex="2" />
+                                        <Label fx:id="lbSemestreEstudiante" text="[Semestre]" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                        <Label text="Correo:" GridPane.rowIndex="3" />
+                                        <Label fx:id="lbCorreoEstudiante" text="[Correo]" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </VBox>
+                        
+                        <Label text="→" GridPane.columnIndex="1">
+                            <font>
+                                <Font size="64.0" />
+                            </font>
+                        </Label>
+
+                        <VBox spacing="10.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 15;" GridPane.columnIndex="2">
+                            <children>
+                                <Label text="PROYECTO" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                                <GridPane hgap="10" vgap="8">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label text="Nombre:" GridPane.rowIndex="0" />
+                                        <Label fx:id="lbNombreProyecto" text="[Nombre del Proyecto]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                        <Label text="Organización:" GridPane.rowIndex="1" />
+                                        <Label fx:id="lbOrganizacion" text="[Organización]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                        <Label text="Número de cupos:" GridPane.rowIndex="2" />
+                                        <Label fx:id="lbNumeroCuposProyecto" text="[Cupos]" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                        <Label text="Objetivo:" GridPane.rowIndex="3" />
+                                        <Label fx:id="lbObjetivo" text="[Objetivo del proyecto]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </VBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </GridPane>
+                <HBox alignment="BOTTOM_RIGHT" spacing="10.0" VBox.vgrow="NEVER">
+                    <children>
+                        <Button onAction="#btnClicCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button onAction="#btnClicAceptar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Aceptar" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>
