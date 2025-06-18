@@ -6,9 +6,21 @@ public class EstudianteConProyecto {
     private String nombreProyecto;
     private int semestre;
     private String correo;
+    private int idExpediente;
 
     public EstudianteConProyecto() {
     }
+
+    public EstudianteConProyecto(String nombreEstudiante, String matricula, String nombreProyecto, int semestre, String correo, int idExpediente) {
+        this.nombreEstudiante = nombreEstudiante;
+        this.matricula = matricula;
+        this.nombreProyecto = nombreProyecto;
+        this.semestre = semestre;
+        this.correo = correo;
+        this.idExpediente = idExpediente;
+    }
+    
+    
 
     public int getSemestre() {
         return semestre;
@@ -23,14 +35,6 @@ public class EstudianteConProyecto {
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public EstudianteConProyecto(String nombreEstudiante, String matricula, String nombreProyecto, int semestre, String correo) {
-        this.nombreEstudiante = nombreEstudiante;
-        this.matricula = matricula;
-        this.nombreProyecto = nombreProyecto;
-        this.semestre = semestre;
         this.correo = correo;
     }
 
@@ -57,4 +61,14 @@ public class EstudianteConProyecto {
     public void setNombreProyecto(String nombreProyecto) {
         this.nombreProyecto = nombreProyecto;
     }
+
+    public int getIdExpediente() {
+        return idExpediente;
+    }
+
+    public void setIdExpediente(int idExpediente) {
+        this.idExpediente = idExpediente;
+    }
+    
+    
 }

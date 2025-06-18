@@ -11,12 +11,12 @@ import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 
 public class EstudianteDAO {
-
+    
     public static ArrayList<EstudianteConProyecto> obtenerEstudiantesConProyecto() throws SQLException {
         ArrayList<EstudianteConProyecto> estudiantes = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto, e.semestre, e.correo " +
+            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto, e.semestre, e.correo, ex.idExpediente " +
                          "FROM estudiante e " +
                          "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
                          "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
@@ -258,6 +258,7 @@ public class EstudianteDAO {
         estudianteConProyecto.setNombreProyecto(resultado.getString("nombreProyecto"));
         estudianteConProyecto.setSemestre(resultado.getInt("semestre"));
         estudianteConProyecto.setCorreo(resultado.getString("correo"));
+        estudianteConProyecto.setIdExpediente(resultado.getInt("idExpediente"));
         return estudianteConProyecto;
     }
 }
