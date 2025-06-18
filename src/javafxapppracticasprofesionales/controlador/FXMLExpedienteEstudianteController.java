@@ -165,7 +165,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             return;
         }
         
-        TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent();
+        TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent().lookup("TableView");
         Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
 
         if (avanceSeleccionado == null) {
