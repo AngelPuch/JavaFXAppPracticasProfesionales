@@ -22,7 +22,9 @@ import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
+import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLConsultarExpedienteController implements Initializable {
@@ -76,14 +78,20 @@ public class FXMLConsultarExpedienteController implements Initializable {
     }
      
      private void cargarEstudiantesConProyecto() {
+        Usuario usuarioLogueado = SesionUsuario.getInstancia().getUsuarioLogueado();
+        if (usuarioLogueado == null || usuarioLogueado.getIdAcademico() == null) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Sesión", "No se pudo verificar la información del profesor.", Alert.AlertType.ERROR);
+            return;
+        }
+        int idAcademico = usuarioLogueado.getIdAcademico();
+
         listaEstudiantesConProyecto = FXCollections.observableArrayList();
         try {
-            listaEstudiantesConProyecto.addAll(EstudianteDAO.obtenerEstudiantesConProyecto());
-            System.out.println("Tamaño de la lista en ConsultarExpediente: " + listaEstudiantesConProyecto.size());
+            listaEstudiantesConProyecto.addAll(EstudianteDAO.obtenerEstudiantesPorProfesor(idAcademico));
             tvEstudiantesConProyecto.setItems(listaEstudiantesConProyecto);
         } catch (SQLException e) {
             e.printStackTrace();
-            AlertaUtilidad.mostrarAlertaSimple("Error de conexión", "No se pudo cargar la lista de estudiantes con proyecto.", Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de conexión", "No se pudo cargar la lista de estudiantes.", Alert.AlertType.ERROR);
         }
     }
 

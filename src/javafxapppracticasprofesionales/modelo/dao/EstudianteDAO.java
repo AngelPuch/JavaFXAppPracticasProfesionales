@@ -207,6 +207,39 @@ public class EstudianteDAO {
         }
         return horasAcumuladas;
     }
+    
+    public static ArrayList<EstudianteConProyecto> obtenerEstudiantesPorProfesor(int idAcademico) throws SQLException {
+        ArrayList<EstudianteConProyecto> estudiantes = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT e.nombre AS nombreEstudiante, e.matricula, p.nombre AS nombreProyecto, e.semestre, e.correo " +
+                         "FROM estudiante e " +
+                         "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
+                         "JOIN grupoee g ON i.grupoEE_idgrupoEE = g.idgrupoEE " +
+                         "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
+                         "JOIN proyecto p ON ex.Proyecto_idProyecto = p.idProyecto " +
+                         "WHERE g.Academico_idAcademico = ?";
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setInt(1, idAcademico);
+                try (ResultSet resultado = sentencia.executeQuery()) {
+                    while (resultado.next()) {
+                        EstudianteConProyecto estudiante = new EstudianteConProyecto();
+                        estudiante.setNombreEstudiante(resultado.getString("nombreEstudiante"));
+                        estudiante.setMatricula(resultado.getString("matricula"));
+                        estudiante.setNombreProyecto(resultado.getString("nombreProyecto"));
+                        estudiante.setSemestre(resultado.getInt("semestre"));
+                        estudiante.setCorreo(resultado.getString("correo"));
+                        estudiantes.add(estudiante);
+                    }
+                }
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            throw new SQLException("Error: Sin conexiÃ³n a la Base de Datos");
+        }
+        return estudiantes;
+    }
 
     private static Estudiante convertirRegistroEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();
