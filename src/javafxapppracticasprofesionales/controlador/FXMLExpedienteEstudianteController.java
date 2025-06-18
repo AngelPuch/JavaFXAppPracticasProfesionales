@@ -20,20 +20,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.dao.AvanceDAO;
+import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
+import javafxapppracticasprofesionales.modelo.dao.ExpedienteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Avance;
-import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto; // Se usa el POJO correcto
+import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
-
+import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
 public class FXMLExpedienteEstudianteController implements Initializable {
 
-    @FXML
     private Label lblNombreEstudiante;
-    @FXML
     private Label lblMatricula;
-    @FXML
     private Label lblCorreo;
     @FXML
     private TableView<Avance> tvDocumentosIniciales;
@@ -44,7 +43,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML
     private TableColumn<Avance, String> colEstadoDI;
     @FXML
-    private TableColumn<Avance, String> colComentariosDI;
+    private TableColumn<Avance, String> colComentariosDI; // NUEVA COLUMNA
     @FXML
     private TableView<Avance> tvReportes;
     @FXML
@@ -54,7 +53,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML
     private TableColumn<Avance, String> colEstadoR;
     @FXML
-    private TableColumn<Avance, String> colComentariosR;
+    private TableColumn<Avance, String> colComentariosR; // NUEVA COLUMNA
     @FXML
     private TableView<Avance> tvDocumentosFinales;
     @FXML
@@ -64,10 +63,9 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML
     private TableColumn<Avance, String> colEstadoDF;
     @FXML
-    private TableColumn<Avance, String> colComentariosDF;
+    private TableColumn<Avance, String> colComentariosDF; // NUEVA COLUMNA
     @FXML
     private Button btnConsultar;
-    @FXML
     private Button btnRegresar;
     @FXML
     private TabPane tpExpediente;
@@ -79,28 +77,41 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     private TableColumn<Evaluacion, String> colFechaEval;
     @FXML
     private TableColumn<Evaluacion, Float> colCalificacionEval;
-    @FXML
     private TableColumn<Evaluacion, String> colTipoEval;
-    @FXML
     private TableColumn<Evaluacion, String> colEvaluador;
 
     private int idExpediente;
+    private Estudiante estudiante;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lbMatricula;
+    @FXML
+    private Label lbSemestre;
+    @FXML
+    private Label lbCorreo;
+    @FXML
+    private Tab tabDocIniciales;
+    @FXML
+    private Tab tabReportes;
+    @FXML
+    private Tab tabDocFinales;
+    @FXML
+    private TableColumn<?, ?> colMotivoEval;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablas();
     }    
 
-    public void inicializarInformacion(EstudianteConProyecto estudianteConProyecto) {
-        // Se extrae el idExpediente del objeto recibido
-        this.idExpediente = estudianteConProyecto.getIdExpediente();
-        
-        // Se llenan las etiquetas con la información del objeto
-        lblNombreEstudiante.setText(estudianteConProyecto.getNombreEstudiante());
-        lblMatricula.setText(estudianteConProyecto.getMatricula());
-        lblCorreo.setText(estudianteConProyecto.getCorreo());
-        
+    public void inicializarInformacion(Estudiante estudiante) {
         try {
+            this.estudiante = estudiante;
+            int idUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario();
+            Estudiante estudianteLogueado = EstudianteDAO.obtenerEstudiantePorIdUsuario(idUsuario);
+            if (estudianteLogueado != null) {
+                    this.idExpediente = ExpedienteDAO.obtenerIdExpedienteActivo(estudianteLogueado.getIdEstudiante());}
+            cargarDatosEstudiante();
             cargarTodosLosAvances();
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
@@ -116,26 +127,37 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     private void configurarTablas() {
-        // La configuración de las tablas con la nueva columna de comentarios permanece igual
+        // Tabla Documentos Iniciales
         colNombreDI.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDI.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDI.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        colComentariosDI.setCellValueFactory(new PropertyValueFactory<>("comentarios"));
+        colComentariosDI.setCellValueFactory(new PropertyValueFactory<>("comentarios")); // NUEVA LÍNEA
         
+        // Tabla Reportes
         colNombreR.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaR.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoR.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        colComentariosR.setCellValueFactory(new PropertyValueFactory<>("comentarios"));
+        colComentariosR.setCellValueFactory(new PropertyValueFactory<>("comentarios")); // NUEVA LÍNEA
         
+        // Tabla Documentos Finales
         colNombreDF.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDF.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDF.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        colComentariosDF.setCellValueFactory(new PropertyValueFactory<>("comentarios"));
+        colComentariosDF.setCellValueFactory(new PropertyValueFactory<>("comentarios")); // NUEVA LÍNEA
 
+        // Tabla Evaluaciones (sin cambios)
         colFechaEval.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colCalificacionEval.setCellValueFactory(new PropertyValueFactory<>("calificacionTotal"));
         colTipoEval.setCellValueFactory(new PropertyValueFactory<>("nombreTipoEvaluacion"));
         colEvaluador.setCellValueFactory(new PropertyValueFactory<>("nombreEvaluador"));
+    }
+
+    private void cargarDatosEstudiante() {
+        if (estudiante != null) {
+             lblNombreEstudiante.setText(estudiante.getNombre());
+             lblMatricula.setText(estudiante.getMatricula());
+             lblCorreo.setText(estudiante.getCorreo());
+        }
     }
     
     private void cargarTodosLosAvances() throws SQLException {
@@ -157,39 +179,35 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     private void btnClicConsultar(ActionEvent event) {
         Tab pestañaSeleccionada = tpExpediente.getSelectionModel().getSelectedItem();
         if (pestañaSeleccionada == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar una pestaña.", Alert.AlertType.WARNING);
+            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar una pestaña (Documentos Iniciales, Reportes, etc.).", Alert.AlertType.WARNING);
             return;
         }
 
-        TableView<?> tablaActiva = null;
-        if(pestañaSeleccionada.getContent().lookup("TableView") instanceof TableView) {
-            tablaActiva = (TableView<?>) pestañaSeleccionada.getContent().lookup("TableView");
-        }
-        
-        if (tablaActiva == null || tablaActiva.getSelectionModel().getSelectedItem() == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar un elemento de la lista para consultarlo.", Alert.AlertType.WARNING);
+        TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent().lookup("TableView");
+        Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
+
+        if (avanceSeleccionado == null) {
+            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar un documento de la lista para consultarlo.", Alert.AlertType.WARNING);
             return;
         }
 
-        Object itemSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
-        
-        if (itemSeleccionado instanceof Avance) {
-            Avance avanceSeleccionado = (Avance) itemSeleccionado;
-            String rutaArchivo = avanceSeleccionado.getRutaArchivo();
-            if (rutaArchivo == null || rutaArchivo.isEmpty()) {
-                AlertaUtilidad.mostrarAlertaSimple("Archivo no disponible", "El documento no tiene una ruta registrada.", Alert.AlertType.ERROR);
-                return;
+        String rutaArchivo = avanceSeleccionado.getRutaArchivo();
+        if (rutaArchivo == null || rutaArchivo.isEmpty()) {
+            AlertaUtilidad.mostrarAlertaSimple("Archivo no disponible", "El documento seleccionado no tiene una ruta de archivo registrada.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            File archivo = new File(rutaArchivo);
+            if (archivo.exists()) {
+                Desktop.getDesktop().open(archivo);
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Archivo no encontrado", "El archivo no pudo ser localizado en la ruta: \n" + rutaArchivo, Alert.AlertType.ERROR);
             }
-            try {
-                File archivo = new File(rutaArchivo);
-                if (archivo.exists()) {
-                    Desktop.getDesktop().open(archivo);
-                } else {
-                    AlertaUtilidad.mostrarAlertaSimple("Archivo no encontrado", "El archivo no se localizó en la ruta:\n" + rutaArchivo, Alert.AlertType.ERROR);
-                }
-            } catch (IOException e) {
-                AlertaUtilidad.mostrarAlertaSimple("Error al abrir", "No se pudo abrir el archivo.", Alert.AlertType.ERROR);
-            }
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error al abrir", "No se pudo abrir el archivo. Es posible que no tengas un programa instalado para visualizarlo.", Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error inesperado", "Ocurrió un error al intentar abrir el archivo.", Alert.AlertType.ERROR);
         }
     }
 }
