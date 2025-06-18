@@ -20,14 +20,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.dao.AvanceDAO;
-import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
-import javafxapppracticasprofesionales.modelo.dao.ExpedienteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Avance;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
-import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
 public class FXMLExpedienteEstudianteController implements Initializable {
 
@@ -104,14 +101,11 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         configurarTablas();
     }    
 
-    public void inicializarInformacion(Estudiante estudiante) {
+    public void inicializarValores(Estudiante estudiante, int idExpediente) {
+        this.estudiante = estudiante;
+        this.idExpediente = idExpediente;
+        cargarDatosEstudiante();
         try {
-            this.estudiante = estudiante;
-            int idUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getIdUsuario();
-            Estudiante estudianteLogueado = EstudianteDAO.obtenerEstudiantePorIdUsuario(idUsuario);
-            if (estudianteLogueado != null) {
-                    this.idExpediente = ExpedienteDAO.obtenerIdExpedienteActivo(estudianteLogueado.getIdEstudiante());}
-            cargarDatosEstudiante();
             cargarTodosLosAvances();
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
