@@ -42,7 +42,7 @@
                             </children>
                         </HBox>
                 
-                        <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8">
+                        <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8.0">
                             <padding>
                                 <Insets left="10.0" />
                             </padding>
@@ -52,15 +52,15 @@
                                         <Image url="@../recurso/organizacion_icon.png" />
                                     </image>
                                 </ImageView>
-                                <Button onAction="#btnClicOrganizaciones" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Organizaciones Vinculadas">
+                                <Label onMouseClicked="#btnClicOrganizaciones" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Organizaciones Vinculadas" textAlignment="CENTER" wrapText="true">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
-                                </Button>
+                                </Label>
                             </children>
                         </HBox>
                 
-                        <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8">
+                        <HBox alignment="CENTER_LEFT" prefWidth="180.0" spacing="8.0">
                             <padding>
                                 <Insets left="10.0" />
                             </padding>
@@ -70,11 +70,11 @@
                                         <Image url="@../recurso/representante_icon.png" />
                                     </image>
                                 </ImageView>
-                                <Button onAction="#btnClicResponsables" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Responsables de Proyectos">
+                                <Label onMouseClicked="#btnClicResponsables" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Responsables de Proyectos" textAlignment="CENTER" wrapText="true">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
-                                </Button>
+                                </Label>
                             </children>
                         </HBox>
 

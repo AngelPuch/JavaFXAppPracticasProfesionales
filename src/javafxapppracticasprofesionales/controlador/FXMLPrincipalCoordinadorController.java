@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
@@ -50,13 +51,13 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     }
 
     @FXML
-    private void btnClicOrganizaciones(ActionEvent event) {
+    private void btnClicOrganizaciones(MouseEvent event) {
         cargarEscenas("vista/FXMLOrganizacionesVinculadas.fxml");
         lbNombreVentana.setText("Gestión de Organizaciones Vinculadas");
     }
 
     @FXML
-    private void btnClicResponsables(ActionEvent event) {
+    private void btnClicResponsables(MouseEvent event) {
         cargarEscenas("vista/FXMLResponsables.fxml");
         lbNombreVentana.setText("Gestion de responsables");
     }
