@@ -50,6 +50,8 @@ public class FXMLMiExpedienteController implements Initializable {
     @FXML
     private TableColumn<Avance, String> colEstadoDI;
     @FXML
+    private TableColumn<Avance, String> colComentariosDI;
+    @FXML
     private TableView<Avance> tvReportes;
     @FXML
     private TableColumn<Avance, String> colNombreR;
@@ -58,6 +60,8 @@ public class FXMLMiExpedienteController implements Initializable {
     @FXML
     private TableColumn<Avance, String> colEstadoR;
     @FXML
+    private TableColumn<Avance, String> colComentariosR;
+    @FXML
     private TableView<Avance> tvDocumentosFinales;
     @FXML
     private TableColumn<Avance, String> colNombreDF;
@@ -65,6 +69,8 @@ public class FXMLMiExpedienteController implements Initializable {
     private TableColumn<Avance, String> colFechaDF;
     @FXML
     private TableColumn<Avance, String> colEstadoDF;
+    @FXML
+    private TableColumn<Avance, String> colComentariosDF;
     @FXML
     private Button btnConsultar;
  
@@ -148,15 +154,20 @@ public class FXMLMiExpedienteController implements Initializable {
         colNombreDI.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDI.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDI.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        colComentariosDI.setCellValueFactory(new PropertyValueFactory<>("comentarios")); 
+        
         
         colNombreR.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaR.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoR.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        colComentariosR.setCellValueFactory(new PropertyValueFactory<>("comentarios"));
+        
         
         colNombreDF.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaDF.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         colEstadoDF.setCellValueFactory(new PropertyValueFactory<>("estado"));
-
+        colComentariosDF.setCellValueFactory(new PropertyValueFactory<>("comentarios"));
+        
         colFechaEval.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colCalificacionEval.setCellValueFactory(new PropertyValueFactory<>("calificacionTotal"));
         colTipoEval.setCellValueFactory(new PropertyValueFactory<>("nombreTipoEvaluacion"));

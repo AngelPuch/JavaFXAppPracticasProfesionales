@@ -8,16 +8,18 @@ public class Avance {
     private String fechaEntrega;
     private String estado;
     private String rutaArchivo;
+    private String comentarios;
 
     public Avance() {
     }
 
-    public Avance(int id, String nombre, String fechaEntrega, String estado, String rutaArchivo) {
+    public Avance(int id, String nombre, String fechaEntrega, String estado, String rutaArchivo, String comentarios) {
         this.id = id;
         this.nombre = nombre;
         this.fechaEntrega = fechaEntrega;
         this.estado = estado;
         this.rutaArchivo = rutaArchivo;
+        this.comentarios = comentarios;
     }
 
     public int getId() {
@@ -59,6 +61,15 @@ public class Avance {
     public void setRutaArchivo(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
     }
+    
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
+    
     
     @Override
     public String toString() {

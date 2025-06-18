@@ -40,16 +40,17 @@
                      <content>
                         <TableView fx:id="tvDocumentosIniciales" style="-fx-background-color: white;">
                            <columns>
-                              <TableColumn fx:id="colNombreDI" prefWidth="400.0" text="Documento" />
-                              <TableColumn fx:id="colFechaDI" prefWidth="200.0" text="Fecha de Entrega" />
-                              <TableColumn fx:id="colEstadoDI" prefWidth="150.0" text="Estado" />
+                              <TableColumn fx:id="colNombreDI" prefWidth="266.0" text="Documento" />
+                              <TableColumn fx:id="colFechaDI" prefWidth="142.0" text="Fecha de Entrega" />
+                              <TableColumn fx:id="colEstadoDI" prefWidth="193.0" text="Estado" />
+                              <TableColumn fx:id="colComentariosDI" prefWidth="75.0" text="Comentarios" />
                            </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </content>
                   </Tab>
@@ -59,14 +60,15 @@
                            <columns>
                               <TableColumn fx:id="colNombreR" prefWidth="400.0" text="Reporte" />
                               <TableColumn fx:id="colFechaR" prefWidth="200.0" text="Fecha de Entrega" />
-                              <TableColumn fx:id="colEstadoR" prefWidth="150.0" text="Estado" />
+                              <TableColumn fx:id="colEstadoR" prefWidth="88.0" text="Estado" />
+                              <TableColumn fx:id="colComentariosR" prefWidth="75.0" text="Comentarios" />
                            </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </content>
                   </Tab>
@@ -76,14 +78,15 @@
                            <columns>
                               <TableColumn fx:id="colNombreDF" prefWidth="400.0" text="Documento" />
                               <TableColumn fx:id="colFechaDF" prefWidth="200.0" text="Fecha de Entrega" />
-                              <TableColumn fx:id="colEstadoDF" prefWidth="150.0" text="Estado" />
+                              <TableColumn fx:id="colEstadoDF" prefWidth="76.0" text="Estado" />
+                              <TableColumn fx:id="colComentariosDF" prefWidth="75.0" text="Comentarios" />
                            </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </content>
                   </Tab>
