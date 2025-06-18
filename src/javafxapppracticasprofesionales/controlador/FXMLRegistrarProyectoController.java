@@ -94,6 +94,10 @@ public class FXMLRegistrarProyectoController implements Initializable {
                     "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
+        if(tfNombre.getText().length() > 100) {
+            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Nombre del Proyecto´ no puede exceder de 100. Favor de corregir la información.", Alert.AlertType.WARNING);
+            return false;
+        }
 
         try {
             int cupos = Integer.parseInt(tfCupos.getText());

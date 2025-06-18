@@ -15,16 +15,16 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasPendientesController">
    <children>
-      <Button layoutY="21.0" onAction="#btnClicEntregarDocIniciales" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Iniciales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="21.0">
+      <Button layoutX="417.0" layoutY="16.0" onAction="#btnClicEntregarDocIniciales" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Iniciales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="16.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
 
-      <Label layoutX="32.0" layoutY="50.0" text="Documentos Iniciales" textFill="#333333" AnchorPane.leftAnchor="32.0">
+      <Label layoutX="32.0" layoutY="40.0" text="Documentos Iniciales" textFill="#333333" AnchorPane.leftAnchor="32.0">
          <font><Font name="System Bold" size="14.0" /></font>
       </Label>
-      <TableView fx:id="tvEntregasIniciales" layoutX="32.0" layoutY="75.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="75.0">
+      <TableView fx:id="tvEntregasIniciales" layoutX="32.0" layoutY="65.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="65.0">
          <columns>
             <TableColumn fx:id="colNombreInicial" prefWidth="243.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />
@@ -37,7 +37,7 @@
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>
 
-      <Button layoutY="194.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Reportes" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="194.0">
+      <Button layoutX="556.0" layoutY="187.0" onAction="#btnClicEntregarReportes" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Reportes" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="187.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -58,15 +58,15 @@
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </TableView>
 
-      <Button layoutY="340.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Finales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="340.0">
+      <Button layoutX="430.0" layoutY="344.0" onAction="#btnClicEntregarDocFinales" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Finales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="344.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="32.0" layoutY="340.0" text="Documentos Finales" textFill="#333333" AnchorPane.leftAnchor="32.0">
+      <Label layoutX="32.0" layoutY="349.0" text="Documentos Finales" textFill="#333333" AnchorPane.leftAnchor="32.0">
          <font><Font name="System Bold" size="14.0" /></font>
       </Label>
-      <TableView fx:id="tvEntregasFinales" layoutX="32.0" layoutY="369.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="369.0">
+      <TableView fx:id="tvEntregasFinales" layoutX="32.0" layoutY="378.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="378.0">
          <columns>
             <TableColumn fx:id="colNombreFinal" prefWidth="241.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioFinal" prefWidth="228.0" text="Fecha de Inicio" />

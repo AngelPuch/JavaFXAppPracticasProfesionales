@@ -137,5 +137,15 @@ public class FXMLEntregasPendientesController implements Initializable, INotific
     public void operacionExitosa() {
         cargarTodasLasEntregas();
     }
+
+    @FXML
+    private void btnClicEntregarReportes(ActionEvent event) {
+        AlertaUtilidad.mostrarAlertaSimple("Información", "Para esta versión aun no se implementa esta funcionalidad, lo sentimos", Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
+    private void btnClicEntregarDocFinales(ActionEvent event) {
+        AlertaUtilidad.mostrarAlertaSimple("Información", "Para esta versión aun no se implementa esta funcionalidad, lo sentimos", Alert.AlertType.INFORMATION);
+    }
     
 }

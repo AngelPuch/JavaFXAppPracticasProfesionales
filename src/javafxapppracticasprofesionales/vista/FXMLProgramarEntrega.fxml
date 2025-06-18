@@ -33,6 +33,6 @@
       <Button layoutX="350.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE">
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </Button>
-      <Label fx:id="lbContadorCaracteres" layoutX="463.0" layoutY="214.0" prefHeight="35.0" prefWidth="57.0" />
+      <Label fx:id="lbContadorCaracteres" layoutX="445.0" layoutY="213.0" prefHeight="35.0" prefWidth="80.0" />
    </children>
 </AnchorPane>

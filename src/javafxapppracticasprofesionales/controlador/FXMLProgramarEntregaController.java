@@ -67,6 +67,10 @@ public class FXMLProgramarEntregaController implements Initializable {
                 });
             }
         });
+        limiteCaracteres();
+    }
+    
+    private void limiteCaracteres() {
         final int MAX_CHARS = 100;
 
         TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
@@ -80,9 +84,9 @@ public class FXMLProgramarEntregaController implements Initializable {
         taDescripcion.setTextFormatter(textFormatter);
 
         if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
+            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
             taDescripcion.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
             });
         }
     }
@@ -99,6 +103,10 @@ public class FXMLProgramarEntregaController implements Initializable {
         }
         if(dpFechaFin.getValue().isBefore(dpFechaInicio.getValue())){
             AlertaUtilidad.mostrarAlertaSimple("Fechas incorrectas", "La fecha de fin no puede ser anterior a la fecha de inicio.", Alert.AlertType.WARNING);
+            return false;
+        }
+        if(tfNombre.getText().length() > 50) {
+            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Nombre de la Entrega´ no puede exceder de 50. Favor de corregir la información.", Alert.AlertType.WARNING);
             return false;
         }
         

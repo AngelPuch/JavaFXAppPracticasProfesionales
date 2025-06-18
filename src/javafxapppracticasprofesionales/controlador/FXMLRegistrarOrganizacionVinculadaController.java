@@ -98,6 +98,14 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
                     "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
+        if(tfNombre.getText().length() > 45) {
+            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Nombre´ no puede exceder de 45. Favor de corregir la información.", Alert.AlertType.WARNING);
+            return false;
+        }
+        if(tfDireccion.getText().length() > 100) {
+            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Correo´ no puede exceder de 100. Favor de corregir la información.", Alert.AlertType.WARNING);
+            return false;
+        }
 
         String telefono = tfTelefono.getText().trim();
         if (!telefono.isEmpty()) {
