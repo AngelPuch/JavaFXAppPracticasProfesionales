@@ -61,7 +61,7 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@../recurso/proyecto_icon.png" />
+                              <Image url="@../recurso/expedientePersonal.png" />
                            </image>
                         </ImageView>
                         <Button onAction="#btnClicMiExpediente" prefHeight="0.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Mi expediente" wrapText="true">

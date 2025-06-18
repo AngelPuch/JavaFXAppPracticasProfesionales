@@ -15,16 +15,16 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasPendientesController">
    <children>
-      <Button layoutX="417.0" layoutY="16.0" onAction="#btnClicEntregarDocIniciales" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Iniciales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="16.0">
+      <Button layoutX="417.0" layoutY="24.0" onAction="#btnClicEntregarDocIniciales" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Entregar Documentos Iniciales" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="24.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
 
-      <Label layoutX="32.0" layoutY="40.0" text="Documentos Iniciales" textFill="#333333" AnchorPane.leftAnchor="32.0">
+      <Label layoutX="32.0" layoutY="33.0" text="Documentos Iniciales" textFill="#333333" AnchorPane.leftAnchor="32.0">
          <font><Font name="System Bold" size="14.0" /></font>
       </Label>
-      <TableView fx:id="tvEntregasIniciales" layoutX="32.0" layoutY="65.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="65.0">
+      <TableView fx:id="tvEntregasIniciales" layoutX="32.0" layoutY="58.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="58.0">
          <columns>
             <TableColumn fx:id="colNombreInicial" prefWidth="243.0" text="Nombre" />
             <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />

@@ -20,6 +20,7 @@ import javafxapppracticasprofesionales.modelo.dao.ValidacionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.DocumentoEntregado;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLValidarEntregaController implements Initializable {
 
@@ -51,7 +52,7 @@ public class FXMLValidarEntregaController implements Initializable {
         
         lblNombreEstudiante.setText(doc.getNombreEstudiante());
         lblMatricula.setText(doc.getMatricula());
-        limiteCaracteres();
+        Utilidad.configurarTextAreaConContador(taComentarios, lbContadorCaracteres, 150);
     }
 
     @FXML
@@ -104,27 +105,6 @@ public class FXMLValidarEntregaController implements Initializable {
             }
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
-    
-    private void limiteCaracteres() {
-        final int MAX_CHARS = 150;
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > MAX_CHARS) {
-                return null; 
-            } else {
-                return change; 
-            }
-        });
-        taComentarios.setTextFormatter(textFormatter);
-
-        if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
-            taComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
-            });
         }
     }
 

@@ -31,7 +31,7 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@../recurso/proyecto_icon.png" />
+                              <Image url="@../recurso/expedienteEstudiantes.png" />
                            </image>
                         </ImageView>
                         <Button onAction="#btnClicConsultarExpediente" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Consultar Expediente" wrapText="true">
@@ -49,10 +49,10 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@../recurso/organizacion_icon.png" />
+                              <Image url="@../recurso/validarDocumentos.png" />
                            </image>
                         </ImageView>
-                        <Button onAction="#btnClicValidarEntregaDocumentos" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Validar Entrega de Documentos" wrapText="true">
+                        <Button onAction="#btnClicValidarEntregaDocumentos" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Validar Entrega de Documentos" textAlignment="CENTER" wrapText="true">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

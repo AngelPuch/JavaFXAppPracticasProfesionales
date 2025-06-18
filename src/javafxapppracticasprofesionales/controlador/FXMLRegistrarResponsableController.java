@@ -39,6 +39,12 @@ public class FXMLRegistrarResponsableController implements Initializable {
     private Label lbTitulo;
     private ResponsableProyecto responsableActualizar;
     private boolean esEdicion;
+    @FXML
+    private Label lbContadorCaracteresNombre;
+    @FXML
+    private Label lbContadorCaracteresCargo;
+    @FXML
+    private Label lbContadorCaracteresCorreo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,6 +63,9 @@ public class FXMLRegistrarResponsableController implements Initializable {
             tfCorreo.setText(responsableActualizar.getCorreo());
             lbTitulo.setText("Actualizar Responsable del Proyecto");
         }
+        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 70);
+        Utilidad.configurarTextAreaConContador(tfCargo, lbContadorCaracteresCargo, 45);
+        Utilidad.configurarTextAreaConContador(tfCorreo, lbContadorCaracteresCorreo, 80);
     }
 
 
@@ -84,21 +93,9 @@ public class FXMLRegistrarResponsableController implements Initializable {
     private boolean validarCampos() {
         boolean esValido = true;
 
-        if (tfNombre.getText().isEmpty() || tfCargo.getText().isEmpty()) {
+        if (tfNombre.getText().trim().isEmpty() || tfCargo.getText().trim().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
                     "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
-            return false;
-        }
-        if(tfNombre.getText().length() > 70) {
-            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Nombre´ no puede exceder de 70. Favor de corregir la información.", Alert.AlertType.WARNING);
-            return false;
-        }
-        if(tfCargo.getText().length() > 45) {
-            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Cargo´ no puede exceder de 45. Favor de corregir la información.", Alert.AlertType.WARNING);
-            return false;
-        }
-        if(tfCorreo.getText().length() > 80) {
-            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Correo´ no puede exceder de 80. Favor de corregir la información.", Alert.AlertType.WARNING);
             return false;
         }
 
@@ -131,10 +128,10 @@ public class FXMLRegistrarResponsableController implements Initializable {
     
     private ResponsableProyecto obtenerResponsableNuevo() {
         ResponsableProyecto nuevoResponsable = new ResponsableProyecto();
-        nuevoResponsable.setNombre(tfNombre.getText());
-        nuevoResponsable.setCargo(tfCargo.getText());
-        nuevoResponsable.setCorreo(tfCorreo.getText());
-        nuevoResponsable.setTelefono(tfTelefono.getText());
+        nuevoResponsable.setNombre(tfNombre.getText().trim());
+        nuevoResponsable.setCargo(tfCargo.getText().trim());
+        nuevoResponsable.setCorreo(tfCorreo.getText().trim());
+        nuevoResponsable.setTelefono(tfTelefono.getText().trim());
         if (!esEdicion) {
             nuevoResponsable.setIdOrganizacion(organizacionSeleccionada.getIdOrganizacion());
         }

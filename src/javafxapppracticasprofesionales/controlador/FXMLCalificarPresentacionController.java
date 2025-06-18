@@ -97,7 +97,7 @@ public class FXMLCalificarPresentacionController implements Initializable {
         tfPuntajeMetodosTecnicasIS.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
 
         calcularYEstablecerPromedio();
-        limiteCaracteres();
+        Utilidad.configurarTextAreaConContador(taObservacionesYComentarios, lbContadorCaracteres, 150);
         
     }    
     
@@ -108,27 +108,6 @@ public class FXMLCalificarPresentacionController implements Initializable {
         cargarInformacionTabla();
     }
     
-    private void limiteCaracteres() {
-        final int MAX_CHARS = 150;
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > MAX_CHARS) {
-                return null; 
-            } else {
-                return change; 
-            }
-        });
-        taObservacionesYComentarios.setTextFormatter(textFormatter);
-
-        if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
-            taObservacionesYComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
-            });
-        }
-    }
-
     @FXML
     private void btnClisCancelar(ActionEvent event) {
         if (AlertaUtilidad.mostrarAlertaConfirmacion("Salir de la evaluacion", null ,"¿Estás seguro que quieres cancelar?")) {

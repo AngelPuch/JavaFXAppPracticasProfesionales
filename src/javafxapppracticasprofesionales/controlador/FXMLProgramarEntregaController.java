@@ -39,7 +39,9 @@ public class FXMLProgramarEntregaController implements Initializable {
     private INotificacion observador;
     private String nombreDocumentoPrefijo;
     @FXML
-    private Label lbContadorCaracteres;
+    private Label lbContadorCaracteresDescripcion;
+    @FXML
+    private Label lbContadorCaracteresNombre;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,7 +52,7 @@ public class FXMLProgramarEntregaController implements Initializable {
         this.tipoEntrega = tipoEntrega;
         this.observador = observador;
 
-        this.nombreDocumentoPrefijo = nombreDocumento + "_";
+        this.nombreDocumentoPrefijo = nombreDocumento;
         this.tfNombre.setText(nombreDocumentoPrefijo);
 
         tfNombre.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -67,32 +69,12 @@ public class FXMLProgramarEntregaController implements Initializable {
                 });
             }
         });
-        limiteCaracteres();
-    }
-    
-    private void limiteCaracteres() {
-        final int MAX_CHARS = 100;
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > MAX_CHARS) {
-                return null; 
-            } else {
-                return change; 
-            }
-        });
-        taDescripcion.setTextFormatter(textFormatter);
-
-        if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
-            taDescripcion.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
-            });
-        }
+        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 50);
+        Utilidad.configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 100);
     }
     
     private boolean validarCampos(){
-        if(tfNombre.getText().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null){
+        if(tfNombre.getText().trim().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null){
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos", "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
@@ -103,10 +85,6 @@ public class FXMLProgramarEntregaController implements Initializable {
         }
         if(dpFechaFin.getValue().isBefore(dpFechaInicio.getValue())){
             AlertaUtilidad.mostrarAlertaSimple("Fechas incorrectas", "La fecha de fin no puede ser anterior a la fecha de inicio.", Alert.AlertType.WARNING);
-            return false;
-        }
-        if(tfNombre.getText().length() > 50) {
-            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Nombre de la Entrega´ no puede exceder de 50. Favor de corregir la información.", Alert.AlertType.WARNING);
             return false;
         }
         
@@ -153,8 +131,8 @@ public class FXMLProgramarEntregaController implements Initializable {
             }
 
             Entrega nuevaEntrega = new Entrega();
-            nuevaEntrega.setNombre(tfNombre.getText());
-            nuevaEntrega.setDescripcion(taDescripcion.getText());
+            nuevaEntrega.setNombre(tfNombre.getText().trim());
+            nuevaEntrega.setDescripcion(taDescripcion.getText().trim());
             nuevaEntrega.setFechaInicio(dpFechaInicio.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             nuevaEntrega.setFechaFin(dpFechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 

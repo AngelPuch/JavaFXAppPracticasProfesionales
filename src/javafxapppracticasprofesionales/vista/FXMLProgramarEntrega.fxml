@@ -19,10 +19,10 @@
       <Label layoutX="25.0" layoutY="25.0" text="Programar Entrega (Paso 3 de 3)" textFill="#333333">
          <font><Font name="System Bold" size="22.0" /></font>
       </Label>
-      <Label layoutX="25.0" layoutY="80.0" text="Nombre de la Entrega: *" />
-      <TextField fx:id="tfNombre" layoutX="180.0" layoutY="76.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
-      <Label layoutX="25.0" layoutY="120.0" text="Descripción:" />
-      <TextArea fx:id="taDescripcion" layoutX="180.0" layoutY="120.0" prefHeight="94.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <Label layoutX="25.0" layoutY="67.0" text="Nombre de la Entrega: *" />
+      <TextField fx:id="tfNombre" layoutX="180.0" layoutY="63.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <Label layoutX="25.0" layoutY="130.0" text="Descripción:" />
+      <TextArea fx:id="taDescripcion" layoutX="180.0" layoutY="130.0" prefHeight="94.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label layoutX="25.0" layoutY="260.0" text="Fecha de Inicio: *" />
       <DatePicker fx:id="dpFechaInicio" layoutX="180.0" layoutY="256.0" />
       <Label layoutX="25.0" layoutY="300.0" text="Fecha de Fin: *" />
@@ -33,6 +33,14 @@
       <Button layoutX="350.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE">
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </Button>
-      <Label fx:id="lbContadorCaracteres" layoutX="445.0" layoutY="213.0" prefHeight="35.0" prefWidth="80.0" />
+      <Label fx:id="lbContadorCaracteresDescripcion" layoutX="445.0" layoutY="215.0" prefHeight="35.0" prefWidth="80.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lbContadorCaracteresNombre" layoutX="444.0" layoutY="100.0" prefHeight="35.0" prefWidth="80.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

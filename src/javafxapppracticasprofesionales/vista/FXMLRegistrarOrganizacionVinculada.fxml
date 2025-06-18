@@ -19,12 +19,12 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="100.0" text="Nombre: *" />
-      <TextField fx:id="tfNombre" layoutX="175.0" layoutY="96.0" prefHeight="25.0" prefWidth="396.0" promptText="Nombre de la Organización" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
-      <Label layoutX="25.0" layoutY="160.0" text="Dirección:" />
-      <TextField fx:id="tfDireccion" layoutX="175.0" layoutY="156.0" prefHeight="25.0" prefWidth="396.0" promptText="Callejón del Diamante #22, Zona Centro" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
-      <Label layoutX="25.0" layoutY="220.0" text="Teléfono:" />
-      <TextField fx:id="tfTelefono" layoutX="175.0" layoutY="216.0" prefHeight="25.0" prefWidth="396.0" promptText="12 34 56 78 90" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
+      <Label layoutX="25.0" layoutY="89.0" text="Nombre: *" />
+      <TextField fx:id="tfNombre" layoutX="175.0" layoutY="85.0" prefHeight="25.0" prefWidth="396.0" promptText="Nombre de la Organización" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
+      <Label layoutX="25.0" layoutY="170.0" text="Dirección:" />
+      <TextField fx:id="tfDireccion" layoutX="175.0" layoutY="166.0" prefHeight="25.0" prefWidth="396.0" promptText="Callejón del Diamante #22, Zona Centro" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
+      <Label layoutX="25.0" layoutY="251.0" text="Teléfono:" />
+      <TextField fx:id="tfTelefono" layoutX="175.0" layoutY="247.0" prefHeight="25.0" prefWidth="396.0" promptText="12 34 56 78 90" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
       <Button layoutX="493.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aceptar" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -35,6 +35,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="lbTelefonoError" layoutX="175.0" layoutY="241.0" prefHeight="17.0" prefWidth="396.0" textFill="RED" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
+      <Label fx:id="lbTelefonoError" layoutX="175.0" layoutY="272.0" prefHeight="17.0" prefWidth="396.0" textFill="RED" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
+      <Label fx:id="lbContadorCaracteresNombre" layoutX="498.0" layoutY="114.0" prefHeight="35.0" prefWidth="80.0" />
+      <Label fx:id="lbContadorCaracteresDireccion" layoutX="498.0" layoutY="195.0" prefHeight="35.0" prefWidth="80.0" />
    </children>
 </AnchorPane>

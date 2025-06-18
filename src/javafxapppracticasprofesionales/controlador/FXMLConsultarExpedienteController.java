@@ -59,9 +59,7 @@ public class FXMLConsultarExpedienteController implements Initializable {
                 Stage escenario = new Stage();
                 escenario.setTitle("Expediente Estudiante");
                 escenario.setScene(new Scene(vista));
-                escenario.initModality(Modality.APPLICATION_MODAL);
-                
-                escenario.showAndWait();
+                escenario.show();
                 
             } catch (IOException e) {
                 AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);

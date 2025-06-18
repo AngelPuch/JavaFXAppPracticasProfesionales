@@ -67,7 +67,7 @@
                             <children>
                                 <ImageView fitHeight="20.0" fitWidth="20.0">
                                     <image>
-                                        <Image url="@../recurso/representante_icon.png" />
+                                        <Image url="@../recurso/responsableDeProyecto.png" />
                                     </image>
                                 </ImageView>
                                 <Label onMouseClicked="#btnClicResponsables" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold;" text="Responsables de Proyectos" textAlignment="CENTER" wrapText="true">

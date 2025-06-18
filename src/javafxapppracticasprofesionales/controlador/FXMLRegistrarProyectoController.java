@@ -39,31 +39,16 @@ public class FXMLRegistrarProyectoController implements Initializable {
     private Label lbContadorCaracteresDescripcion;
     @FXML
     private Label lbContadorCaracteresObjetivo;
+    @FXML
+    private Label lbContadorCaracteresNombre;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 100);
-        configurarTextAreaConContador(taObjetivo, lbContadorCaracteresObjetivo, 100);
+        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 100);
+        Utilidad.configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 100);
+        Utilidad.configurarTextAreaConContador(taObjetivo, lbContadorCaracteresObjetivo, 100);
     }
     
-    private void configurarTextAreaConContador(TextArea textArea, Label contadorLabel, int maxLength) {
-        if (textArea == null || contadorLabel == null) {
-            return;
-        }
-
-        UnaryOperator<TextFormatter.Change> filtro = change -> {
-            String newText = change.getControlNewText();
-            return newText.length() > maxLength ? null : change;
-        };
-        TextFormatter<String> textFormatter = new TextFormatter<>(filtro);
-        textArea.setTextFormatter(textFormatter);
-
-        contadorLabel.setText("0/" + maxLength + " Max.");
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            contadorLabel.setText(newValue.length() + "/" + maxLength + " Max.");
-        });
-    }
-
     public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable,
             INotificacion observador) {
         this.organizacion = organizacion;
@@ -89,18 +74,14 @@ public class FXMLRegistrarProyectoController implements Initializable {
     }
 
     private boolean validarCampos() {
-        if (tfNombre.getText().isEmpty() || tfCupos.getText().isEmpty()) {
+        if (tfCupos.getText().trim().isEmpty() || tfNombre.getText().trim().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
                     "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
-        if(tfNombre.getText().length() > 100) {
-            AlertaUtilidad.mostrarAlertaSimple("Excede límite de carácteres", "La cantidad de carácteres en el campo de ´Nombre del Proyecto´ no puede exceder de 100. Favor de corregir la información.", Alert.AlertType.WARNING);
-            return false;
-        }
 
         try {
-            int cupos = Integer.parseInt(tfCupos.getText());
+            int cupos = Integer.parseInt(tfCupos.getText().trim());
             if (cupos <= 0) {
                 AlertaUtilidad.mostrarAlertaSimple("Datos inválidos",
                         "El número de cupos debe ser un entero positivo mayor a cero.", Alert.AlertType.WARNING);
@@ -122,10 +103,10 @@ public class FXMLRegistrarProyectoController implements Initializable {
 
     private Proyecto obtenerProyectoNuevo() {
         Proyecto nuevoProyecto = new Proyecto();
-        nuevoProyecto.setNombre(tfNombre.getText());
-        nuevoProyecto.setDescripcion(taDescripcion.getText());
-        nuevoProyecto.setObjetivo(taObjetivo.getText());
-        nuevoProyecto.setNumeroCupos(Integer.parseInt(tfCupos.getText()));
+        nuevoProyecto.setNombre(tfNombre.getText().trim());
+        nuevoProyecto.setDescripcion(taDescripcion.getText().trim());
+        nuevoProyecto.setObjetivo(taObjetivo.getText().trim());
+        nuevoProyecto.setNumeroCupos(Integer.parseInt(tfCupos.getText().trim()));
         nuevoProyecto.setOrganizacion(organizacion);
         nuevoProyecto.setResponsable(responsable);
 

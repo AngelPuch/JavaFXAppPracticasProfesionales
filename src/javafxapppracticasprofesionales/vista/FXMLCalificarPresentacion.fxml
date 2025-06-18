@@ -122,10 +122,6 @@
                 </DropShadow>
             </effect>
         </Button>
-      <Label fx:id="lbContadorCaracteres" layoutX="335.0" layoutY="542.0" prefHeight="17.0" prefWidth="80.0">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
+      <Label fx:id="lbContadorCaracteres" layoutX="339.0" layoutY="523.0" prefHeight="17.0" prefWidth="80.0" />
     </children>
 </AnchorPane>
