@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLPrincipalEvaluadorController">
-   <children>
-      <AnchorPane prefHeight="45.0" prefWidth="720.0" style="-fx-background-color: #146cd0;">
-         <children>
-            <Label layoutX="26.0" layoutY="14.0" text="Panel Principal del Evaluador" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <Label fx:id="lblNombreEvaluador" layoutX="35.0" layoutY="70.0" text="Bienvenido(a), [Nombre del Evaluador]">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnEvaluarEstudiante" layoutX="282.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnClicEvaluarEstudiante" prefHeight="58.0" prefWidth="157.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Evaluar estudiante" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="559.0" layoutY="419.0" mnemonicParsing="false" onAction="#btnClicCerrarSesion" style="-fx-font-weight: bold;" text="Cerrar Sesión" textFill="RED">
-         <graphic>
-            <ImageView fitHeight="37.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recurso/logOut.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
-   </children>
+    <children>
+        <AnchorPane prefHeight="45.0" prefWidth="720.0" style="-fx-background-color: #146cd0;">
+            <children>
+                <Label layoutX="26.0" layoutY="14.0" text="Panel Principal del Evaluador" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+
+        <Label fx:id="lblNombreEvaluador" layoutX="35.0" layoutY="70.0" text="Bienvenido(a), [Nombre del Evaluador]">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+
+        <Label layoutX="35.0" layoutY="120.0" text="Seleccionar Estudiante a Evaluar">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tvEstudiantes" layoutX="35.0" layoutY="150.0" prefHeight="250.0" prefWidth="650.0">
+            <columns>
+                <TableColumn fx:id="colNombre" prefWidth="325.0" text="Nombre" />
+                <TableColumn fx:id="colMatricula" prefWidth="175.0" text="Matrícula" />
+                <TableColumn fx:id="colSemestre" prefWidth="150.0" text="Semestre" />
+            </columns>
+        </TableView>
+
+        <Button layoutX="605.0" layoutY="415.0" onAction="#btnClicContinuar" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Evaluar" textFill="WHITE" />
+
+        <Button layoutX="570.0" layoutY="56.0" mnemonicParsing="false" onAction="#btnClicCerrarSesion" style="-fx-font-weight: bold;" text="Cerrar Sesión" textFill="RED">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../recurso/logOut.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
 </AnchorPane>

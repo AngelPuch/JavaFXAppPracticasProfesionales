@@ -2,7 +2,10 @@ package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +15,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
+import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
@@ -23,13 +31,21 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
 
     @FXML
     private Label lblNombreEvaluador;
-    @FXML
-    private Button btnEvaluarEstudiante;
     private Usuario usuario;
+    @FXML
+    private TableView<Estudiante> tvEstudiantes;
+    @FXML
+    private TableColumn colNombre;
+    @FXML
+    private TableColumn colMatricula;
+    @FXML
+    private TableColumn colSemestre;
+    private ObservableList<Estudiante> listaEstudiantes;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        configurarTabla();
+        cargarEstudiantes();
     }   
     
     public void inicializarInformacion(Usuario usuario) {
@@ -38,23 +54,30 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
     }
 
     @FXML
-    private void btnClicEvaluarEstudiante(ActionEvent event) {
-        try {
-            Stage escenario = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEstudianteParaEvaluar.fxml"));
-            Parent vista = loader.load();
-            
-            Scene escena = new Scene(vista);
-            escenario.setTitle("Evaluar Estudiante");
-            escenario.setScene(escena);
-            escenario.show();
-            
-        } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana para evaluar estudiantes.", Alert.AlertType.ERROR);
-            e.printStackTrace();
+    private void btnClicContinuar(ActionEvent event) {
+        Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
+        if (estudianteSeleccionado != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLCalificarPresentacion.fxml"));
+                Parent vista = loader.load();
+
+                FXMLCalificarPresentacionController controller = loader.getController();
+                controller.inicializarInformacion(estudianteSeleccionado);
+
+                Stage escenario = new Stage();
+                escenario.setTitle("Calificar Presentación");
+                escenario.setScene(new Scene(vista));
+                escenario.show();
+                
+            } catch (IOException e) {
+                AlertaUtilidad.mostrarAlertaSimple("Error de UI", "No se pudo cargar la ventana de calificación.", Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+        } else {
+            AlertaUtilidad.mostrarAlertaSimple("Selección requerida", "Debe seleccionar un estudiante para continuar.", Alert.AlertType.WARNING);
         }
     }
-
+    
     @FXML
     private void btnClicCerrarSesion(ActionEvent event) {
         try {
@@ -68,6 +91,22 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
             escenarioActual.show();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    
+    private void configurarTabla() {
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        colSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
+    }
+
+    private void cargarEstudiantes() {
+        try {
+            listaEstudiantes = FXCollections.observableArrayList(EstudianteDAO.obtenerEstudiantesParaEvaluar());
+            tvEstudiantes.setItems(listaEstudiantes);
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     
