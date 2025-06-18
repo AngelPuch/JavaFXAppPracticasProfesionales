@@ -58,9 +58,9 @@ public class FXMLRegistrarProyectoController implements Initializable {
         TextFormatter<String> textFormatter = new TextFormatter<>(filtro);
         textArea.setTextFormatter(textFormatter);
 
-        contadorLabel.setText("0/" + maxLength);
+        contadorLabel.setText("0/" + maxLength + " Max.");
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            contadorLabel.setText(newValue.length() + "/" + maxLength);
+            contadorLabel.setText(newValue.length() + "/" + maxLength + " Max.");
         });
     }
 

@@ -97,8 +97,19 @@ public class FXMLCalificarPresentacionController implements Initializable {
         tfPuntajeMetodosTecnicasIS.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
 
         calcularYEstablecerPromedio();
+        limiteCaracteres();
         
-        final int MAX_CHARS = 100;
+    }    
+    
+    public void inicializarInformacion(Estudiante estudiante) {
+        this.estudiante = estudiante;
+        lbNombreEstudiante.setText("Estudiante: " + this.estudiante.getNombre());
+        cargarDatosDeExpedienteYProyecto();
+        cargarInformacionTabla();
+    }
+    
+    private void limiteCaracteres() {
+        final int MAX_CHARS = 150;
 
         TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
@@ -111,18 +122,11 @@ public class FXMLCalificarPresentacionController implements Initializable {
         taObservacionesYComentarios.setTextFormatter(textFormatter);
 
         if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
+            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
             taObservacionesYComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
             });
         }
-    }    
-    
-    public void inicializarInformacion(Estudiante estudiante) {
-        this.estudiante = estudiante;
-        lbNombreEstudiante.setText("Estudiante: " + this.estudiante.getNombre());
-        cargarDatosDeExpedienteYProyecto();
-        cargarInformacionTabla();
     }
 
     @FXML

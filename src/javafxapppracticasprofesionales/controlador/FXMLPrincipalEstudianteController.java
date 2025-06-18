@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
@@ -25,7 +28,7 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-public class FXMLPrincipalEstudianteController implements Initializable {
+public class FXMLPrincipalEstudianteController implements Initializable, INotificacion {
 
     @FXML
     private Label lbNombreVentana;
@@ -65,7 +68,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     @FXML
     private void btnClicEvaluarOrganizacionVinculada(ActionEvent event) {
         try {
-            int idEstudiante = SesionUsuario.getInstancia().getUsuarioLogueado().getIdEstudiante();
             boolean tieneProyecto = EstudianteDAO.verificarProyectoAsignado(idEstudiante);
             if (!tieneProyecto) {
                 AlertaUtilidad.mostrarAlertaSimple("Sin Proyecto Asignado",
@@ -85,15 +87,14 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             boolean yaEvaluado = EvaluacionDAO.haEvaluadoOVPreviamente(this.idExpediente);
 
             if (yaEvaluado) {
-                lbNombreVentana.setText("Evaluación de OV (Realizada)");
-                FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
-                Parent root = loader.load();
-                FXMLVerEvaluacionOVController controller = loader.getController();
-                controller.inicializarDatos(this.idExpediente);
-                apCentral.getChildren().setAll(root);
+                cargarEvaluacionRealizada();
             } else {
                 lbNombreVentana.setText("Evaluación de OV (Pendiente)");
-                cargarEscenas("vista/FXMLPreEvaluarOV.fxml");
+                FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLPreEvaluarOV.fxml"));
+                Parent root = loader.load();
+                FXMLPreEvaluarOVController controller = loader.getController();
+                controller.inicializarDatos(this);
+                apCentral.getChildren().setAll(root);
             }
             
         } catch (SQLException e) {
@@ -113,7 +114,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     @FXML
     private void btnClicMiExpediente(ActionEvent event) {
         try {
-            int idEstudiante = SesionUsuario.getInstancia().getUsuarioLogueado().getIdEstudiante();
             boolean tieneProyecto = EstudianteDAO.verificarProyectoAsignado(idEstudiante);
 
             if (tieneProyecto) {
@@ -158,4 +158,22 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             ex.printStackTrace();
         }
     }   
+
+    @Override
+    public void operacionExitosa() {
+        cargarEvaluacionRealizada();
+    }
+    
+    private void cargarEvaluacionRealizada() {
+        try {
+            lbNombreVentana.setText("Evaluación de OV (Realizada)");
+            FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
+            Parent root = loader.load();
+            FXMLVerEvaluacionOVController controller = loader.getController();
+            controller.inicializarDatos(this.idExpediente);
+            apCentral.getChildren().setAll(root);
+        } catch (IOException ex) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la vista correspondiente: " + ex.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
 }

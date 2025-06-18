@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.AfirmacionOV;
 import javafxapppracticasprofesionales.modelo.pojo.RespuestaGuardadaOV;
@@ -41,17 +42,19 @@ public class FXMLConfirmarDatosController implements Initializable {
     private String comentarios;
     private int idUsuario;
     private int idExpediente;
+    private INotificacion observador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
     }    
     
-    public void inicializarDatos(List<AfirmacionOV> afirmaciones, String comentarios, int idUsuario, int idExpediente) {
+    public void inicializarDatos(List<AfirmacionOV> afirmaciones, String comentarios, int idUsuario, int idExpediente, INotificacion observador) {
         this.listaAfirmaciones = afirmaciones;
         this.comentarios = comentarios;
         this.idUsuario = idUsuario;
         this.idExpediente = idExpediente;
+        this.observador = observador;
         
         cargarDatosResumen();
     }
@@ -88,6 +91,7 @@ public class FXMLConfirmarDatosController implements Initializable {
             
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Operación Exitosa", "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                observador.operacionExitosa();
                 cerrarVentana();
             } else {
                 AlertaUtilidad.mostrarAlertaSimple("Error al Guardar", "No se ha podido guardar su evaluación. Inténtelo más tarde.", Alert.AlertType.ERROR);

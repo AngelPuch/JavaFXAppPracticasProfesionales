@@ -38,7 +38,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="lbContadorCaracteresDescripcion" layoutX="508.0" layoutY="190.0" prefHeight="35.0" prefWidth="63.0" />
-      <Label fx:id="lbContadorCaracteresObjetivo" layoutX="508.0" layoutY="299.0" prefHeight="35.0" prefWidth="63.0" />
+      <Label fx:id="lbContadorCaracteresDescripcion" layoutX="495.0" layoutY="190.0" prefHeight="35.0" prefWidth="80.0" />
+      <Label fx:id="lbContadorCaracteresObjetivo" layoutX="495.0" layoutY="299.0" prefHeight="35.0" prefWidth="80.0" />
    </children>
 </AnchorPane>

@@ -51,24 +51,7 @@ public class FXMLValidarEntregaController implements Initializable {
         
         lblNombreEstudiante.setText(doc.getNombreEstudiante());
         lblMatricula.setText(doc.getMatricula());
-        final int MAX_CHARS = 100;
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > MAX_CHARS) {
-                return null; 
-            } else {
-                return change; 
-            }
-        });
-        taComentarios.setTextFormatter(textFormatter);
-
-        if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
-            taComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
-            });
-        }
+        limiteCaracteres();
     }
 
     @FXML
@@ -121,6 +104,27 @@ public class FXMLValidarEntregaController implements Initializable {
             }
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void limiteCaracteres() {
+        final int MAX_CHARS = 150;
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > MAX_CHARS) {
+                return null; 
+            } else {
+                return change; 
+            }
+        });
+        taComentarios.setTextFormatter(textFormatter);
+
+        if (lbContadorCaracteres != null) {
+            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
+            taComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
+            });
         }
     }
 

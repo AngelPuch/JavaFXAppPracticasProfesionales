@@ -70,9 +70,8 @@ public class FXMLSeleccionarEstudianteController implements Initializable {
                 escenario.setTitle("Asignar Proyecto a Estudiante - Paso 2");
                 escenario.setScene(new Scene(vista));
                 escenario.initModality(Modality.APPLICATION_MODAL);
-                escenario.showAndWait();
-                
                 cerrarVentana();
+                escenario.show();
             } catch (IOException e) {
                 AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de selección de registro.", Alert.AlertType.ERROR);
             }

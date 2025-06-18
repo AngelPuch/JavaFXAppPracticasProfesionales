@@ -27,6 +27,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
 import javafxapppracticasprofesionales.modelo.pojo.AfirmacionOV;
@@ -72,6 +73,7 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     private final Map<AfirmacionOV, ToggleGroup> gruposPorAfirmacion = new HashMap<>();
     @FXML
     private Label lbContadorCaracteres;
+    private INotificacion observador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -90,24 +92,11 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Se perdió la conexión. Inténtalo de nuevo", Alert.AlertType.ERROR);
         }
         cargarDatosGenerales();
-        final int MAX_CHARS = 100;
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > MAX_CHARS) {
-                return null; 
-            } else {
-                return change; 
-            }
-        });
-        taObservaciones.setTextFormatter(textFormatter);
-
-        if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
-            taObservaciones.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
-            });
-        }
+        limiteCaracteres();
+    }
+    
+    public void inicializarDatos(INotificacion observador) {
+        this.observador = observador;
     }
 
     private void configurarTabla() {
@@ -168,6 +157,27 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar los datos de la evaluación.", Alert.AlertType.ERROR);
         }
     }
+    
+    private void limiteCaracteres() {
+        final int MAX_CHARS = 150;
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > MAX_CHARS) {
+                return null; 
+            } else {
+                return change; 
+            }
+        });
+        taObservaciones.setTextFormatter(textFormatter);
+
+        if (lbContadorCaracteres != null) {
+            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
+            taObservaciones.textProperty().addListener((observable, oldValue, newValue) -> {
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
+            });
+        }
+    }
 
     @FXML
     private void clicAceptar(ActionEvent event) {
@@ -195,7 +205,7 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             FXMLConfirmarDatosController controller = loader.getController();
             
             String obs = taObservaciones.getText();
-            controller.inicializarDatos(this.listaAfirmaciones, obs, this.idUsuario, this.idExpediente); 
+            controller.inicializarDatos(this.listaAfirmaciones, obs, this.idUsuario, this.idExpediente, observador); 
             
             Stage escenario = new Stage();
             escenario.setTitle("Confirmar Evaluación");

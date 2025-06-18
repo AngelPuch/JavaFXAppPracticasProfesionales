@@ -74,9 +74,8 @@ public class FXMLSeleccionarProyectoController implements Initializable {
                 escenario.setTitle("Asignar Proyecto a Estudiante - Paso 3");
                 escenario.setScene(new Scene(vista));
                 escenario.initModality(Modality.APPLICATION_MODAL);
-                escenario.showAndWait();
-                
                 cerrarVentana();
+                escenario.show();
             } catch (IOException e) {
                 AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de confirmación de asignación.", Alert.AlertType.ERROR);
             }

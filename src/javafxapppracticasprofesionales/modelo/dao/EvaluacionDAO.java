@@ -139,17 +139,18 @@ public class EvaluacionDAO {
             try {
                 conexion.setAutoCommit(false); 
             
-                String sqlEvaluacion = "INSERT INTO evaluacion (calificacionTotal, fecha, comentarios, Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
-                                       "VALUES (?, ?, ?, ?, ?, ?)";
+                String sqlEvaluacion = "INSERT INTO evaluacion (calificacionTotal, fecha, motivo, comentarios, Usuario_idUsuario, TipoEvaluacion_idTipoEvaluacion, Expediente_idExpediente) " +
+                                       "VALUES (?, ?, ?, ?, ?, ?, ?)";
                 
                 PreparedStatement psEvaluacion = conexion.prepareStatement(sqlEvaluacion, Statement.RETURN_GENERATED_KEYS);
             
                 psEvaluacion.setDouble(1, calificacion); 
                 psEvaluacion.setDate(2, Date.valueOf(LocalDate.now()));
-                psEvaluacion.setString(3, observaciones);
-                psEvaluacion.setInt(4, idUsuario);
-                psEvaluacion.setInt(5, idTipoEvaluacion);
-                psEvaluacion.setInt(6, idExpediente);
+                psEvaluacion.setString(3, "Evaluación de Organización Vínculada");
+                psEvaluacion.setString(4, observaciones);
+                psEvaluacion.setInt(5, idUsuario);
+                psEvaluacion.setInt(6, idTipoEvaluacion);
+                psEvaluacion.setInt(7, idExpediente);
                 
                 psEvaluacion.executeUpdate();
                 
