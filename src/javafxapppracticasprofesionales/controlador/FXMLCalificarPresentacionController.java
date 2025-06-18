@@ -77,6 +77,8 @@ public class FXMLCalificarPresentacionController implements Initializable {
     private Estudiante estudiante;
     private Proyecto proyecto;
     private int idExpediente;
+    @FXML
+    private Label lbContadorCaracteres;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -95,6 +97,25 @@ public class FXMLCalificarPresentacionController implements Initializable {
         tfPuntajeMetodosTecnicasIS.textProperty().addListener((obs, oldV, newV) -> calcularYEstablecerPromedio());
 
         calcularYEstablecerPromedio();
+        
+        final int MAX_CHARS = 100;
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > MAX_CHARS) {
+                return null; 
+            } else {
+                return change; 
+            }
+        });
+        taObservacionesYComentarios.setTextFormatter(textFormatter);
+
+        if (lbContadorCaracteres != null) {
+            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
+            taObservacionesYComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
+            });
+        }
     }    
     
     public void inicializarInformacion(Estudiante estudiante) {
@@ -114,7 +135,7 @@ public class FXMLCalificarPresentacionController implements Initializable {
     @FXML
     private void btnClicAceptar(ActionEvent event) {
         if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || tfPuntajeRequisitos.getText().isEmpty() || tfPuntajeSeguridadDominio.getText().isEmpty() || tfPuntajeContenido.getText().isEmpty() || tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "Los calificación de los criterios no puede estar vacía. Por favor corrige tu información.", Alert.AlertType.WARNING);
+            AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "La calificación de los criterios no puede estar vacía. Por favor corrige tu información.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -214,7 +235,6 @@ public class FXMLCalificarPresentacionController implements Initializable {
                     puntajeTotal += Double.parseDouble(texto);
                     camposValidos++;
                 } catch (NumberFormatException e) {
-                    // Ignorar campos con formato incorrecto para el cálculo del promedio
                 }
             }
         }
@@ -226,15 +246,8 @@ public class FXMLCalificarPresentacionController implements Initializable {
         }
     }
 
-    /**
-    * Configura un filtro para un TextField que solo permite números decimales
-    * en el rango de 5.0 a 10.0, con hasta dos decimales.
-    */
     private void agregarValidacionNumerica(TextField campoTexto) {
-        // La expresión regular original es demasiado estricta.
-        // Original: "^(?:[5-9](\\.\\d{0,2})?|10(\\.0{0,2})?|)$"
 
-        // CORRECCIÓN: Se añade "1|" para permitir que el usuario pueda empezar a escribir "10".
         final String regex = "^(1|([5-9](\\.\\d{0,2})?)|10(\\.0{0,2})?|)$";
 
         UnaryOperator<TextFormatter.Change> filtro = change -> {
@@ -247,16 +260,12 @@ public class FXMLCalificarPresentacionController implements Initializable {
 
         TextFormatter<String> formateadorTexto = new TextFormatter<>(filtro);
         campoTexto.setTextFormatter(formateadorTexto);
-
-        // El resto del método para la validación al perder el foco permanece igual.
         campoTexto.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) { 
                 String texto = campoTexto.getText();
                 if (!texto.isEmpty()) {
                     try {
                         double valor = Double.parseDouble(texto);
-                        // El valor "1" se permite mientras se escribe, pero al perder el foco
-                        // se valida que el valor final esté en el rango correcto.
                         if (valor < 5.0 || valor > 10.0) {
                             AlertaUtilidad.mostrarAlertaSimple("Valor fuera de rango", "La calificación debe estar entre 5.0 y 10.0.",
                                     Alert.AlertType.ERROR);

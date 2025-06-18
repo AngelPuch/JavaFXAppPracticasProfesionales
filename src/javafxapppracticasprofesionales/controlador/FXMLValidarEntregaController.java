@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ValidacionDAO;
@@ -36,6 +37,8 @@ public class FXMLValidarEntregaController implements Initializable {
     private DocumentoEntregado docAValidar;
     private INotificacion notificador;
     private String[] tablaInfo;
+    @FXML
+    private Label lbContadorCaracteres;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -48,6 +51,24 @@ public class FXMLValidarEntregaController implements Initializable {
         
         lblNombreEstudiante.setText(doc.getNombreEstudiante());
         lblMatricula.setText(doc.getMatricula());
+        final int MAX_CHARS = 100;
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > MAX_CHARS) {
+                return null; 
+            } else {
+                return change; 
+            }
+        });
+        taComentarios.setTextFormatter(textFormatter);
+
+        if (lbContadorCaracteres != null) {
+            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
+            taComentarios.textProperty().addListener((observable, oldValue, newValue) -> {
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
+            });
+        }
     }
 
     @FXML

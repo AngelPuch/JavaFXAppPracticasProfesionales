@@ -22,6 +22,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -69,6 +70,8 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     private int idExpediente;
     private int idUsuario;
     private final Map<AfirmacionOV, ToggleGroup> gruposPorAfirmacion = new HashMap<>();
+    @FXML
+    private Label lbContadorCaracteres;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,6 +90,24 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Se perdió la conexión. Inténtalo de nuevo", Alert.AlertType.ERROR);
         }
         cargarDatosGenerales();
+        final int MAX_CHARS = 100;
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > MAX_CHARS) {
+                return null; 
+            } else {
+                return change; 
+            }
+        });
+        taObservaciones.setTextFormatter(textFormatter);
+
+        if (lbContadorCaracteres != null) {
+            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
+            taObservaciones.textProperty().addListener((observable, oldValue, newValue) -> {
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
+            });
+        }
     }
 
     private void configurarTabla() {

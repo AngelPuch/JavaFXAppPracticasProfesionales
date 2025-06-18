@@ -10,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
 import javafxapppracticasprofesionales.modelo.dao.PeriodoDAO;
@@ -36,6 +38,8 @@ public class FXMLProgramarEntregaController implements Initializable {
     private String tipoEntrega;
     private INotificacion observador;
     private String nombreDocumentoPrefijo;
+    @FXML
+    private Label lbContadorCaracteres;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -63,6 +67,24 @@ public class FXMLProgramarEntregaController implements Initializable {
                 });
             }
         });
+        final int MAX_CHARS = 100;
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > MAX_CHARS) {
+                return null; 
+            } else {
+                return change; 
+            }
+        });
+        taDescripcion.setTextFormatter(textFormatter);
+
+        if (lbContadorCaracteres != null) {
+            lbContadorCaracteres.setText("0/" + MAX_CHARS); 
+            taDescripcion.textProperty().addListener((observable, oldValue, newValue) -> {
+                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS);
+            });
+        }
     }
     
     private boolean validarCampos(){

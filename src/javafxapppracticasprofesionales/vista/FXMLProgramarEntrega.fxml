@@ -22,7 +22,7 @@
       <Label layoutX="25.0" layoutY="80.0" text="Nombre de la Entrega: *" />
       <TextField fx:id="tfNombre" layoutX="180.0" layoutY="76.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label layoutX="25.0" layoutY="120.0" text="Descripción:" />
-      <TextArea fx:id="taDescripcion" layoutX="180.0" layoutY="120.0" prefHeight="120.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
+      <TextArea fx:id="taDescripcion" layoutX="180.0" layoutY="120.0" prefHeight="94.0" prefWidth="340.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label layoutX="25.0" layoutY="260.0" text="Fecha de Inicio: *" />
       <DatePicker fx:id="dpFechaInicio" layoutX="180.0" layoutY="256.0" />
       <Label layoutX="25.0" layoutY="300.0" text="Fecha de Fin: *" />
@@ -33,5 +33,6 @@
       <Button layoutX="350.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE">
          <cursor><Cursor fx:constant="HAND" /></cursor>
       </Button>
+      <Label fx:id="lbContadorCaracteres" layoutX="463.0" layoutY="214.0" prefHeight="35.0" prefWidth="57.0" />
    </children>
 </AnchorPane>

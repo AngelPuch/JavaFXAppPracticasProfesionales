@@ -3,12 +3,15 @@ package javafxapppracticasprofesionales.controlador;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
@@ -32,9 +35,33 @@ public class FXMLRegistrarProyectoController implements Initializable {
     private OrganizacionVinculada organizacion;
     private ResponsableProyecto responsable;
     private INotificacion observador;
+    @FXML
+    private Label lbContadorCaracteresDescripcion;
+    @FXML
+    private Label lbContadorCaracteresObjetivo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 100);
+        configurarTextAreaConContador(taObjetivo, lbContadorCaracteresObjetivo, 100);
+    }
+    
+    private void configurarTextAreaConContador(TextArea textArea, Label contadorLabel, int maxLength) {
+        if (textArea == null || contadorLabel == null) {
+            return;
+        }
+
+        UnaryOperator<TextFormatter.Change> filtro = change -> {
+            String newText = change.getControlNewText();
+            return newText.length() > maxLength ? null : change;
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filtro);
+        textArea.setTextFormatter(textFormatter);
+
+        contadorLabel.setText("0/" + maxLength);
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            contadorLabel.setText(newValue.length() + "/" + maxLength);
+        });
     }
 
     public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable,
@@ -42,6 +69,7 @@ public class FXMLRegistrarProyectoController implements Initializable {
         this.organizacion = organizacion;
         this.responsable = responsable;
         this.observador = observador;
+        
     }
 
     @FXML
