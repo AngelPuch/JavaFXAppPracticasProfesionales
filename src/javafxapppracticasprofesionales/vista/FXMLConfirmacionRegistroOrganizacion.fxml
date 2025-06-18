@@ -79,8 +79,8 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
-                  <Button fx:id="btnCancelar" onAction="#btnClicCancelar" style="-fx-background-color: #9E9E9E;" text="Cancelar" textFill="WHITE" />
-                  <Button fx:id="btnConfirmar" onAction="#btnClicConfirmar" style="-fx-background-color: #4CAF50;" text="Confirmar" textFill="WHITE" />
+                  <Button fx:id="btnCancelar" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE" />
+                  <Button fx:id="btnConfirmar" onAction="#btnClicConfirmar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Confirmar" textFill="WHITE" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

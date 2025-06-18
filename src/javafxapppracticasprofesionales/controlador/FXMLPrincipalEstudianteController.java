@@ -67,24 +67,33 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         try {
             int idEstudiante = SesionUsuario.getInstancia().getUsuarioLogueado().getIdEstudiante();
             boolean tieneProyecto = EstudianteDAO.verificarProyectoAsignado(idEstudiante);
-            if (tieneProyecto) {
-                boolean yaEvaluado = EvaluacionDAO.haEvaluadoOVPreviamente(this.idExpediente);
-            
-                if (yaEvaluado) {
-                    lbNombreVentana.setText("Evaluación de OV (Realizada)");
-                    FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
-                    Parent root = loader.load();
-                    FXMLVerEvaluacionOVController controller = loader.getController();
-                    controller.inicializarDatos(this.idExpediente); 
-                    apCentral.getChildren().setAll(root);
-                } else {
-                    lbNombreVentana.setText("Evaluación de OV (Pendiente)");
-                    cargarEscenas("vista/FXMLPreEvaluarOV.fxml");
-                }
-            } else {
+            if (!tieneProyecto) {
                 AlertaUtilidad.mostrarAlertaSimple("Sin Proyecto Asignado",
-                    "No tienes proyecto asignado, por lo tanto no puedes evaluar a una organización vinculada.",
-                    Alert.AlertType.INFORMATION);
+                        "No tienes proyecto asignado, por lo tanto no puedes evaluar a una organización vinculada.",
+                        Alert.AlertType.INFORMATION);
+                return; 
+            }
+            int horasAcumuladas = EstudianteDAO.obtenerHorasAcumuladas(this.idExpediente);
+
+            if (horasAcumuladas < 480) {
+                AlertaUtilidad.mostrarAlertaSimple("Horas Insuficientes",
+                        "Debes haber cumplido con al menos 480 horas para poder evaluar a la organización vinculada. Llevas " + horasAcumuladas + " horas.",
+                        Alert.AlertType.WARNING);
+                return; 
+            }
+
+            boolean yaEvaluado = EvaluacionDAO.haEvaluadoOVPreviamente(this.idExpediente);
+
+            if (yaEvaluado) {
+                lbNombreVentana.setText("Evaluación de OV (Realizada)");
+                FXMLLoader loader = new FXMLLoader(JavaFXAppPracticasProfesionales.class.getResource("vista/FXMLVerEvaluacionOV.fxml"));
+                Parent root = loader.load();
+                FXMLVerEvaluacionOVController controller = loader.getController();
+                controller.inicializarDatos(this.idExpediente);
+                apCentral.getChildren().setAll(root);
+            } else {
+                lbNombreVentana.setText("Evaluación de OV (Pendiente)");
+                cargarEscenas("vista/FXMLPreEvaluarOV.fxml");
             }
             
         } catch (SQLException e) {

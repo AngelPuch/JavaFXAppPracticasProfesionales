@@ -19,6 +19,6 @@
          </placeholder>
       </TableView>
       <Label layoutX="32.0" layoutY="32.0" style="-fx-font-weight: bold;" text="Selecciona un estudiante" />
-      <Button layoutX="677.0" layoutY="26.0" mnemonicParsing="false" onAction="#btnClicContinuar" style="-fx-background-color: #5A4FCF; -fx-font-weight: bold; -fx-background-radius: 5;" text="Continuar" textFill="WHITE" />
+      <Button layoutX="677.0" layoutY="26.0" mnemonicParsing="false" onAction="#btnClicContinuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Continuar" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -54,7 +54,7 @@
         </Label>
         <TextArea fx:id="taObservaciones" layoutX="25.0" layoutY="530.0" prefHeight="80.0" prefWidth="898.0" wrapText="true" />
 
-        <Button layoutX="678.0" layoutY="615.0" onAction="#clicCancelar" style="-fx-background-color: #6c757d;" text="Cancelar" textFill="WHITE" />
-        <Button layoutX="811.0" layoutY="615.0" onAction="#clicAceptar" style="-fx-background-color: #146cd0;" text="Aceptar" textFill="WHITE" />
+        <Button layoutX="670.0" layoutY="615.0" onAction="#clicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold;" text="Cancelar" textFill="WHITE" />
+        <Button layoutX="811.0" layoutY="615.0" onAction="#clicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold;" text="Aceptar" textFill="WHITE" />
     </children>
 </AnchorPane>

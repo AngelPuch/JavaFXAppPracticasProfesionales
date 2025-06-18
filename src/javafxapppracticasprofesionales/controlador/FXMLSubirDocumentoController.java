@@ -9,14 +9,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.UUID;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -24,7 +21,6 @@ import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.DocumentoInicioDAO;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
-import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -82,7 +78,9 @@ public class FXMLSubirDocumentoController implements Initializable {
         if (!validarCampos()) {
             return;
         }
-        
+        String nombreFinalArchivo;
+        Path rutaDestino;
+
         try {
             String nombreOriginal = archivoSeleccionado.getName();
             String extension = "";
@@ -90,13 +88,12 @@ public class FXMLSubirDocumentoController implements Initializable {
             if (i > 0) {
                 extension = nombreOriginal.substring(i); 
             }
-            String nombreFinalArchivo = tipoDocumento + "_" + nombreUsuario + extension;
+            nombreFinalArchivo = tipoDocumento + "_" + nombreUsuario + extension;
             
             String userHome = System.getProperty("user.home");
             Path directorioPath = Paths.get(userHome, DIRECTORIO_PRINCIPAL_APP, SUBDIRECTORIO_DOCUMENTOS);
-            Files.createDirectories(directorioPath);
+            rutaDestino = directorioPath.resolve(nombreFinalArchivo);
 
-            Path rutaDestino = directorioPath.resolve(nombreFinalArchivo);
             if (Files.exists(rutaDestino)) {
                 AlertaUtilidad.mostrarAlertaSimple("Nombre duplicado", 
                         "Ya existe un archivo con el nombre '" + nombreFinalArchivo + "'. Por favor, elige otro nombre.", 
@@ -104,25 +101,25 @@ public class FXMLSubirDocumentoController implements Initializable {
                 return; 
             }
             
-            Files.copy(archivoSeleccionado.toPath(), rutaDestino, StandardCopyOption.REPLACE_EXISTING);
-
-            String nombreDocTipo = tipoDocumento;
             String rutaParaBD = rutaDestino.toAbsolutePath().toString();
-            
-            ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(nombreDocTipo, rutaParaBD, nombreFinalArchivo, idEntrega, idExpediente);
+            ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(tipoDocumento, rutaParaBD, nombreFinalArchivo, idEntrega, idExpediente);
 
             if (!resultado.isError()) {
+                Files.createDirectories(directorioPath); 
+                Files.copy(archivoSeleccionado.toPath(), rutaDestino, StandardCopyOption.REPLACE_EXISTING);
+                
                 AlertaUtilidad.mostrarAlertaSimple("Operación exitosa", "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
                 observador.operacionExitosa();
                 cerrarVentana();
             } else {
-                AlertaUtilidad.mostrarAlertaSimple("Error", resultado.getMensaje(), Alert.AlertType.ERROR);
+                AlertaUtilidad.mostrarAlertaSimple("Error", "No se puede realizar la entrega de tu documento debido a que no tienes un expediente asignado.", Alert.AlertType.ERROR);
             }
 
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Ocurrió un error con la base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de Base de Datos", "No se puede realizar la entrega de tu documento debido a que no tienes un expediente asignado." , Alert.AlertType.ERROR);
+            cerrarVentana();
         } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error de Archivo", "No se pudo guardar el archivo en el directorio: " + e.getMessage(), Alert.AlertType.ERROR);
+            AlertaUtilidad.mostrarAlertaSimple("Error de Archivo", "No se pudo preparar o guardar el archivo en el directorio: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     

@@ -18,7 +18,7 @@
             <TableColumn fx:id="colOrganizacion" maxWidth="602.0" prefWidth="262.0" text="Organizacion Vinculada" />
          </columns>
       </TableView>
-      <Button layoutX="609.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #5A4FCF; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Responsable" AnchorPane.rightAnchor="32.0">
+      <Button layoutX="609.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicRegistrar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 5;" text="+ Registrar Nuevo Responsable" AnchorPane.rightAnchor="32.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
