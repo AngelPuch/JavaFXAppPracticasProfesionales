@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -11,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLConfirmarAsignacionProyectoController">
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLConfirmarAsignacionProyectoController">
     <children>
         <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
@@ -33,7 +38,7 @@
                     <children>
                         <VBox spacing="10.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 15;">
                             <children>
-                                <Label text="ESTUDIANTE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                                <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="ESTUDIANTE" />
                                 <GridPane hgap="10" vgap="8">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
@@ -52,6 +57,12 @@
                                         <Label text="Correo:" GridPane.rowIndex="3" />
                                         <Label fx:id="lbCorreoEstudiante" text="[Correo]" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                           </rowConstraints>
                                 </GridPane>
                             </children>
                         </VBox>
@@ -64,7 +75,7 @@
 
                         <VBox spacing="10.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 15;" GridPane.columnIndex="2">
                             <children>
-                                <Label text="PROYECTO" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                                <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="PROYECTO" />
                                 <GridPane hgap="10" vgap="8">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
@@ -83,6 +94,12 @@
                                         <Label text="Objetivo:" GridPane.rowIndex="3" />
                                         <Label fx:id="lbObjetivo" text="[Objetivo del proyecto]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                           </rowConstraints>
                                 </GridPane>
                             </children>
                         </VBox>
@@ -91,22 +108,22 @@
                         <Insets top="20.0" />
                     </VBox.margin>
                 </GridPane>
-                <HBox alignment="BOTTOM_RIGHT" spacing="10.0" VBox.vgrow="NEVER">
-                    <children>
-                        <Button onAction="#btnClicCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button onAction="#btnClicAceptar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Aceptar" textFill="WHITE">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                    </children>
+                <HBox alignment="BOTTOM_RIGHT" prefHeight="37.0" prefWidth="810.0" spacing="10.0" VBox.vgrow="NEVER">
                     <VBox.margin>
                         <Insets top="20.0" />
                     </VBox.margin>
+               <children>
+                        <Button onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button onAction="#btnClicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Aceptar" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+               </children>
                 </HBox>
             </children>
         </VBox>

@@ -36,7 +36,7 @@
          </cursor>
       </Button>
       <Label fx:id="lbTelefonoError" layoutX="175.0" layoutY="272.0" prefHeight="17.0" prefWidth="396.0" textFill="RED" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
-      <Label fx:id="lbContadorCaracteresNombre" layoutX="498.0" layoutY="114.0" prefHeight="35.0" prefWidth="80.0" />
-      <Label fx:id="lbContadorCaracteresDireccion" layoutX="498.0" layoutY="195.0" prefHeight="35.0" prefWidth="80.0" />
+      <Label fx:id="lbContadorCaracteresNombre" layoutX="501.0" layoutY="107.0" prefHeight="35.0" prefWidth="80.0" />
+      <Label fx:id="lbContadorCaracteresDireccion" layoutX="498.0" layoutY="189.0" prefHeight="35.0" prefWidth="80.0" />
    </children>
 </AnchorPane>

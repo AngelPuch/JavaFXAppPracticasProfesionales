@@ -64,6 +64,9 @@ public class FXMLSubirDocumentoController implements Initializable {
     @FXML
     private void clicSeleccionarArchivo(ActionEvent event) {
         FileChooser dialogo = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "Documentos Soportados (*.pdf, *.doc, *.docx)", "*.pdf", "*.doc", "*.docx");
+        dialogo.getExtensionFilters().add(extFilter);
         Stage escenario = (Stage) btnSeleccionarArchivo.getScene().getWindow();
         archivoSeleccionado = dialogo.showOpenDialog(escenario);
 
