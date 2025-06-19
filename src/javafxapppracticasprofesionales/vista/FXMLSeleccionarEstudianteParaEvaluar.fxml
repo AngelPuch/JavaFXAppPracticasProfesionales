@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarEstudianteParaEvaluarController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLSeleccionarEstudianteParaEvaluarController">
    <children>
       <Label layoutX="24.0" layoutY="25.0" text="Seleccionar Estudiante a Evaluar" />
       <TableView fx:id="tvEstudiantes" layoutX="24.0" layoutY="58.0" prefHeight="280.0" prefWidth="553.0">
@@ -11,7 +15,13 @@
             <TableColumn fx:id="colSemestre" prefWidth="150.0" text="Semestre" />
         </columns>
       </TableView>
-      <Button layoutX="503.0" layoutY="354.0" onAction="#btnClicContinuar" text="Continuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" textFill="WHITE" />
-      <Button layoutX="428.0" layoutY="354.0" onAction="#btnClicCancelar" text="Cancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" textFill="WHITE" />
+      <Button layoutX="503.0" layoutY="354.0" onAction="#btnClicContinuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Continuar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="428.0" layoutY="354.0" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

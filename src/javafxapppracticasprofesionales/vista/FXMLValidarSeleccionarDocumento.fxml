@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -25,7 +26,13 @@
           <TableColumn fx:id="colFechaFin" prefWidth="150.0" text="Fecha de Fin" />
         </columns>
       </TableView>
-      <Button layoutX="500.0" layoutY="360.0" onAction="#btnClicContinuar" prefWidth="75.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Continuar" textFill="WHITE" />
-      <Button layoutX="406.0" layoutY="360.0" onAction="#btnClicRegresar" prefWidth="75.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Regresar" textFill="WHITE" />
+      <Button layoutX="500.0" layoutY="360.0" onAction="#btnClicContinuar" prefWidth="75.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Continuar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="406.0" layoutY="360.0" onAction="#btnClicRegresar" prefWidth="75.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Regresar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

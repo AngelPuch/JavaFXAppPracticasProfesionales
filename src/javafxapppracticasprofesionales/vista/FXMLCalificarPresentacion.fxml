@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -109,6 +110,9 @@
                     </color>
                 </DropShadow>
             </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </Button>
         <Button layoutX="800.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicAceptar" style="-fx-background-color: #146cd0;" text="Aceptar" textFill="WHITE">
             <font>
@@ -121,6 +125,9 @@
                     </color>
                 </DropShadow>
             </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </Button>
       <Label fx:id="lbContadorCaracteres" layoutX="339.0" layoutY="531.0" prefHeight="17.0" prefWidth="80.0" />
     </children>

@@ -92,7 +92,7 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Se perdió la conexión. Inténtalo de nuevo", Alert.AlertType.ERROR);
         }
         cargarDatosGenerales();
-        limiteCaracteres();
+        Utilidad.configurarTextAreaConContador(taObservaciones, lbContadorCaracteres, 150);
     }
     
     public void inicializarDatos(INotificacion observador) {
@@ -157,27 +157,6 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar los datos de la evaluación.", Alert.AlertType.ERROR);
         }
     }
-    
-    private void limiteCaracteres() {
-        final int MAX_CHARS = 150;
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > MAX_CHARS) {
-                return null; 
-            } else {
-                return change; 
-            }
-        });
-        taObservaciones.setTextFormatter(textFormatter);
-
-        if (lbContadorCaracteres != null) {
-            lbContadorCaracteres.setText("0/" + MAX_CHARS + " Max."); 
-            taObservaciones.textProperty().addListener((observable, oldValue, newValue) -> {
-                lbContadorCaracteres.setText(newValue.length() + "/" + MAX_CHARS + " Max.");
-            });
-        }
-    }
 
     @FXML
     private void clicAceptar(ActionEvent event) {
@@ -204,14 +183,14 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             
             FXMLConfirmarDatosController controller = loader.getController();
             
-            String obs = taObservaciones.getText();
+            String obs = taObservaciones.getText().trim();
             controller.inicializarDatos(this.listaAfirmaciones, obs, this.idUsuario, this.idExpediente, observador); 
             
             Stage escenario = new Stage();
             escenario.setTitle("Confirmar Evaluación");
             escenario.setScene(new Scene(vista));
-            escenario.initModality(Modality.APPLICATION_MODAL);  
-            escenario.showAndWait(); 
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.show();
             cerrarVentana();
             
             

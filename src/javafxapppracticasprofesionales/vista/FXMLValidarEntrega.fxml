@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -37,16 +38,28 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="30.0" layoutY="135.0" mnemonicParsing="false" onAction="#btnClicAbrirDocumento" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Abrir Documento" textFill="WHITE" />
+      <Button layoutX="30.0" layoutY="135.0" mnemonicParsing="false" onAction="#btnClicAbrirDocumento" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Abrir Documento" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label layoutX="30.0" layoutY="180.0" text="Comentarios de Validación:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <TextArea fx:id="taComentarios" layoutX="30.0" layoutY="205.0" prefHeight="74.0" prefWidth="440.0" wrapText="true" />
-      <Button fx:id="btnRechazar" layoutX="310.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicRechazar" prefWidth="70.0" style="-fx-background-color: #d9534f;" text="Rechazar" textFill="WHITE" />
-      <Button fx:id="btnAprobar" layoutX="399.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicAprobar" prefWidth="70.0" style="-fx-background-color: #5cb85c;" text="Aprobar" textFill="WHITE" />
-      <Button layoutX="30.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicCancelar" prefWidth="70.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE" />
+      <Button fx:id="btnRechazar" layoutX="310.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicRechazar" prefWidth="70.0" style="-fx-background-color: #d9534f;" text="Rechazar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="btnAprobar" layoutX="399.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicAprobar" prefWidth="70.0" style="-fx-background-color: #5cb85c;" text="Aprobar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="30.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicCancelar" prefWidth="70.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label fx:id="lbContadorCaracteres" layoutX="389.0" layoutY="271.0" prefHeight="35.0" prefWidth="80.0" />
    </children>
 </AnchorPane>

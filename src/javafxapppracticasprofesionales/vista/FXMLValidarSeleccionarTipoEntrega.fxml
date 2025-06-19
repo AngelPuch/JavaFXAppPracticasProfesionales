@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -40,7 +41,10 @@
       </RadioButton>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="401.0">
          <children>
-            <Button layoutX="307.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnClicContinuar" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Continuar" textFill="WHITE" />
+            <Button layoutX="307.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnClicContinuar" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Continuar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
    </children>

@@ -18,6 +18,9 @@
             <Label text="No hay estudiantes con proyectos asignados." />
          </placeholder>
       </TableView>
-      <Button layoutX="600.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicAsignarProyecto" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="+Asignar Proyecto" textFill="WHITE" AnchorPane.rightAnchor="32.0" />
+      <Button layoutX="600.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicAsignarProyecto" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="+Asignar Proyecto" textFill="WHITE" AnchorPane.rightAnchor="32.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

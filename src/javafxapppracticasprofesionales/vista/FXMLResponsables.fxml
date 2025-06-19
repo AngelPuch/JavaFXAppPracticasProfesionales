@@ -22,11 +22,17 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button layoutX="422.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicActualizar" style="-fx-background-color: #ffae3f; -fx-text-fill: white; -fx-background-radius: 5;" text="🔁 Actualizar Responsable">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
    </children>
 </AnchorPane>

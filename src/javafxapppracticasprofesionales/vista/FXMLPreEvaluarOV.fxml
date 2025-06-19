@@ -20,6 +20,9 @@
             </Label>
             <Button mnemonicParsing="false" onAction="#btnClicEvaluar" style="-fx-background-color: #007bff; -fx-font-weight: bold;" text="Evaluar Organización Vinculada" textFill="WHITE">
                <font><Font size="14.0" /></font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </VBox>

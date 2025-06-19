@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -125,7 +126,13 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="btnConsultar" layoutX="695.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicConsultar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Consultar" textFill="WHITE" />
-      <Button layoutX="608.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicRegresar" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cerrar" textFill="WHITE" />
+      <Button fx:id="btnConsultar" layoutX="695.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicConsultar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Consultar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="608.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicRegresar" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cerrar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

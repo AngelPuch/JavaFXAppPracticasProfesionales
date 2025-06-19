@@ -39,8 +39,8 @@
 
         <TableView fx:id="tvAfirmaciones" layoutX="25.0" layoutY="150.0" prefHeight="342.0" prefWidth="900.0">
             <columns>
-                <TableColumn fx:id="colCategoria" prefWidth="45.0" text="N°" />
-                <TableColumn fx:id="colAfirmacion" prefWidth="489.0" text="Afirmación" />
+                <TableColumn fx:id="colCategoria" prefWidth="35.0" text="N°" />
+                <TableColumn fx:id="colAfirmacion" prefWidth="499.0" text="Afirmación" />
                 <TableColumn fx:id="colNunca" prefWidth="66.0" text="Nunca (1)" />
                 <TableColumn fx:id="colPocasVeces" prefWidth="59.0" text="Pocas (2)" />
                 <TableColumn fx:id="colAlgunasVeces" prefWidth="72.0" text="Algunas (3)" />
@@ -54,8 +54,14 @@
         </Label>
         <TextArea fx:id="taObservaciones" layoutX="25.0" layoutY="518.0" prefHeight="67.0" prefWidth="898.0" wrapText="true" />
 
-        <Button layoutX="670.0" layoutY="615.0" onAction="#clicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold;" text="Cancelar" textFill="WHITE" />
-        <Button layoutX="811.0" layoutY="615.0" onAction="#clicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold;" text="Aceptar" textFill="WHITE" />
+        <Button layoutX="746.0" layoutY="615.0" onAction="#clicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold;" text="Cancelar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Button layoutX="836.0" layoutY="615.0" onAction="#clicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold;" text="Aceptar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label fx:id="lbContadorCaracteres" layoutX="845.0" layoutY="585.0" prefHeight="17.0" prefWidth="80.0">
          <font>
             <Font name="System Bold" size="12.0" />
