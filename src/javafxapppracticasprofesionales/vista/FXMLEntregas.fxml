@@ -15,7 +15,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="824.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapppracticasprofesionales.controlador.FXMLEntregasController">
    <children>
-      <Button layoutY="21.0" onAction="#btnClicProgramarEntrega" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Programar Nueva Entrega" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="21.0">
+      <Button onAction="#btnClicProgramarEntrega" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Programar Nueva Entrega" textFill="WHITE" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="21.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -26,9 +26,12 @@
       </Label>
       <TableView fx:id="tvEntregasIniciales" layoutX="25.0" layoutY="75.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="75.0">
          <columns>
-            <TableColumn fx:id="colNombreInicial" prefWidth="300.0" text="Nombre" />
-            <TableColumn fx:id="colFechaInicioInicial" prefWidth="230.0" text="Fecha de Inicio" />
-            <TableColumn fx:id="colFechaFinInicial" prefWidth="230.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colNombreInicial" prefWidth="250.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioInicial" prefWidth="120.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinInicial" prefWidth="120.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colHoraInicioInicial" prefWidth="90.0" text="Hora Inicio" />
+            <TableColumn fx:id="colHoraFinInicial" prefWidth="90.0" text="Hora Fin" />
+            <TableColumn fx:id="colGrupoInicial" prefWidth="150.0" text="Grupo" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -40,9 +43,12 @@
       </Label>
       <TableView fx:id="tvEntregasReportes" layoutX="25.0" layoutY="220.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0">
          <columns>
-            <TableColumn fx:id="colNombreReporte" prefWidth="300.0" text="Nombre" />
-            <TableColumn fx:id="colFechaInicioReporte" prefWidth="230.0" text="Fecha de Inicio" />
-            <TableColumn fx:id="colFechaFinReporte" prefWidth="230.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colNombreReporte" prefWidth="250.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioReporte" prefWidth="120.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinReporte" prefWidth="120.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colHoraInicioReporte" prefWidth="90.0" text="Hora Inicio" />
+            <TableColumn fx:id="colHoraFinReporte" prefWidth="90.0" text="Hora Fin" />
+            <TableColumn fx:id="colGrupoReporte" prefWidth="150.0" text="Grupo" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -54,9 +60,12 @@
       </Label>
       <TableView fx:id="tvEntregasFinales" layoutX="25.0" layoutY="369.0" prefHeight="110.0" prefWidth="760.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0">
          <columns>
-            <TableColumn fx:id="colNombreFinal" prefWidth="300.0" text="Nombre" />
-            <TableColumn fx:id="colFechaInicioFinal" prefWidth="230.0" text="Fecha de Inicio" />
-            <TableColumn fx:id="colFechaFinFinal" prefWidth="230.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colNombreFinal" prefWidth="250.0" text="Nombre" />
+            <TableColumn fx:id="colFechaInicioFinal" prefWidth="120.0" text="Fecha de Inicio" />
+            <TableColumn fx:id="colFechaFinFinal" prefWidth="120.0" text="Fecha de Fin" />
+            <TableColumn fx:id="colHoraInicioFinal" prefWidth="90.0" text="Hora Inicio" />
+            <TableColumn fx:id="colHoraFinFinal" prefWidth="90.0" text="Hora Fin" />
+            <TableColumn fx:id="colGrupoFinal" prefWidth="150.0" text="Grupo" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

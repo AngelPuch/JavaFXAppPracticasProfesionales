@@ -32,33 +32,6 @@ public class TipoDocumento {
         return nombre;
     }
 
-    public static List<TipoDocumento> obtenerTiposDocumentoInicial() {
-        ArrayList<TipoDocumento> tipos = new ArrayList<>();
-        tipos.add(new TipoDocumento("Carta de aceptación"));
-        tipos.add(new TipoDocumento("Constancia de seguro"));
-        tipos.add(new TipoDocumento("Cronograma"));
-        tipos.add(new TipoDocumento("Horario"));
-        tipos.add(new TipoDocumento("Oficio asignación"));
-        return tipos;
-    }
-
-    public static List<TipoDocumento> obtenerTiposDocumentoReporte() {
-        ArrayList<TipoDocumento> tipos = new ArrayList<>();
-        tipos.add(new TipoDocumento("Reporte Mensual"));
-        tipos.add(new TipoDocumento("Reporte 210 horas"));
-        tipos.add(new TipoDocumento("Reporte final"));
-        return tipos;
-    }
-
-    public static List<TipoDocumento> obtenerTiposDocumentoFinal() {
-        ArrayList<TipoDocumento> tipos = new ArrayList<>();
-        tipos.add(new TipoDocumento("Reporte Final"));
-        tipos.add(new TipoDocumento("Constancia de Liberación"));
-        tipos.add(new TipoDocumento("Evaluación de OV"));
-        tipos.add(new TipoDocumento("Autoevaluación"));
-        return tipos;
-    }
-
     public int getIdTipoDocumento() {
         return idTipoDocumento;
     }

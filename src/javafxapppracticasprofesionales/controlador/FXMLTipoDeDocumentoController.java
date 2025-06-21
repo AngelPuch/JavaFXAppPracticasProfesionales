@@ -2,6 +2,7 @@ package javafxapppracticasprofesionales.controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
+import javafxapppracticasprofesionales.modelo.dao.TipoDocumentoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -27,15 +29,18 @@ public class FXMLTipoDeDocumentoController implements Initializable {
     private ListView<TipoDocumento> lvTipoDocumento;
     private String tipoEntrega;
     private INotificacion observador;
+    private ObservableList<TipoDocumento> listaTiposDocumento;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        listaTiposDocumento = FXCollections.observableArrayList();
     }
 
     public void inicializarInformacion(String tipoEntrega, INotificacion observador) {
         this.tipoEntrega = tipoEntrega;
         this.observador = observador;
-        cargarDocumentos();
+        cargarTiposDeDocumento();
     }
 
     @FXML
@@ -46,7 +51,7 @@ public class FXMLTipoDeDocumentoController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLProgramarEntrega.fxml"));
                 Parent vista = loader.load();
                 FXMLProgramarEntregaController controller = loader.getController();
-                controller.inicializarInformacion(tipoEntrega, docSeleccionado.getNombre(), observador);
+                controller.inicializarInformacion(tipoEntrega, docSeleccionado, observador);
 
                 Stage escenario = new Stage();
                 escenario.setTitle("Programar Entrega");
@@ -76,25 +81,15 @@ public class FXMLTipoDeDocumentoController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se puede mostrar la ventana.", Alert.AlertType.ERROR);
         }
     }
-
-    private void cargarDocumentos() {
-        System.out.println("Cargando documentos para: " + tipoEntrega); 
-        ArrayList<TipoDocumento> documentosPojo = new ArrayList<>();
-        switch (tipoEntrega) {
-            case "DOCUMENTOS INICIALES":
-                documentosPojo.addAll(TipoDocumento.obtenerTiposDocumentoInicial());
-                break;
-            case "REPORTES":
-                documentosPojo.addAll(TipoDocumento.obtenerTiposDocumentoReporte());
-                break;
-            case "DOCUMENTOS FINALES":
-                documentosPojo.addAll(TipoDocumento.obtenerTiposDocumentoFinal());
-                break;
+    
+    private void cargarTiposDeDocumento() {
+        try {
+            ArrayList<TipoDocumento> tiposBD = TipoDocumentoDAO.obtenerTiposDeDocumento(tipoEntrega);
+            listaTiposDocumento.addAll(tiposBD);
+            lvTipoDocumento.setItems(listaTiposDocumento);
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Carga", "No se pudieron cargar los tipos de documento desde la base de datos.", Alert.AlertType.ERROR);
         }
-        
-        lvTipoDocumento.setItems(FXCollections.observableArrayList(documentosPojo));
-        lvTipoDocumento.requestFocus();
-
     }
 
     private void cerrarVentana() {

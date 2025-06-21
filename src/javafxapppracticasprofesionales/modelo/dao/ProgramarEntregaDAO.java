@@ -3,99 +3,72 @@ package javafxapppracticasprofesionales.modelo.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
-import javafxapppracticasprofesionales.modelo.pojo.Grupo;
-import javafxapppracticasprofesionales.modelo.pojo.Periodo;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 public class ProgramarEntregaDAO {
-    public static ResultadoOperacion programarEntrega(String nombre, String descripcion, String fechaInicio, String fechaFin, int idGrupoEE, String tabla) throws SQLException {
+
+    public static ResultadoOperacion programarNuevaEntrega(Entrega nuevaEntrega, String tabla, int idGrupoEE, int idTipoDocumento) throws SQLException {
         ResultadoOperacion resultado = new ResultadoOperacion();
         resultado.setIsError(true);
         Connection conexionBD = ConexionBD.abrirConexion();
+
         if (conexionBD != null) {
-            String sql = String.format("INSERT INTO %s (nombre, descripcion, fechaInicio, fechaFin, grupoEE_idgrupoEE) VALUES (?, ?, ?, ?, ?)", tabla);
             
-            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            sentencia.setString(2, descripcion);
-            sentencia.setString(3, fechaInicio);
-            sentencia.setString(4, fechaFin);
-            sentencia.setInt(5, idGrupoEE);
-            
-            int filasAfectadas = sentencia.executeUpdate();
-            
-            if (filasAfectadas > 0) {
-                resultado.setIsError(false);
-                resultado.setMensaje("La entrega ha sido programada correctamente.");
-            } else {
-                resultado.setMensaje("No se pudo programar la entrega.");
+            // Determinar el nombre de la columna de la llave foránea dinámicamente
+            String columnaFkTipoDoc = "";
+            switch(tabla) {
+                case "entregadocumentoinicio":
+                    columnaFkTipoDoc = "TipoDocumentoInicio_idTipoDocumentoInicio";
+                    break;
+                case "entregareporte":
+                    columnaFkTipoDoc = "TipoDocumentoReporte_idTipoDocumentoReporte";
+                    break;
+                case "entregadocumentofinal":
+                    columnaFkTipoDoc = "TipoDocumentoFinal_idTipoDocumentoFinal";
+                    break;
+                default:
+                    throw new SQLException("Nombre de tabla de entrega no válido: " + tabla);
             }
+
+            String sql = String.format(
+                "INSERT INTO %s (nombre, descripcion, fechaInicio, fechaFin, horaInicio, horaFin, grupoEE_idgrupoEE, %s) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", tabla, columnaFkTipoDoc
+            );
             
-            conexionBD.close();
-            sentencia.close();
-        } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
-        }
-        return resultado;
-    }
-    
-    public static ResultadoOperacion programarEntregaPeriodoActual(Entrega nuevaEntrega, String tabla) throws SQLException {
-        ResultadoOperacion resultado = new ResultadoOperacion();
-        resultado.setIsError(true);
-        Connection conexionBD = ConexionBD.abrirConexion();
-        if (conexionBD != null) {
-            try {
-                Periodo periodoActual = PeriodoDAO.obtenerPeriodoActual();
-                if (periodoActual == null) {
-                    resultado.setMensaje("No se encontró un periodo escolar activo para programar la entrega.");
-                    return resultado;
+            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
+                sentencia.setString(1, nuevaEntrega.getNombre());
+                sentencia.setString(2, nuevaEntrega.getDescripcion());
+                sentencia.setDate(3, java.sql.Date.valueOf(LocalDate.parse(nuevaEntrega.getFechaInicio())));
+                sentencia.setDate(4, java.sql.Date.valueOf(LocalDate.parse(nuevaEntrega.getFechaFin())));
+
+                if (nuevaEntrega.getHoraInicio() != null && !nuevaEntrega.getHoraInicio().isEmpty()) {
+                    sentencia.setTime(5, Time.valueOf(nuevaEntrega.getHoraInicio() + ":00"));
+                } else {
+                    sentencia.setNull(5, java.sql.Types.TIME);
                 }
 
-                ArrayList<Grupo> grupos = GrupoDAO.obtenerGruposPorPeriodo(periodoActual.getIdPeriodo());
-                if (grupos.isEmpty()) {
-                    resultado.setMensaje("No se encontraron grupos en el periodo actual para asignar la entrega.");
-                    return resultado;
+                if (nuevaEntrega.getHoraFin() != null && !nuevaEntrega.getHoraFin().isEmpty()) {
+                    sentencia.setTime(6, Time.valueOf(nuevaEntrega.getHoraFin() + ":00"));
+                } else {
+                    sentencia.setNull(6, java.sql.Types.TIME);
                 }
+                
+                sentencia.setInt(7, idGrupoEE);
+                sentencia.setInt(8, idTipoDocumento); // Se inserta el ID del tipo de documento
 
-                conexionBD.setAutoCommit(false);
-
-                String sql = String.format("INSERT INTO %s (nombre, descripcion, fechaInicio, fechaFin, grupoEE_idgrupoEE) VALUES (?, ?, ?, ?, ?)", tabla);
-                PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-
-                for (Grupo grupo : grupos) {
-                    sentencia.setString(1, nuevaEntrega.getNombre());
-                    sentencia.setString(2, nuevaEntrega.getDescripcion());
-
-                    LocalDate fechaInicio = LocalDate.parse(nuevaEntrega.getFechaInicio());
-                    LocalDate fechaFin = LocalDate.parse(nuevaEntrega.getFechaFin());
-                    sentencia.setDate(3, java.sql.Date.valueOf(fechaInicio));
-                    sentencia.setDate(4, java.sql.Date.valueOf(fechaFin));
-
-                    sentencia.setInt(5, grupo.getIdGrupo());
-                    sentencia.executeUpdate();
-                }
-
-                conexionBD.commit();
-                resultado.setIsError(false);
-                resultado.setMensaje("La entrega ha sido programada correctamente para todos los grupos del periodo actual.");
-
-            } catch (SQLException e) {
-                resultado.setMensaje("Ocurrió un error y no se pudo completar la operación: " + e.getMessage());
-                try {
-                    if (conexionBD != null && !conexionBD.getAutoCommit()) {
-                        conexionBD.rollback();
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                int filasAfectadas = sentencia.executeUpdate();
+                if (filasAfectadas > 0) {
+                    resultado.setIsError(false);
+                    resultado.setMensaje("La entrega ha sido programada correctamente.");
+                } else {
+                    resultado.setMensaje("No se pudo programar la entrega.");
                 }
             } finally {
-                if (conexionBD != null) {
-                    conexionBD.close();
-                }
+                conexionBD.close();
             }
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");

@@ -6,19 +6,26 @@ public class Entrega {
     private String descripcion;
     private String fechaInicio;
     private String fechaFin;
+    private String horaInicio;
+    private String horaFin;
     private String estado;
+    private String nombreGrupo;
 
     public Entrega() {}
 
-    public Entrega(int idEntrega, String nombre, String descripcion, String fechaInicio, String fechaFin, String estado) {
+    public Entrega(int idEntrega, String nombre, String descripcion, String fechaInicio, String fechaFin, 
+            String horaInicio, String horaFin, String estado) {
         this.idEntrega = idEntrega;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
         this.estado = estado;
     }
 
+    // Getters y Setters
     public int getIdEntrega() {
         return idEntrega;
     }
@@ -59,6 +66,22 @@ public class Entrega {
         this.fechaFin = fechaFin;
     }
 
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
+    
     public String getEstado() {
         return estado;
     }
@@ -66,6 +89,13 @@ public class Entrega {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
+    public String getNombreGrupo() {
+        return nombreGrupo;
+    }
+
+    public void setNombreGrupo(String nombreGrupo) {
+        this.nombreGrupo = nombreGrupo;
+    }
     
 }

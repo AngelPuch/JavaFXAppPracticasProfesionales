@@ -24,9 +24,11 @@ public class FXMLTipoDeEntregaController implements Initializable {
     @FXML
     private ListView<String> lvTipoEntrega;
     private INotificacion observador;
+    private ObservableList<String> listaTipos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        listaTipos = FXCollections.observableArrayList();
         cargarTiposDeEntrega();
     }    
     
@@ -35,9 +37,10 @@ public class FXMLTipoDeEntregaController implements Initializable {
     }
     
     private void cargarTiposDeEntrega(){
-        ObservableList<String> tipos = FXCollections.observableArrayList();
-        tipos.addAll("DOCUMENTOS INICIALES", "REPORTES", "DOCUMENTOS FINALES");
-        lvTipoEntrega.setItems(tipos);
+        listaTipos.add("DOCUMENTOS INICIALES");
+        listaTipos.add("REPORTES");
+        listaTipos.add("DOCUMENTOS FINALES");
+        lvTipoEntrega.setItems(listaTipos);
     }
 
     @FXML
