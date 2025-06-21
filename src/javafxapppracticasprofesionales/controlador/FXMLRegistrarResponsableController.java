@@ -9,22 +9,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
-import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
-import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
+import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 
 public class FXMLRegistrarResponsableController implements Initializable {
 
     @FXML
-    private TextField tfNombre;   
-    private OrganizacionVinculada organizacionSeleccionada;
-    private INotificacion observador;
+    private Label lbTitulo;
+    @FXML
+    private TextField tfNombre;
+    @FXML
+    private TextField tfApellidoPaterno;
+    @FXML
+    private TextField tfApellidoMaterno;
     @FXML
     private TextField tfCargo;
     @FXML
@@ -36,19 +40,25 @@ public class FXMLRegistrarResponsableController implements Initializable {
     @FXML
     private Label lbCorreoError;
     @FXML
-    private Label lbTitulo;
-    private ResponsableProyecto responsableActualizar;
-    private boolean esEdicion;
-    @FXML
     private Label lbContadorCaracteresNombre;
     @FXML
-    private Label lbContadorCaracteresCargo;
+    private Label lbContadorCaracteresApPaterno;
     @FXML
-    private Label lbContadorCaracteresCorreo;
+    private Label lbContadorCaracteresApMaterno;
+    @FXML
+    private Label lbContadorCaracteresCargo;
+    
+    private OrganizacionVinculada organizacionSeleccionada;
+    private INotificacion observador;
+    private ResponsableProyecto responsableActualizar;
+    private boolean esEdicion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 70);
+        Utilidad.configurarTextAreaConContador(tfApellidoPaterno, lbContadorCaracteresApPaterno, 100);
+        Utilidad.configurarTextAreaConContador(tfApellidoMaterno, lbContadorCaracteresApMaterno, 100);
+        Utilidad.configurarTextAreaConContador(tfCargo, lbContadorCaracteresCargo, 45);
     }    
     
     public void inicializarInformacion(OrganizacionVinculada organizacionSeleccionada, INotificacion observador, ResponsableProyecto responsableActualizar, boolean esEdicion) {
@@ -56,129 +66,107 @@ public class FXMLRegistrarResponsableController implements Initializable {
         this.observador = observador;
         this.responsableActualizar = responsableActualizar;
         this.esEdicion = esEdicion;
+        
         if (esEdicion && responsableActualizar != null) {
+            lbTitulo.setText("Actualizar Responsable del Proyecto");
             tfNombre.setText(responsableActualizar.getNombre());
+            tfApellidoPaterno.setText(responsableActualizar.getApellidoPaterno());
+            tfApellidoMaterno.setText(responsableActualizar.getApellidoMaterno());
             tfCargo.setText(responsableActualizar.getCargo());
             tfTelefono.setText(responsableActualizar.getTelefono());
             tfCorreo.setText(responsableActualizar.getCorreo());
-            lbTitulo.setText("Actualizar Responsable del Proyecto");
-        }
-        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 70);
-        Utilidad.configurarTextAreaConContador(tfCargo, lbContadorCaracteresCargo, 45);
-        Utilidad.configurarTextAreaConContador(tfCorreo, lbContadorCaracteresCorreo, 80);
-    }
-
-
-    @FXML
-    private void btnAceptar(ActionEvent event) {
-        boolean camposValidos = validarCampos();
-        if (camposValidos) {
-            if (esEdicion) {
-                actualizarResponsable(obtenerResponsableNuevo());
-            } else {
-                registrarResponsable(obtenerResponsableNuevo());
-            }
+        } else {
+            lbTitulo.setText("Registrar Responsable del Proyecto");
         }
     }
 
-    @FXML
-    private void btnCancelar(ActionEvent event) {
-        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
-                "¿Estás seguro de que quieres cancelar?");
-        if (confirmado) {
-            cerrarVentana();
-        }
-    }
-    
     private boolean validarCampos() {
+        lbTelefonoError.setText("");
+        lbCorreoError.setText("");
         boolean esValido = true;
 
-        if (tfNombre.getText().trim().isEmpty() || tfCargo.getText().trim().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
-                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+        if (tfNombre.getText().trim().isEmpty() || tfApellidoPaterno.getText().trim().isEmpty() || tfCargo.getText().trim().isEmpty()) {
+            AlertaUtilidad.mostrarAlertaSimple("Campos obligatorios vacíos", 
+                "Los campos marcados con (*) no deben estar vacíos. Por favor, complételos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
 
-        String telefono = tfTelefono.getText().trim();
-        if (!telefono.isEmpty()) {
-            if (!telefono.matches("\\d{10}")) {
-                lbTelefonoError.setText("*Teléfono inválido");
-                esValido = false;
-            } else {
-                lbTelefonoError.setText("");
-            }
-        } else {
-            lbTelefonoError.setText("");
+        if (!tfTelefono.getText().trim().isEmpty() && !ValidacionUtilidad.validarTelefono(tfTelefono.getText().trim())) {
+            lbTelefonoError.setText("Teléfono inválido");
+            esValido = false;
         }
         
-        String correo = tfCorreo.getText().trim();
-        if (!correo.isEmpty()) {
-            if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
-                lbCorreoError.setText("*Correo inválido");
-                esValido = false;
-            } else {
-                lbCorreoError.setText("");
-            }
-        } else {
-            lbCorreoError.setText("");
+        if (!tfCorreo.getText().trim().isEmpty() && !ValidacionUtilidad.validarCorreo(tfCorreo.getText().trim())) {
+            lbCorreoError.setText("Correo inválido");
+            esValido = false;
         }
 
         return esValido;
     }
     
-    private ResponsableProyecto obtenerResponsableNuevo() {
-        ResponsableProyecto nuevoResponsable = new ResponsableProyecto();
-        nuevoResponsable.setNombre(tfNombre.getText().trim());
-        nuevoResponsable.setCargo(tfCargo.getText().trim());
-        nuevoResponsable.setCorreo(tfCorreo.getText().trim());
-        nuevoResponsable.setTelefono(tfTelefono.getText().trim());
+    private ResponsableProyecto obtenerResponsableFormulario() {
+        ResponsableProyecto responsable = new ResponsableProyecto();
+        responsable.setNombre(tfNombre.getText().trim());
+        responsable.setApellidoPaterno(tfApellidoPaterno.getText().trim());
+        responsable.setApellidoMaterno(tfApellidoMaterno.getText().trim());
+        responsable.setCargo(tfCargo.getText().trim());
+        responsable.setTelefono(tfTelefono.getText().trim());
+        responsable.setCorreo(tfCorreo.getText().trim());
         if (!esEdicion) {
-            nuevoResponsable.setIdOrganizacion(organizacionSeleccionada.getIdOrganizacion());
+            responsable.setIdOrganizacion(organizacionSeleccionada.getIdOrganizacion());
         }
-        
-        return nuevoResponsable;
+        return responsable;
     }
     
     private void registrarResponsable(ResponsableProyecto responsable) {
         try {
             ResultadoOperacion resultado = ResponsableProyectoDAO.registrarResponsable(responsable);
             if (!resultado.isError()) {
-                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
-                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                AlertaUtilidad.mostrarAlertaSimple("Registro Exitoso", resultado.getMensaje(), Alert.AlertType.INFORMATION);
                 observador.operacionExitosa();
                 cerrarVentana();
             } else {
-                AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
-                        resultado.getMensaje(), Alert.AlertType.ERROR);
+                AlertaUtilidad.mostrarAlertaSimple("Error en el Registro", resultado.getMensaje(), Alert.AlertType.ERROR);
             }
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
-                    "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
-            e.printStackTrace();
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Hubo un error en la conexión con la base de datos. Intente más tarde.", Alert.AlertType.ERROR);
         }
     }
-    
+
     private void actualizarResponsable(ResponsableProyecto responsable) {
         try {
             ResultadoOperacion resultado = ResponsableProyectoDAO.actualizarResponsable(responsable, responsableActualizar.getIdResponsable());
             if (!resultado.isError()) {
-                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
-                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                AlertaUtilidad.mostrarAlertaSimple("Actualización Exitosa", resultado.getMensaje(), Alert.AlertType.INFORMATION);
                 observador.operacionExitosa();
                 cerrarVentana();
             } else {
-                AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
-                        resultado.getMensaje(), Alert.AlertType.ERROR);
+                AlertaUtilidad.mostrarAlertaSimple("Error en la Actualización", resultado.getMensaje(), Alert.AlertType.ERROR);
             }
         } catch (SQLException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
-                    "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
-            e.printStackTrace();
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Hubo un error en la conexión con la base de datos. Intente más tarde.", Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void btnAceptar(ActionEvent event) {
+        if (validarCampos()) {
+            ResponsableProyecto responsable = obtenerResponsableFormulario();
+            if (esEdicion) {
+                actualizarResponsable(responsable);
+            } else {
+                registrarResponsable(responsable);
+            }
+        }
+    }
+
+    @FXML
+    private void btnCancelar(ActionEvent event) {
+        cerrarVentana();
     }
     
     private void cerrarVentana() {
-        Utilidad.getEscenarioComponente(tfNombre).close();
+        Stage escenario = (Stage) lbTitulo.getScene().getWindow();
+        escenario.close();
     }
-    
 }

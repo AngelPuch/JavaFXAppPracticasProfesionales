@@ -17,29 +17,54 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.OrganizacionVinculadaDAO;
-import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
-import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLRegistrarOrganizacionVinculadaController implements Initializable {
 
-    @FXML
-    private TextField tfNombre;
-    @FXML
-    private TextField tfTelefono;
-    @FXML
-    private TextField tfDireccion;
-    @FXML
-    private Label lbTelefonoError;
+
     private INotificacion observador;
     private OrganizacionVinculada organizacionVinculada;
+    
     @FXML
     private Label lbContadorCaracteresNombre;
     @FXML
-    private Label lbContadorCaracteresDireccion;
+    private Label lbContadorCaracteresCalle;
+    @FXML
+    private Label lbContadorCaracteresNumero;
+    @FXML
+    private Label lbContadorCaracteresColonia;
+    @FXML
+    private Label lbContadorCaracteresCodigoPostal;
+    @FXML
+    private Label lbContadorCaracteresMunicipio;
+    @FXML
+    private Label lbContadorCaracteresEstado;
+    @FXML
+    private Label lbTitulo;
+    @FXML
+    private TextField tfNombre;
+    @FXML
+    private TextField tfCalle;
+    @FXML
+    private TextField tfNumero;
+    @FXML
+    private TextField tfColonia;
+    @FXML
+    private TextField tfCodigoPostal;
+    @FXML
+    private Label lbCodigoPostalError;
+    @FXML
+    private TextField tfMunicipio;
+    @FXML
+    private TextField tfEstado;
+    @FXML
+    private TextField tfTelefono;
+    @FXML
+    private Label lbTelefonoError;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,7 +75,12 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
         this.organizacionVinculada = organizacionVinculada;
         this.observador = observador;
         Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 45);
-        Utilidad.configurarTextAreaConContador(tfDireccion, lbContadorCaracteresDireccion, 100);
+        Utilidad.configurarTextAreaConContador(tfCalle, lbContadorCaracteresCalle, 100);
+        Utilidad.configurarTextAreaConContador(tfNumero, lbContadorCaracteresNumero, 10);
+        Utilidad.configurarTextAreaConContador(tfColonia, lbContadorCaracteresColonia, 100);
+        Utilidad.configurarTextAreaConContador(tfCodigoPostal, lbContadorCaracteresCodigoPostal, 10);
+        Utilidad.configurarTextAreaConContador(tfMunicipio, lbContadorCaracteresMunicipio, 100);
+        Utilidad.configurarTextAreaConContador(tfEstado, lbContadorCaracteresEstado, 100);
     }
 
     @FXML
@@ -65,7 +95,7 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
         }
     }
     
-     private boolean mostrarVentanaConfirmacion(OrganizacionVinculada organizacion) {
+    private boolean mostrarVentanaConfirmacion(OrganizacionVinculada organizacion) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLConfirmacionRegistroOrganizacion.fxml"));
             Parent vista = loader.load();
@@ -98,61 +128,74 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     }
     
     private boolean validarCampos() {
+        lbTelefonoError.setText("");
+        lbCodigoPostalError.setText("");
         boolean esValido = true;
-        if (tfNombre.getText().trim().isEmpty()) {
+        
+        if (tfNombre.getText().trim().isEmpty() || 
+            tfCalle.getText().trim().isEmpty() || 
+            tfNumero.getText().trim().isEmpty() || 
+            tfColonia.getText().trim().isEmpty() || 
+            tfCodigoPostal.getText().trim().isEmpty() || 
+            tfEstado.getText().trim().isEmpty()) {
+            
             AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
                     "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
             return false;
         }
 
         String telefono = tfTelefono.getText().trim();
-        if (!telefono.isEmpty()) {
-            if (!telefono.matches("\\d{10}")) {
-                lbTelefonoError.setText("*Teléfono inválido");
-                esValido = false;
-            } else {
-                lbTelefonoError.setText("");
-            }
-        } else {
-            lbTelefonoError.setText("");
+        if (!telefono.isEmpty() && !ValidacionUtilidad.validarTelefono(telefono)) {
+            lbTelefonoError.setText("Teléfono inválido (10 dígitos)");
+            esValido = false;
         }
 
+        String codigoPostal = tfCodigoPostal.getText().trim();
+        if (!ValidacionUtilidad.validarCodigoPostal(codigoPostal)) {
+            lbCodigoPostalError.setText("CP inválido (5 dígitos)");
+            esValido = false;
+        }
+        
         return esValido;
     }
     
     private OrganizacionVinculada obtenerOrganizacionNueva() {
         OrganizacionVinculada nuevaOrganizacion = new OrganizacionVinculada();
         nuevaOrganizacion.setNombre(tfNombre.getText().trim());
-        nuevaOrganizacion.setDireccion(tfDireccion.getText().trim());
         nuevaOrganizacion.setTelefono(tfTelefono.getText().trim());
+        nuevaOrganizacion.setCalle(tfCalle.getText().trim());
+        nuevaOrganizacion.setNumero(tfNumero.getText().trim());
+        nuevaOrganizacion.setColonia(tfColonia.getText().trim());
+        nuevaOrganizacion.setCodigoPostal(tfCodigoPostal.getText().trim());
+        nuevaOrganizacion.setMunicipio(tfMunicipio.getText().trim());
+        nuevaOrganizacion.setEstado(tfEstado.getText().trim());
         
         return nuevaOrganizacion;
     }
     
     private void registrarOrganizacion(OrganizacionVinculada organizacionVinculada) {
-    try {
-        ResultadoOperacion resultado = OrganizacionVinculadaDAO.registrarOrganizacion(organizacionVinculada);
-        if (!resultado.isError()) {
-            AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
-                    "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
-            
-           
-            if (observador != null) {
-                observador.operacionExitosa();
+        try {
+            ResultadoOperacion resultado = OrganizacionVinculadaDAO.registrarOrganizacion(organizacionVinculada);
+            if (!resultado.isError()) {
+                AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
+                        "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
+                
+                if (observador != null) {
+                    observador.operacionExitosa();
+                }
+                
+                cerrarVentana();
+                
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
+                        resultado.getMensaje(), Alert.AlertType.ERROR);
             }
-            
-            cerrarVentana();
-            
-        } else {
-            AlertaUtilidad.mostrarAlertaSimple("Error en el registro",
-                    resultado.getMensaje(), Alert.AlertType.ERROR);
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
+                    "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        AlertaUtilidad.mostrarAlertaSimple("Sin Conexión",
-                "Se perdió la conexión. Inténtalo de nuevo. Causa: " + e.getMessage(), Alert.AlertType.ERROR);
-        e.printStackTrace();
     }
-}
     
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(tfNombre).close();

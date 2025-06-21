@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -130,7 +131,8 @@ public class FXMLInicioSesionController implements Initializable {
                     AlertaUtilidad.mostrarAlertaSimple("Rol no reconocido", "No hay una pantalla principal para el rol: " + primerRol, Alert.AlertType.ERROR);
                     return;
             }
-
+            
+            escenarioPrincipal.centerOnScreen();
             escenarioPrincipal.show();
 
         } catch (IOException e) {

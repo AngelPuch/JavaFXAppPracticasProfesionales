@@ -13,87 +13,99 @@ import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
 public class ProyectoDAO {
-    
-    public static ArrayList<Proyecto> obtenerTodosLosProyectosActivos() throws SQLException {
+
+    public static ArrayList<Proyecto> obtenerTodosLosProyectosActivos() throws SQLException{
         ArrayList<Proyecto> proyectos = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
-        if (conexionBD != null) {
-            String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.objetivo, p.numeroCupos, " +
-                         "ov.idOrganizacionVinculada, ov.nombre AS nombreOrganizacion, " +
-                         "r.idResponsableProyecto, r.nombre AS nombreResponsable, " +
-                         "pe.idProyectoEstado, pe.nombreEstado " +
-                         "FROM proyecto p " +
-                         "JOIN organizacionvinculada ov ON p.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada " +
-                         "JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
-                         "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
-                         "WHERE pe.nombreEstado = 'Disponible'";
-            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+        
+        if(conexionBD != null){
+            String consulta = "SELECT p.idProyecto, p.nombre, p.numeroCupos, p.descripcion, p.objetivo, " +
+                              "o.idOrganizacionVinculada, o.nombre AS nombreOrganizacion, " +
+                              "r.idResponsableProyecto, CONCAT(r.nombre, ' ', r.apellidoPaterno, ' ', IFNULL(r.apellidoMaterno, '')) AS nombreResponsable, " +
+                              "pe.idProyectoEstado, pe.nombreEstado " +
+                              "FROM proyecto p " +
+                              "INNER JOIN organizacionvinculada o ON p.OrganizacionVinculada_idOrganizacionVinculada = o.idOrganizacionVinculada " +
+                              "INNER JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
+                              "INNER JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
+                              "WHERE pe.nombreEstado != 'Finalizado';";
+
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
             
             while(resultado.next()){
                 proyectos.add(convertirRegistroProyecto(resultado));
             }
+            
             conexionBD.close();
             sentencia.close();
             resultado.close();
-        } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
-        }
-        return proyectos;
-    }
-    
-    public static ArrayList<Proyecto> obtenerProyectosDisponiblesParaAsignar() throws SQLException {
-        ArrayList<Proyecto> proyectos = new ArrayList<>();
-        Connection conexionBD = ConexionBD.abrirConexion();
-        if (conexionBD != null) {
-            String sql = "SELECT p.idProyecto, p.nombre, p.descripcion, p.numeroCupos, p.objetivo, " +
-                         "ov.idOrganizacionVinculada, ov.nombre AS nombreOrganizacion, " +
-                         "r.idResponsableProyecto, r.nombre AS nombreResponsable, " +
-                         "pe.idProyectoEstado, pe.nombreEstado " +
-                         "FROM proyecto p " +
-                         "JOIN organizacionvinculada ov ON p.OrganizacionVinculada_idOrganizacionVinculada = ov.idOrganizacionVinculada " +
-                         "JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
-                         "JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
-                         "WHERE pe.nombreEstado = 'Disponible' AND p.numeroCupos > (" +
-                         "    SELECT COUNT(*) FROM expediente ex2 WHERE ex2.Proyecto_idProyecto = p.idProyecto" +
-                         ")";
-            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            ResultSet resultado = sentencia.executeQuery();
-            while (resultado.next()) {
-                proyectos.add(convertirRegistroProyecto(resultado));
-            }
-            resultado.close();
-            sentencia.close();
-            conexionBD.close();
-        } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            
+        } else{
+            throw new SQLException("Error: Sin conexión a la Base de Datos.");
         }
         return proyectos;
     }
 
-    public static ResultadoOperacion registrarProyecto(Proyecto proyectoNuevo) throws SQLException {
+    public static ArrayList<Proyecto> obtenerProyectosDisponiblesParaAsignar() throws SQLException {
+        ArrayList<Proyecto> proyectos = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+
+        if (conexionBD != null) {
+            String consulta = "SELECT p.idProyecto, p.nombre, p.numeroCupos, p.descripcion, p.objetivo, " +
+                              "o.idOrganizacionVinculada, o.nombre AS nombreOrganizacion, " +
+                              "r.idResponsableProyecto, CONCAT(r.nombre, ' ', r.apellidoPaterno, ' ', IFNULL(r.apellidoMaterno, '')) AS nombreResponsable, " +
+                              "pe.idProyectoEstado, pe.nombreEstado " +
+                              "FROM proyecto p " +
+                              "INNER JOIN organizacionvinculada o ON p.OrganizacionVinculada_idOrganizacionVinculada = o.idOrganizacionVinculada " +
+                              "INNER JOIN responsableproyecto r ON p.ResponsableProyecto_idResponsableProyecto = r.idResponsableProyecto " +
+                              "INNER JOIN proyecto_estado pe ON p.ProyectoEstado_idProyectoEstado = pe.idProyectoEstado " +
+                              "WHERE p.numeroCupos > 0 AND pe.nombreEstado = 'Disponible';";
+
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            
+            while (resultado.next()) {
+                proyectos.add(convertirRegistroProyecto(resultado));
+            }
+
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+            
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos.");
+        }
+        return proyectos;
+    }
+
+    public static ResultadoOperacion registrarProyecto(Proyecto proyecto) throws SQLException {
         ResultadoOperacion resultado = new ResultadoOperacion();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "INSERT INTO proyecto (nombre, descripcion, numeroCupos, objetivo, " +
-                             "OrganizacionVinculada_idOrganizacionVinculada, " +
-                             "ResponsableProyecto_idResponsableProyecto) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO proyecto (nombre, descripcion, numeroCupos, objetivo, ProyectoEstado_idProyectoEstado, "
+                    + "OrganizacionVinculada_idOrganizacionVinculada, ResponsableProyecto_idResponsableProyecto) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            asignarParametrosProyecto(sentencia, proyectoNuevo);
-            int filasAfectadas = sentencia.executeUpdate();
+            sentencia.setString(1, proyecto.getNombre());
+            sentencia.setString(2, proyecto.getDescripcion());
+            sentencia.setInt(3, proyecto.getNumeroCupos());
+            sentencia.setString(4, proyecto.getObjetivo());
+            sentencia.setInt(5, 1); // Disponible por defecto
+            sentencia.setInt(6, proyecto.getOrganizacion().getIdOrganizacion());
+            sentencia.setInt(7, proyecto.getResponsable().getIdResponsable());
             
-            if (filasAfectadas == 1) {
+            int filasAfectadas = sentencia.executeUpdate();
+
+            if (filasAfectadas > 0) {
                 resultado.setIsError(false);
                 resultado.setMensaje("Proyecto registrado correctamente.");
             } else {
                 resultado.setIsError(true);
-                resultado.setMensaje("Lo sentimos, por el momento no se puede registrar el proyecto, por favor inténtelo más tarde");
+                resultado.setMensaje("Error al registrar el proyecto.");
             }
-          
             conexionBD.close();
-            sentencia.close();
         } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            throw new SQLException("Error de conexión");
         }
         return resultado;
     }
@@ -126,7 +138,7 @@ public class ProyectoDAO {
         }
         return proyecto;
     }
-    
+
     private static Proyecto convertirRegistroProyecto(ResultSet resultado) throws SQLException {
         Proyecto proyecto = new Proyecto();
         proyecto.setIdProyecto(resultado.getInt("idProyecto"));
@@ -142,7 +154,7 @@ public class ProyectoDAO {
         
         ResponsableProyecto responsable = new ResponsableProyecto();
         responsable.setIdResponsable(resultado.getInt("idResponsableProyecto"));
-        responsable.setNombre(resultado.getString("nombreResponsable"));
+        responsable.setNombre(resultado.getString("nombreResponsable")); // Ya viene concatenado desde la consulta
         proyecto.setResponsable(responsable);
         
         ProyectoEstado estado = new ProyectoEstado();
@@ -151,14 +163,5 @@ public class ProyectoDAO {
         proyecto.setEstado(estado);
         
         return proyecto;
-    }
-    
-    private static void asignarParametrosProyecto(PreparedStatement sentencia, Proyecto proyectoNuevo) throws SQLException{
-        sentencia.setString(1, proyectoNuevo.getNombre());
-        sentencia.setString(2, proyectoNuevo.getDescripcion());
-        sentencia.setInt(3, proyectoNuevo.getNumeroCupos());
-        sentencia.setString(4, proyectoNuevo.getObjetivo());
-        sentencia.setInt(5, proyectoNuevo.getOrganizacion().getIdOrganizacion());
-        sentencia.setInt(6, proyectoNuevo.getResponsable().getIdResponsable());
     }
 }

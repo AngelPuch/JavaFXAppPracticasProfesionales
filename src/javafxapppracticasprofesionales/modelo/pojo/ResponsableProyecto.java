@@ -1,9 +1,10 @@
-
 package javafxapppracticasprofesionales.modelo.pojo;
 
 public class ResponsableProyecto {
     private int idResponsable;
     private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String cargo;
     private String correo;
     private String telefono;
@@ -14,9 +15,11 @@ public class ResponsableProyecto {
     public ResponsableProyecto() {
     }
 
-    public ResponsableProyecto(int idResponsable, String nombre, String cargo, String correo, OrganizacionVinculada organizacionVinculada) {
+    public ResponsableProyecto(int idResponsable, String nombre, String apellidoPaterno, String apellidoMaterno, String cargo, String correo, OrganizacionVinculada organizacionVinculada) {
         this.idResponsable = idResponsable;
         this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.cargo = cargo;
         this.correo = correo;
         this.organizacionVinculada = organizacionVinculada;
@@ -36,6 +39,22 @@ public class ResponsableProyecto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getCargo() {
@@ -78,4 +97,12 @@ public class ResponsableProyecto {
         this.idOrganizacion = idOrganizacion;
     }
     
+    public String getNombreCompleto() {
+        return nombre + " " + apellidoPaterno + (apellidoMaterno != null && !apellidoMaterno.isEmpty() ? " " + apellidoMaterno : "");
+    }
+
+    @Override
+    public String toString() {
+        return getNombreCompleto();
+    }
 }

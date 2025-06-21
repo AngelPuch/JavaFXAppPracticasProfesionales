@@ -51,7 +51,7 @@ public class FXMLResponsablesController implements Initializable, INotificacion{
     }    
     
     private void configurarTabla() {
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreCompleto"));
         colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
         colOrganizacion.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getOrganizacionVinculada().getNombre()));        

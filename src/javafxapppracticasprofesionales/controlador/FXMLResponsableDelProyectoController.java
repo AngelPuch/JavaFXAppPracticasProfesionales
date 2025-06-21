@@ -104,7 +104,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     }
     
     private void configurarTabla() {
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreCompleto"));
         colCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
     }

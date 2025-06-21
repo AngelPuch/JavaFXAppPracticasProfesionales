@@ -5,57 +5,66 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
+import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLConfirmacionRegistroOrganizacionController implements Initializable {
 
     @FXML
     private Label lbNombre;
     @FXML
-    private Label lbDireccion;
-    @FXML
     private Label lbTelefono;
     @FXML
-    private Button btnCancelar;
+    private Label lbCalle;
     @FXML
-    private Button btnConfirmar;
+    private Label lbNumero;
+    @FXML
+    private Label lbColonia;
+    @FXML
+    private Label lbCodigoPostal;
+    @FXML
+    private Label lbMunicipio;
+    @FXML
+    private Label lbEstado;
+    
     private boolean confirmado = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     public void inicializarDatos(OrganizacionVinculada organizacion) {
-        if (organizacion != null) {
-            lbNombre.setText(organizacion.getNombre());
-            lbDireccion.setText(organizacion.getDireccion());
-            lbTelefono.setText(organizacion.getTelefono());
-        }
+        lbNombre.setText(organizacion.getNombre());
+        lbTelefono.setText(organizacion.getTelefono());
+        lbCalle.setText(organizacion.getCalle());
+        lbNumero.setText(organizacion.getNumero());
+        lbColonia.setText(organizacion.getColonia());
+        lbCodigoPostal.setText(organizacion.getCodigoPostal());
+        lbMunicipio.setText(organizacion.getMunicipio());
+        lbEstado.setText(organizacion.getEstado());
     }
     
     public boolean isConfirmado() {
         return confirmado;
     }
 
-    private void cerrarVentana() {
-        Stage escenario = (Stage) btnConfirmar.getScene().getWindow();
-        escenario.close();
-    }
-
     @FXML
-    private void btnClicCancelar(ActionEvent event) {
-        confirmado = false;
-        cerrarVentana();
-    }
-
-    @FXML
-    private void btnClicConfirmar(ActionEvent event) {
+    private void btnConfirmar(ActionEvent event) {
         confirmado = true;
         cerrarVentana();
     }
+
+    @FXML
+    private void btnModificar(ActionEvent event) {
+        confirmado = false;
+        cerrarVentana();
+    }
     
+    private void cerrarVentana() {
+        Stage escenario = (Stage) lbNombre.getScene().getWindow();
+        escenario.close();
+    }
 }

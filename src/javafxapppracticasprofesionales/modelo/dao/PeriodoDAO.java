@@ -38,7 +38,7 @@ public class PeriodoDAO {
         Periodo periodo = null;
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            String sql = "SELECT idPeriodo, nombrePeriodo, fechaInicio, fechaFin FROM periodo ORDER BY fechaInicio DESC LIMIT 1";
+            String sql = "SELECT idPeriodo, nombrePeriodo, fechaInicio, fechaFin FROM periodo WHERE CURDATE() BETWEEN fechaInicio AND fechaFin";
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
             ResultSet resultado = sentencia.executeQuery();
             if (resultado.next()) {

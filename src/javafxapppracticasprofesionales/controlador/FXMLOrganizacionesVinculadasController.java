@@ -46,7 +46,7 @@ public class FXMLOrganizacionesVinculadasController implements Initializable, IN
     
     private void configurarTabla() {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionCompleta"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
     }
     
