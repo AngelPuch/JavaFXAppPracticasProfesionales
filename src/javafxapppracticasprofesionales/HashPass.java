@@ -13,7 +13,7 @@ import javafxapppracticasprofesionales.utilidad.UtilidadPassword;
 public class HashPass {
     public static void main(String[] args) {
         // Elige la contraseña que quieras usar para iniciar sesión
-        String miPasswordFacil = "profe03"; 
+        String miPasswordFacil = "estudiante3"; 
         
         String hashGenerado = UtilidadPassword.hashearPassword(miPasswordFacil);
         

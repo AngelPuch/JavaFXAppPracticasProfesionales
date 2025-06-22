@@ -26,31 +26,46 @@
 
       <Label layoutX="36.0" layoutY="76.0" text="Grupo (*)" />
       <ComboBox fx:id="cbGrupo" layoutX="36.0" layoutY="96.0" prefWidth="528.0" promptText="Seleccione un grupo" />
-      <Label fx:id="lbErrorGrupo" layoutX="36.0" layoutY="325.0" textFill="RED" />
+      <Label fx:id="lbErrorGrupo" layoutX="36.0" layoutY="121.0" textFill="RED" />
 
-      <!-- Fechas -->
       <Label layoutX="36.0" layoutY="306.0" text="Fecha de Inicio (*)" />
       <DatePicker fx:id="dpFechaInicio" layoutX="36.0" layoutY="326.0" prefWidth="254.0" />
 
       <Label layoutX="310.0" layoutY="306.0" text="Fecha de Fin (*)" />
       <DatePicker fx:id="dpFechaFin" layoutX="310.0" layoutY="326.0" prefWidth="254.0" />
 
-      <!-- Horas -->
-      <Label layoutX="36.0" layoutY="371.0" text="Hora de Inicio (HH:mm)" />
-      <TextField fx:id="tfHoraInicio" layoutX="36.0" layoutY="391.0" prefWidth="254.0" promptText="Ej: 09:00" style="-fx-background-radius: 5;" />
+      <Label layoutX="36.0" layoutY="371.0" text="Hora de Inicio (*)" />
+      <HBox alignment="CENTER_LEFT" layoutX="36.0" layoutY="391.0" prefHeight="25.0" prefWidth="254.0" spacing="10.0">
+         <children>
+            <ComboBox fx:id="cmbHorasInicio" prefWidth="115.0" promptText="HH" />
+            <Label text=":">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cmbMinutosInicio" prefWidth="115.0" promptText="mm" />
+         </children>
+      </HBox>
 
-      <Label layoutX="310.0" layoutY="371.0" text="Hora de Fin (HH:mm)" />
-      <TextField fx:id="tfHoraFin" layoutX="310.0" layoutY="391.0" prefWidth="254.0" promptText="Ej: 18:00" style="-fx-background-radius: 5;" />
-
-      <Label fx:id="lbErrorHora" layoutX="36.0" layoutY="475.0" textFill="RED" />
-
-      <!-- Botones -->
-      <Button fx:id="btnCancelar" layoutX="378.0" layoutY="436.0" onAction="#btnClicCancelar" style="-fx-background-color: #bdc3c7; -fx-text-fill: white; -fx-background-radius: 5;" text="Cancelar">
+      <Label layoutX="310.0" layoutY="371.0" text="Hora de Fin (*)" />
+      <HBox alignment="CENTER_LEFT" layoutX="310.0" layoutY="391.0" prefHeight="25.0" prefWidth="254.0" spacing="10.0">
+         <children>
+            <ComboBox fx:id="cmbHorasFin" prefWidth="115.0" promptText="HH" />
+            <Label text=":">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cmbMinutosFin" prefWidth="115.0" promptText="mm" />
+         </children>
+      </HBox>
+      
+      <Button fx:id="btnCancelar" layoutX="378.0" layoutY="436.0" onAction="#clicCancelar" style="-fx-background-color: #bdc3c7; -fx-text-fill: white; -fx-background-radius: 5;" text="Cancelar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnAceptar" layoutX="474.0" layoutY="436.0" onAction="#btnClicAceptar" style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-background-radius: 5;" text="Aceptar">
+      <Button fx:id="btnAceptar" layoutX="474.0" layoutY="436.0" onAction="#clicAceptar" style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-background-radius: 5;" text="Aceptar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

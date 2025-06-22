@@ -274,15 +274,15 @@ public class FXMLCalificarPresentacionController implements Initializable {
     }
 
     private void cargarInformacionTabla() {
-    criterios = FXCollections.observableArrayList();
-    try {
-        ArrayList<CriterioEvaluacion> criteriosBD = CriterioEvaluacionDAO.obtenerCriteriosRubrica();
-        criterios.addAll(criteriosBD);
-        tvRubricaEvaluacion.setItems(criterios);
+        criterios = FXCollections.observableArrayList();
+        try {
+            ArrayList<CriterioEvaluacion> criteriosBD = CriterioEvaluacionDAO.obtenerCriteriosRubrica();
+            criterios.addAll(criteriosBD);
+            tvRubricaEvaluacion.setItems(criterios);
 
-    } catch (SQLException e) {
-        AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
-            "No se pudieron cargar los criterios de evaluación desde la base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
-    } 
-}
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
+                "No se pudieron cargar los criterios de evaluación desde la base de datos: " + e.getMessage(), Alert.AlertType.ERROR);
+        } 
+    }
 }

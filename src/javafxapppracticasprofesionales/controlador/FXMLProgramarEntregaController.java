@@ -4,9 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,32 +42,36 @@ public class FXMLProgramarEntregaController implements Initializable {
     @FXML
     private ComboBox<Grupo> cbGrupo;
     @FXML
-    private TextField tfHoraInicio;
-    @FXML
-    private TextField tfHoraFin;
-    @FXML
     private Label lbContadorCaracteresDescripcion;
     @FXML
     private Label lbContadorCaracteresNombre;
     @FXML
     private Label lbErrorGrupo;
     @FXML
-    private Label lbErrorHora;
+    private Button btnCancelar;
+    @FXML
+    private Button btnAceptar;
+    @FXML
+    private ComboBox<String> cmbHorasInicio;
+    @FXML
+    private ComboBox<String> cmbMinutosInicio;
+    @FXML
+    private ComboBox<String> cmbHorasFin;
+    @FXML
+    private ComboBox<String> cmbMinutosFin;
 
     private String tipoEntrega;
     private INotificacion observador;
     private TipoDocumento tipoDocumento;
     private ObservableList<Grupo> grupos;
-    @FXML
-    private Button btnCancelar;
-    @FXML
-    private Button btnAceptar;
+    private Periodo periodoActual;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 50);
         Utilidad.configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 100);
         cargarGrupos();
+        configurarComboBoxes();
     }
 
     public void inicializarInformacion(String tipoEntrega, TipoDocumento tipoDocumento, INotificacion observador) {
@@ -78,7 +80,6 @@ public class FXMLProgramarEntregaController implements Initializable {
         this.tipoDocumento = tipoDocumento;
         this.tfNombre.setText(tipoDocumento.getNombre());
 
-        // Listener para evitar que se borre el prefijo del nombre
         tfNombre.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.startsWith(tipoDocumento.getNombre())) {
                 javafx.application.Platform.runLater(() -> tfNombre.setText(oldValue));
@@ -89,7 +90,7 @@ public class FXMLProgramarEntregaController implements Initializable {
     private void cargarGrupos() {
         grupos = FXCollections.observableArrayList();
         try {
-            Periodo periodoActual = PeriodoDAO.obtenerPeriodoActual();
+            this.periodoActual = PeriodoDAO.obtenerPeriodoActual();
             if (periodoActual != null) {
                 grupos.addAll(GrupoDAO.obtenerGruposPorPeriodo(periodoActual.getIdPeriodo()));
                 cbGrupo.setItems(grupos);
@@ -102,43 +103,76 @@ public class FXMLProgramarEntregaController implements Initializable {
                     "No se pudo conectar a la base de datos para cargar los grupos.", Alert.AlertType.ERROR);
         }
     }
+    
+    private void configurarComboBoxes() {
+        ObservableList<String> horas = FXCollections.observableArrayList();
+        for (int i = 0; i <= 23; i++) {
+            horas.add(String.format("%02d", i));
+        }
+        ObservableList<String> minutos = FXCollections.observableArrayList();
+        for (int i = 0; i <= 59; i++) {
+            minutos.add(String.format("%02d", i));
+        }
+        cmbHorasInicio.setItems(horas);
+        cmbMinutosInicio.setItems(minutos);
+        cmbHorasFin.setItems(horas);
+        cmbMinutosFin.setItems(minutos);
+        cmbHorasInicio.setValue("08");
+        cmbMinutosInicio.setValue("00");
+        cmbHorasFin.setValue("18");
+        cmbMinutosFin.setValue("00");
+    }
 
     private boolean validarCampos() {
         lbErrorGrupo.setText("");
-        lbErrorHora.setText("");
-        boolean esValido = true;
+        String errores = "";
 
-        if (tfNombre.getText().trim().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null || cbGrupo.getValue() == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos", "Los campos marcados con un (*) no deben estar vacíos.", Alert.AlertType.WARNING);
-            if(cbGrupo.getValue() == null) lbErrorGrupo.setText("Debe seleccionar un grupo.");
-            return false;
+        if (tfNombre.getText().trim().isEmpty()) {
+            errores += "- El nombre de la entrega es obligatorio.\n";
+        }
+        if (dpFechaInicio.getValue() == null) {
+            errores += "- La fecha de inicio es obligatoria.\n";
+        }
+        if (dpFechaFin.getValue() == null) {
+            errores += "- La fecha de fin es obligatoria.\n";
+        }
+        if (cbGrupo.getValue() == null) {
+            lbErrorGrupo.setText("Debe seleccionar un grupo.");
+            errores += "- El grupo es obligatorio.\n";
+        }
+        if (cmbHorasInicio.getValue() == null || cmbMinutosInicio.getValue() == null ||
+            cmbHorasFin.getValue() == null || cmbMinutosFin.getValue() == null) {
+            errores += "- Debe seleccionar una hora y minuto de inicio y fin.\n";
         }
         
-        LocalDate fechaActual = LocalDate.now();
-        if (dpFechaInicio.getValue().isBefore(fechaActual)) {
-            AlertaUtilidad.mostrarAlertaSimple("Fecha incorrecta", "La fecha de inicio no puede ser anterior a la fecha actual.", Alert.AlertType.WARNING);
+        if (!errores.isEmpty()) {
+            AlertaUtilidad.mostrarAlertaSimple("Campos obligatorios", errores, Alert.AlertType.WARNING);
             return false;
         }
+
         if (dpFechaFin.getValue().isBefore(dpFechaInicio.getValue())) {
             AlertaUtilidad.mostrarAlertaSimple("Fechas incorrectas", "La fecha de fin no puede ser anterior a la fecha de inicio.", Alert.AlertType.WARNING);
             return false;
         }
 
-        String regexHora = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
-        if (!tfHoraInicio.getText().isEmpty() && !Pattern.matches(regexHora, tfHoraInicio.getText())) {
-            lbErrorHora.setText("Formato de hora de inicio inválido (HH:mm).");
-            esValido = false;
+        if (this.periodoActual != null) {
+            LocalDate fechaFinEntrega = dpFechaFin.getValue();
+            LocalDate fechaFinPeriodo = LocalDate.parse(this.periodoActual.getFechaFin());
+            if (fechaFinEntrega.isAfter(fechaFinPeriodo)) {
+                DateTimeFormatter formatoAmigable = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                AlertaUtilidad.mostrarAlertaSimple("Fecha fuera de rango",
+                        "La fecha de fin (" + fechaFinEntrega.format(formatoAmigable) +
+                        ") no puede exceder el fin del periodo (" +
+                        fechaFinPeriodo.format(formatoAmigable) + ").",
+                        Alert.AlertType.WARNING);
+                return false;
+            }
         }
-         if (!tfHoraFin.getText().isEmpty() && !Pattern.matches(regexHora, tfHoraFin.getText())) {
-            lbErrorHora.setText("Formato de hora de fin inválido (HH:mm).");
-            esValido = false;
-        }
-
-        return esValido;
+        return true;
     }
 
     @FXML
-    private void btnClicCancelar(ActionEvent event) {
+    private void clicCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar Operación",
                 "¿Estás seguro de que quieres cancelar?", "Cualquier dato no guardado se perderá.");
         if (confirmado) {
@@ -147,13 +181,23 @@ public class FXMLProgramarEntregaController implements Initializable {
     }
 
     @FXML
-    private void btnClicAceptar(ActionEvent event) {
+    private void clicAceptar(ActionEvent event) {
         if (validarCampos()) {
+            if (tipoEntrega == null || tipoDocumento == null || observador == null) {
+                AlertaUtilidad.mostrarAlertaSimple("Error de Programación", 
+                    "El controlador no se inicializó correctamente desde la ventana anterior. No se puede continuar.", 
+                    Alert.AlertType.ERROR);
+                return;
+            }
+
             String tablaDestino = "";
             switch (tipoEntrega) {
                 case "DOCUMENTOS INICIALES": tablaDestino = "entregadocumentoinicio"; break;
                 case "REPORTES": tablaDestino = "entregareporte"; break;
                 case "DOCUMENTOS FINALES": tablaDestino = "entregadocumentofinal"; break;
+                default:
+                    AlertaUtilidad.mostrarAlertaSimple("Error Interno", "Tipo de entrega no válido: " + tipoEntrega, Alert.AlertType.ERROR);
+                    return;
             }
 
             Entrega nuevaEntrega = new Entrega();
@@ -161,14 +205,16 @@ public class FXMLProgramarEntregaController implements Initializable {
             nuevaEntrega.setDescripcion(taDescripcion.getText().trim());
             nuevaEntrega.setFechaInicio(dpFechaInicio.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             nuevaEntrega.setFechaFin(dpFechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            nuevaEntrega.setHoraInicio(tfHoraInicio.getText().trim());
-            nuevaEntrega.setHoraFin(tfHoraFin.getText().trim());
+            
+            String horaInicio = cmbHorasInicio.getValue() + ":" + cmbMinutosInicio.getValue();
+            String horaFin = cmbHorasFin.getValue() + ":" + cmbMinutosFin.getValue();
+            nuevaEntrega.setHoraInicio(horaInicio);
+            nuevaEntrega.setHoraFin(horaFin);
 
             int idGrupoSeleccionado = cbGrupo.getSelectionModel().getSelectedItem().getIdGrupo();
-            int idTipoDocumentoSeleccionado = this.tipoDocumento.getIdTipoDocumento(); // Se obtiene el ID
+            int idTipoDocumentoSeleccionado = this.tipoDocumento.getIdTipoDocumento();
 
             try {
-                // CAMBIO AQUÍ: Se pasa el ID del tipo de documento al DAO
                 ResultadoOperacion resultado = ProgramarEntregaDAO.programarNuevaEntrega(
                         nuevaEntrega, tablaDestino, idGrupoSeleccionado, idTipoDocumentoSeleccionado);
                 

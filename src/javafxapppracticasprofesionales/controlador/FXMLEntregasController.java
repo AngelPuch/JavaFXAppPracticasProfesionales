@@ -79,10 +79,8 @@ public class FXMLEntregasController implements Initializable, INotificacion {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLTipoDeEntrega.fxml"));
             Parent vista = loader.load();
             
-            // Suponiendo que FXMLTipoDeEntregaController necesita una referencia para notificar cambios
-            INotificacion notificacion = this;
             FXMLTipoDeEntregaController controlador = loader.getController();
-            // controlador.inicializarInformacion(notificacion); // Si el método existe
+            controlador.inicializarInformacion(this); // Si el método existe
             
             Stage escenario = new Stage();
             escenario.setTitle("Programar Nueva Entrega");
