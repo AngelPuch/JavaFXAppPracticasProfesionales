@@ -37,7 +37,6 @@ public class FXMLValidarEntregaController implements Initializable {
 
     private DocumentoEntregado docAValidar;
     private INotificacion notificador;
-    private String[] tablaInfo;
     @FXML
     private Label lbContadorCaracteres;
 
@@ -45,10 +44,9 @@ public class FXMLValidarEntregaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }    
     
-    public void inicializar(DocumentoEntregado doc, INotificacion notificacion, String[] info) {
+    public void inicializar(DocumentoEntregado doc, INotificacion notificacion) {
         this.docAValidar = doc;
         this.notificador = notificacion;
-        this.tablaInfo = info;
         
         lblNombreEstudiante.setText(doc.getNombreEstudiante());
         lblMatricula.setText(doc.getMatricula());
@@ -91,11 +89,9 @@ public class FXMLValidarEntregaController implements Initializable {
     
     private void validarDocumento(int nuevoEstadoId) {
         String comentarios = taComentarios.getText();
-        String nombreTabla = tablaInfo[0];
-        String nombreColumnaId = tablaInfo[1];
         
         try {
-            ResultadoOperacion resultado = ValidacionDAO.validarEntrega(docAValidar.getIdDocumento(), nuevoEstadoId, comentarios, nombreTabla, nombreColumnaId);
+            ResultadoOperacion resultado = ValidacionDAO.validarEntrega(docAValidar, nuevoEstadoId, comentarios);
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Éxito", resultado.getMensaje(), javafx.scene.control.Alert.AlertType.INFORMATION);
                 notificador.operacionExitosa();

@@ -41,7 +41,7 @@ public class FXMLSeleccionarEntregaParaValidarController implements Initializabl
     private TableColumn<DocumentoEntregado, String> colFechaEntrega;
 
     private Entrega entregaSeleccionada;
-    private String[] tablaInfo;
+    private String tipoDocumentoNombre; 
     private ObservableList<DocumentoEntregado> listaDocumentos;
 
     @Override
@@ -49,9 +49,9 @@ public class FXMLSeleccionarEntregaParaValidarController implements Initializabl
         configurarTabla();
     }    
     
-    public void inicializar(Entrega entrega, String[] info) {
+    public void inicializar(Entrega entrega, String tipoDocNombre) {
         this.entregaSeleccionada = entrega;
-        this.tablaInfo = info;
+        this.tipoDocumentoNombre = tipoDocNombre; 
         lblTitulo.setText(entrega.getNombre());
         cargarEntregas();
     }
@@ -64,7 +64,7 @@ public class FXMLSeleccionarEntregaParaValidarController implements Initializabl
     
     private void cargarEntregas() {
         try {
-            ArrayList<DocumentoEntregado> documentosBD = ValidacionDAO.obtenerEntregasParaValidar(entregaSeleccionada.getIdEntrega(), tablaInfo);
+            ArrayList<DocumentoEntregado> documentosBD = ValidacionDAO.obtenerEntregasParaValidar(entregaSeleccionada.getIdEntrega(), tipoDocumentoNombre);
             listaDocumentos = FXCollections.observableArrayList(documentosBD);
             tvEntregas.setItems(listaDocumentos);
         } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class FXMLSeleccionarEntregaParaValidarController implements Initializabl
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarEntrega.fxml"));
             Parent vista = loader.load();
             FXMLValidarEntregaController controlador = loader.getController();
-            controlador.inicializar(doc, this, tablaInfo);
+            controlador.inicializar(doc, this);
             
             Stage escenario = new Stage();
             escenario.setScene(new Scene(vista));
