@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,7 +63,7 @@ public class FXMLValidarSeleccionarDocumentoController implements Initializable 
             Academico profesor = AcademicoDAO.obtenerAcademicoPorIdUsuario(idUsuario);
             
             if (profesor != null) {
-                ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPorTipo(tipoDocumento.getIdTipoDocumento(), profesor.getIdAcademico());
+                List<Entrega> entregasBD = EntregaDAO.obtenerEntregasPorTipo(tipoDocumento.getNombre(), profesor.getIdAcademico());
                 listaEntregas = FXCollections.observableArrayList(entregasBD);
                 tvEntregasProgramadas.setItems(listaEntregas);
             } else {
@@ -75,46 +76,30 @@ public class FXMLValidarSeleccionarDocumentoController implements Initializable 
     }
 
     @FXML
-    private void btnClicContinuar(ActionEvent event) {
-        Entrega entregaSeleccionada = tvEntregasProgramadas.getSelectionModel().getSelectedItem();
-        if (entregaSeleccionada != null) {
-            String[] tablaInfo = new String[3];
-             switch (tipoDocumento.getIdTipoDocumento()) {
-                case 1: 
-                    tablaInfo[0] = "documentoinicio";
-                    tablaInfo[1] = "idDocumentoInicio";
-                    tablaInfo[2] = "EntregaDocumentoInicio_idEntregaDocumentoInicio";
-                    break;
-                case 2: 
-                    tablaInfo[0] = "reporte";
-                    tablaInfo[1] = "idReporte";
-                    tablaInfo[2] = "EntregaReporte_idEntregaReporte";
-                    break;
-                case 3: 
-                    tablaInfo[0] = "documentofinal";
-                    tablaInfo[1] = "idDocumentoFinal";
-                    tablaInfo[2] = "EntregaDocumentoFinal_idEntregaDocumentoFinal";
-                    break;
-            }
+private void btnClicContinuar(ActionEvent event) {
+    Entrega entregaSeleccionada = tvEntregasProgramadas.getSelectionModel().getSelectedItem();
+    if (entregaSeleccionada != null) {
+        // ¡El bloque switch que creaba el arreglo "tablaInfo" se elimina por completo!
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEntregaParaValidar.fxml"));
+            Parent vista = loader.load();
+            FXMLSeleccionarEntregaParaValidarController controlador = loader.getController();
             
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEntregaParaValidar.fxml"));
-                Parent vista = loader.load();
-                FXMLSeleccionarEntregaParaValidarController controlador = loader.getController();
-                controlador.inicializar(entregaSeleccionada, tablaInfo);
+            // Pasamos la información de forma limpia y directa.
+            controlador.inicializar(entregaSeleccionada, tipoDocumento.getNombre());
 
-                Stage escenario = (Stage) lblTitulo.getScene().getWindow();
-                escenario.setScene(new Scene(vista));
-                escenario.setTitle("Validar Entregas - Paso 3");
-            } catch (IOException e) {
-                AlertaUtilidad.mostrarAlertaSimple("Error","No se pudo cargar la ventana: " + e.getMessage(), Alert.AlertType.ERROR);
-            }
-
-        } else {
-            AlertaUtilidad.mostrarAlertaSimple("Sin selección", "Debe seleccionar una entrega para continuar.", Alert.AlertType.WARNING);
+            Stage escenario = (Stage) lblTitulo.getScene().getWindow();
+            escenario.setScene(new Scene(vista));
+            escenario.setTitle("Validar Entregas - Paso 3");
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error","No se pudo cargar la ventana: " + e.getMessage(), Alert.AlertType.ERROR);
         }
-    }
 
+    } else {
+        AlertaUtilidad.mostrarAlertaSimple("Sin selección", "Debe seleccionar una entrega para continuar.", Alert.AlertType.WARNING);
+    }
+}
     @FXML
 private void btnClicRegresar(ActionEvent event) {
     try {

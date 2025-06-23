@@ -10,6 +10,7 @@ public class Entrega {
     private String horaFin;
     private String estado;
     private String nombreGrupo;
+    private String tipoDocumento;
 
     public Entrega() {}
 
@@ -97,5 +98,15 @@ public class Entrega {
     public void setNombreGrupo(String nombreGrupo) {
         this.nombreGrupo = nombreGrupo;
     }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+    
+    
     
 }
