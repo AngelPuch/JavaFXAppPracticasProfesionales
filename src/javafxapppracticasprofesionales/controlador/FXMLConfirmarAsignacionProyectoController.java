@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ExpedienteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
@@ -27,16 +28,16 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
     @FXML
     private Label lbMatriculaEstudiante;
     @FXML
-    private Label lbObjetivo;
-    @FXML
     private Label lbNumeroCuposProyecto;
-    @FXML
-    private Label lbOrganizacion;
-    @FXML
-    private Label lbNombreProyecto;
     Proyecto proyectoSeleccionado;
     Estudiante estudianteSeleccionado;
     INotificacion observador;
+    @FXML
+    private TextArea taObjetivo;
+    @FXML
+    private TextArea taNombreProyecto;
+    @FXML
+    private TextArea taOrganizacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,10 +88,10 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
     }
     
     private void configurarInformacionProyecto() {
-        lbNombreProyecto.setText(proyectoSeleccionado.getNombre());
-        lbOrganizacion.setText(proyectoSeleccionado.getOrganizacion().getNombre());
+        taNombreProyecto.setText(proyectoSeleccionado.getNombre());
+        taOrganizacion.setText(proyectoSeleccionado.getOrganizacion().getNombre());
         lbNumeroCuposProyecto.setText(String.valueOf(proyectoSeleccionado.getNumeroCupos()));
-        lbObjetivo.setText(proyectoSeleccionado.getObjetivo());
+        taObjetivo.setText(proyectoSeleccionado.getObjetivo());
     }
     
     private void cerrarVentana(){

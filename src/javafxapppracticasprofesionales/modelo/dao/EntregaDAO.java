@@ -161,6 +161,8 @@ public class EntregaDAO {
                 entrega.setDescripcion(resultado.getString("descripcion"));
                 entrega.setFechaInicio(resultado.getString("fechaInicio"));
                 entrega.setFechaFin(resultado.getString("fechaFin"));
+                entrega.setHoraInicio(resultado.getString("horaInicio"));
+                entrega.setHoraFin(resultado.getString("horaFin"));
                 
                 if (resultado.getObject("documento_id") != null) {
                     entrega.setEstado("Entregado");

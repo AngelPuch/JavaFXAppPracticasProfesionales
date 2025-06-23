@@ -44,7 +44,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     @FXML
     private TableColumn<Entrega, String> colFechaFin;
     @FXML
-    private TableColumn<Entrega, String> colDescripcion;
+    private TableColumn<Entrega, String> colHoraFin;
     @FXML
     private Button btnContinuar;
     @FXML
@@ -67,7 +67,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicio.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
         colFechaFin.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        colHoraFin.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
     }
     
     private void cargarInformacionEstudiante(int idUsuario) {
@@ -98,8 +98,16 @@ public class FXMLSeleccionarEntregaController implements Initializable {
                     .filter(entrega -> "Sin Entregar".equals(entrega.getEstado()))
                     .filter(entrega -> {
                         try {
-                            LocalDateTime fechaFinEntrega = LocalDateTime.parse(entrega.getFechaFin(), formatter);
-                            return fechaFinEntrega.isAfter(fechaYHoraActual);
+                            String fechaInicioStr = entrega.getFechaInicio();
+                            String horaInicioStr = entrega.getHoraInicio() != null ? entrega.getHoraInicio() : "00:00:00";
+                            String fechaFinStr = entrega.getFechaFin();
+                            String horaFinStr = entrega.getHoraFin() != null ? entrega.getHoraFin() : "23:59:59";
+                            String inicioCompletoStr = fechaInicioStr + " " + horaInicioStr;
+                            String finCompletoStr = fechaFinStr + " " + horaFinStr;
+                            LocalDateTime fechaInicioEntrega = LocalDateTime.parse(inicioCompletoStr, formatter);
+                            LocalDateTime fechaFinEntrega = LocalDateTime.parse(finCompletoStr, formatter);
+
+                            return fechaYHoraActual.isAfter(fechaInicioEntrega) && fechaYHoraActual.isBefore(fechaFinEntrega);
                         } catch (DateTimeParseException e) {
                             
                             return false;
@@ -128,7 +136,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             Parent vista = loader.load();
 
             FXMLSubirDocumentoController controller = loader.getController();
-            controller.inicializarDatos(entregaSeleccionada.getIdEntrega(), this.infoSesion.getIdExpediente(), entregaSeleccionada.getNombre(), observador);
+            controller.inicializarDatos(entregaSeleccionada, this.infoSesion.getIdExpediente(), entregaSeleccionada.getNombre(), observador);
 
             Stage escenario = new Stage();
             escenario.setTitle("Subir documento inicial - Paso 2");

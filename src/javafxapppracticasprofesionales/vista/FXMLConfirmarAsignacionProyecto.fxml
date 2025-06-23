@@ -84,16 +84,16 @@
                                     </columnConstraints>
                                     <children>
                                         <Label text="Nombre:" GridPane.rowIndex="0" />
-                                        <Label fx:id="lbNombreProyecto" text="[Nombre del Proyecto]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                                         <Label text="Organización:" GridPane.rowIndex="1" />
-                                        <Label fx:id="lbOrganizacion" text="[Organización]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                                         <Label text="Número de cupos:" GridPane.rowIndex="2" />
                                         <Label fx:id="lbNumeroCuposProyecto" text="[Cupos]" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                                         <Label text="Objetivo:" GridPane.rowIndex="3" />
-                                        <Label fx:id="lbObjetivo" text="[Objetivo del proyecto]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextArea fx:id="taObjetivo" editable="false" prefHeight="58.0" prefWidth="181.0" promptText="[Objetivo]" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextArea fx:id="taNombreProyecto" editable="false" prefHeight="35.0" prefWidth="150.0" promptText="[Nombre del proyecto]" GridPane.columnIndex="1" />
+                              <TextArea fx:id="taOrganizacion" editable="false" prefHeight="35.0" prefWidth="150.0" promptText="[Organizacion]" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                            <rowConstraints>
                               <RowConstraints />

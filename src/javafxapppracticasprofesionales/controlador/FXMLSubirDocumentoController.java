@@ -15,11 +15,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.DocumentoInicioDAO;
+import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
@@ -28,37 +30,41 @@ import javafxapppracticasprofesionales.utilidad.Utilidad;
 public class FXMLSubirDocumentoController implements Initializable {
 
     
-    @FXML
-    private TextField tfRutaArchivo;
+    
     @FXML
     private Button btnSeleccionarArchivo;
     @FXML
     private Button btnAceptar;
     @FXML
     private Button btnCancelar;
-    private int idEntrega;
+    private Entrega entregaSeleccionada;
     private int idExpediente;
     private File archivoSeleccionado;
     private static final String DIRECTORIO_PRINCIPAL_APP = "PracticasProfesionales_Documentos";
     private static final String SUBDIRECTORIO_DOCUMENTOS = "DocumentosIniciales";
-    @FXML
-    private TextField tfNombreArchivo;
     private INotificacion observador;
     @FXML
     private Label lbTipoDocumento;
     private String tipoDocumento;
     private String nombreUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getNombre();
+    @FXML
+    private TextArea taDescripcion;
+    @FXML
+    private Label lbNombreArchivo;
+    @FXML
+    private TextArea taRutaArchivo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
     
-    public void inicializarDatos(int idEntrega, int idExpediente, String tipoDocumento, INotificacion observador) {
-        this.idEntrega = idEntrega;
+    public void inicializarDatos(Entrega entregaSeleccionada, int idExpediente, String tipoDocumento, INotificacion observador) {
+        this.entregaSeleccionada = entregaSeleccionada;
         this.idExpediente = idExpediente;
         this.tipoDocumento = tipoDocumento;
         this.observador = observador;
         lbTipoDocumento.setText(tipoDocumento);
+        taDescripcion.setText(entregaSeleccionada.getDescripcion());
     }
 
     @FXML
@@ -71,8 +77,8 @@ public class FXMLSubirDocumentoController implements Initializable {
         archivoSeleccionado = dialogo.showOpenDialog(escenario);
 
         if (archivoSeleccionado != null) {
-            tfRutaArchivo.setText(archivoSeleccionado.getAbsolutePath());
-            tfNombreArchivo.setText(tipoDocumento + "_" + nombreUsuario);
+            taRutaArchivo.setText(archivoSeleccionado.getAbsolutePath());
+            lbNombreArchivo.setText(tipoDocumento + "_" + nombreUsuario);
         }
     }
 
@@ -105,7 +111,7 @@ public class FXMLSubirDocumentoController implements Initializable {
             }
             
             String rutaParaBD = rutaDestino.toAbsolutePath().toString();
-            ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(tipoDocumento, rutaParaBD, nombreFinalArchivo, idEntrega, idExpediente);
+            ResultadoOperacion resultado = DocumentoInicioDAO.guardarDocumentoInicio(tipoDocumento, rutaParaBD, nombreFinalArchivo, entregaSeleccionada.getIdEntrega(), idExpediente);
 
             if (!resultado.isError()) {
                 Files.createDirectories(directorioPath); 
@@ -131,10 +137,6 @@ public class FXMLSubirDocumentoController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Archivo requerido", "Debes seleccionar un archivo para subir.", Alert.AlertType.WARNING);
             return false;
         }
-        if (tfNombreArchivo.getText().trim().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Campo requerido", "Debes ingresar un nombre para el archivo.", Alert.AlertType.WARNING);
-            return false;
-        }
         return true;
     }
 
@@ -148,6 +150,6 @@ public class FXMLSubirDocumentoController implements Initializable {
     }
     
     private void cerrarVentana() {
-        Utilidad.getEscenarioComponente(tfNombreArchivo).close();
+        Utilidad.getEscenarioComponente(lbNombreArchivo).close();
     }
 }

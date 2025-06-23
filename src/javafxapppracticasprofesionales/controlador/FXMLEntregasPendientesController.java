@@ -61,6 +61,18 @@ public class FXMLEntregasPendientesController implements Initializable, INotific
     private TableColumn<Entrega, String> colEstadoReporte;
     @FXML
     private TableColumn<Entrega, String> colEstadoFinal;
+    @FXML
+    private TableColumn<Entrega, String> colHoraInicioInicial;
+    @FXML
+    private TableColumn<Entrega, String> colHoraFinInicial;
+    @FXML
+    private TableColumn<Entrega, String> colHoraInicioReporte;
+    @FXML
+    private TableColumn<Entrega, String> colHoraFinReporte;
+    @FXML
+    private TableColumn<Entrega, String> colHoraInicioFinal;
+    @FXML
+    private TableColumn<Entrega, String> colHoraFinFinal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,17 +93,23 @@ public class FXMLEntregasPendientesController implements Initializable, INotific
     private void configurarTablas() {
         colNombreInicial.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioInicial.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
+        colHoraInicioInicial.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
         colFechaFinInicial.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
+        colHoraFinInicial.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
         colEstadoInicial.setCellValueFactory(new PropertyValueFactory<>("estado")); 
 
         colNombreReporte.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioReporte.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
+        colHoraInicioReporte.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
         colFechaFinReporte.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
+        colHoraFinReporte.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
         colEstadoReporte.setCellValueFactory(new PropertyValueFactory<>("estado")); 
 
         colNombreFinal.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colFechaInicioFinal.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
+        colHoraInicioFinal.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
         colFechaFinFinal.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
+        colHoraFinFinal.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
         colEstadoFinal.setCellValueFactory(new PropertyValueFactory<>("estado")); 
     }
 

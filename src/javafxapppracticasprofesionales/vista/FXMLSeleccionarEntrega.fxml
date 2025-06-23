@@ -17,10 +17,10 @@
       </Label>
       <TableView fx:id="tvEntregas" layoutX="16.0" layoutY="56.0" prefHeight="265.0" prefWidth="564.0">
         <columns>
-          <TableColumn fx:id="colNombre" prefWidth="128.0" text="Nombre" />
-          <TableColumn fx:id="colFechaInicio" prefWidth="146.0" text="Fecha Inicio" />
-          <TableColumn fx:id="colFechaFin" prefWidth="127.0" text="Fecha Fin" />
-          <TableColumn fx:id="colDescripcion" prefWidth="162.0" text="Descripción" />
+          <TableColumn fx:id="colNombre" prefWidth="158.0" text="Nombre" />
+          <TableColumn fx:id="colFechaInicio" prefWidth="153.0" text="Fecha Inicio" />
+          <TableColumn fx:id="colFechaFin" prefWidth="139.0" text="Fecha Fin" />
+          <TableColumn fx:id="colHoraFin" prefWidth="113.0" text="Hora Fin" />
         </columns>
       </TableView>
       <Button fx:id="btnContinuar" layoutX="469.0" layoutY="338.0" mnemonicParsing="false" onAction="#clicContinuar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Continuar" textFill="WHITE">
