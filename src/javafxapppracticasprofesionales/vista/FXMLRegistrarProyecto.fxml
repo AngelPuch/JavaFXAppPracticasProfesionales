@@ -28,7 +28,7 @@
       <TextArea fx:id="taObjetivo" layoutX="175.0" layoutY="232.0" prefHeight="80.0" prefWidth="396.0" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="25.0" />
       <Label layoutX="25.0" layoutY="332.0" text="Cupos Disponibles: *" />
       <TextField fx:id="tfCupos" layoutX="175.0" layoutY="328.0" prefHeight="25.0" prefWidth="80.0" promptText="Ej: 5" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
-      <Button layoutX="493.0" layoutY="395.0" mnemonicParsing="false" onAction="#clicBtnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aceptar" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0">
+      <Button layoutX="493.0" layoutY="395.0" mnemonicParsing="false" onAction="#clicBtnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

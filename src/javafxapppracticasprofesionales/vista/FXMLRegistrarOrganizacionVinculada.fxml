@@ -62,7 +62,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="535.0" layoutY="436.0" mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aceptar" textFill="WHITE">
+      <Button layoutX="535.0" layoutY="436.0" mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

@@ -67,7 +67,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Aceptar" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Confirmar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

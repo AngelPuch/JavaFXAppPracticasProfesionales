@@ -58,7 +58,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-        <Button layoutX="836.0" layoutY="615.0" onAction="#clicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold;" text="Aceptar" textFill="WHITE">
+        <Button layoutX="836.0" layoutY="615.0" onAction="#clicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold;" text="Calificar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
