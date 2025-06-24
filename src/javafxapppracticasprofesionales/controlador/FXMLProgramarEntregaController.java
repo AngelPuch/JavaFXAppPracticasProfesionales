@@ -126,19 +126,26 @@ public class FXMLProgramarEntregaController implements Initializable {
     private boolean validarCampos() {
         lbErrorGrupo.setText("");
 
-        if (tfNombre.getText().trim().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null || 
+        if (tfNombre.getText().trim().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null ||
                 cbGrupo.getValue() == null || cmbHorasInicio.getValue() == null || cmbMinutosInicio.getValue() == null ||
-            cmbHorasFin.getValue() == null || cmbMinutosFin.getValue() == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos", 
-                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", 
+                cmbHorasFin.getValue() == null || cmbMinutosFin.getValue() == null) {
+            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
+                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.",
                     Alert.AlertType.WARNING);
+            return false;
         }
-
+        LocalDate fechaActual = LocalDate.now();
+        if (dpFechaInicio.getValue().isBefore(fechaActual)) {
+            DateTimeFormatter formatoAmigable = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            AlertaUtilidad.mostrarAlertaSimple("Fecha de inicio inválida",
+                    "La fecha de inicio no puede ser anterior a la fecha actual (" + fechaActual.format(formatoAmigable) + ").",
+                    Alert.AlertType.WARNING);
+            return false;
+        }
         if (dpFechaFin.getValue().isBefore(dpFechaInicio.getValue())) {
             AlertaUtilidad.mostrarAlertaSimple("Fechas incorrectas", "La fecha de fin no puede ser anterior a la fecha de inicio.", Alert.AlertType.WARNING);
             return false;
         }
-
         if (this.periodoActual != null) {
             LocalDate fechaFinEntrega = dpFechaFin.getValue();
             LocalDate fechaFinPeriodo = LocalDate.parse(this.periodoActual.getFechaFin());
@@ -152,6 +159,7 @@ public class FXMLProgramarEntregaController implements Initializable {
                 return false;
             }
         }
+
         return true;
     }
 

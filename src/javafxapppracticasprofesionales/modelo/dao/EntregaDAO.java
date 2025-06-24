@@ -14,40 +14,6 @@ import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 
 public class EntregaDAO {
-    public static ArrayList<Entrega> obtenerEntregasPorGrupo(int idGrupo, String tabla) throws SQLException {
-        ArrayList<Entrega> entregas = new ArrayList<>();
-        Connection conexionBD = ConexionBD.abrirConexion();
-        if (conexionBD != null) {
-            String sql = String.format("SELECT * FROM %s WHERE grupoEE_idgrupoEE = ?", tabla);
-            
-            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setInt(1, idGrupo);
-            ResultSet resultado = sentencia.executeQuery();
-
-            while(resultado.next()){
-                Entrega entrega = new Entrega();
-                if (tabla.equals("entregadocumentoinicio")) {
-                    entrega.setIdEntrega(resultado.getInt("idEntregaDocumentoInicio"));
-                } else if (tabla.equals("entregareporte")) {
-                    entrega.setIdEntrega(resultado.getInt("idEntregaReporte"));
-                } else {
-                    entrega.setIdEntrega(resultado.getInt("idEntregaDocumentoFinal"));
-                }
-                entrega.setNombre(resultado.getString("nombre"));
-                entrega.setDescripcion(resultado.getString("descripcion"));
-                entrega.setFechaInicio(resultado.getString("fechaInicio"));
-                entrega.setFechaFin(resultado.getString("fechaFin"));
-                entregas.add(entrega);
-            }
-
-            conexionBD.close();
-            sentencia.close();
-            resultado.close();
-        } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
-        }
-        return entregas;
-    }
     
     public static ArrayList<Entrega> obtenerTodasLasEntregas(String tabla) throws SQLException {
         ArrayList<Entrega> entregas = new ArrayList<>();
