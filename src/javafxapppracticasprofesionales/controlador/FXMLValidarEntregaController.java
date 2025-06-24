@@ -93,7 +93,7 @@ public class FXMLValidarEntregaController implements Initializable {
         try {
             ResultadoOperacion resultado = ValidacionDAO.validarEntrega(docAValidar, nuevoEstadoId, comentarios);
             if (!resultado.isError()) {
-                AlertaUtilidad.mostrarAlertaSimple("Éxito", resultado.getMensaje(), javafx.scene.control.Alert.AlertType.INFORMATION);
+                AlertaUtilidad.mostrarAlertaSimple("Éxito", resultado.getMensaje(), Alert.AlertType.INFORMATION);
                 notificador.operacionExitosa();
                 cerrarVentana();
             } else {

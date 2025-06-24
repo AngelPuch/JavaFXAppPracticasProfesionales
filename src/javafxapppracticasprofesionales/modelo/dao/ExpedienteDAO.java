@@ -67,16 +67,16 @@ public class ExpedienteDAO {
                          "FROM gestionpracticas.expediente ex " +
                          "JOIN gestionpracticas.inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
                          "WHERE i.Estudiante_idEstudiante = ?;";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setInt(1, idEstudiante);
-                try (ResultSet resultado = sentencia.executeQuery()) {
-                    if (resultado.next()) {
-                        idExpediente = resultado.getInt("idExpediente");
-                    }
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idEstudiante);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                idExpediente = resultado.getInt("idExpediente");
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+              
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
@@ -91,15 +91,17 @@ public class ExpedienteDAO {
                          "JOIN inscripcion i ON ex.Inscripcion_idInscripcion = i.idInscripcion " +
                          "WHERE i.Estudiante_idEstudiante = ? AND ex.Estado_idEstado = 1 " + 
                          "ORDER BY ex.idExpediente DESC LIMIT 1";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setInt(1, idEstudiante);
-                ResultSet resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    idExpediente = resultado.getInt("idExpediente");
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idEstudiante);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                idExpediente = resultado.getInt("idExpediente");
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
         return idExpediente;
     }

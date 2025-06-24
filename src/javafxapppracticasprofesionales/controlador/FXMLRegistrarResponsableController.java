@@ -56,8 +56,8 @@ public class FXMLRegistrarResponsableController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 70);
-        Utilidad.configurarTextAreaConContador(tfApellidoPaterno, lbContadorCaracteresApPaterno, 100);
-        Utilidad.configurarTextAreaConContador(tfApellidoMaterno, lbContadorCaracteresApMaterno, 100);
+        Utilidad.configurarTextAreaConContador(tfApellidoPaterno, lbContadorCaracteresApPaterno, 50);
+        Utilidad.configurarTextAreaConContador(tfApellidoMaterno, lbContadorCaracteresApMaterno, 50);
         Utilidad.configurarTextAreaConContador(tfCargo, lbContadorCaracteresCargo, 45);
     }    
     
@@ -85,9 +85,7 @@ public class FXMLRegistrarResponsableController implements Initializable {
         lbCorreoError.setText("");
         boolean esValido = true;
 
-        if (tfNombre.getText().trim().isEmpty() || tfApellidoPaterno.getText().trim().isEmpty() || tfCargo.getText().trim().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Campos obligatorios vacíos", 
-                "Los campos marcados con (*) no deben estar vacíos. Por favor, complételos para continuar.", Alert.AlertType.WARNING);
+        if (!ValidacionUtilidad.isCampoTextoValido(tfNombre, tfApellidoPaterno, tfCargo)) {
             return false;
         }
 

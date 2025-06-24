@@ -11,31 +11,34 @@ import javafxapppracticasprofesionales.modelo.pojo.CriterioEvaluacion;
 public class CriterioEvaluacionDAO {
 
     public static ArrayList<CriterioEvaluacion> obtenerCriteriosRubrica() throws SQLException {
-    ArrayList<CriterioEvaluacion> criterios = new ArrayList<>();
-    Connection conexion = ConexionBD.abrirConexion();
-    if (conexion != null) {
-        // Se seleccionan todas las columnas de la rúbrica.
-        String consulta = "SELECT idCriterio, nombreCriterio, competente, independiente, basicoAvanzado, basicoUmbral, noCompetente " +
+        ArrayList<CriterioEvaluacion> criterios = new ArrayList<>();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT idCriterio, nombreCriterio, competente, independiente, basicoAvanzado, basicoUmbral, noCompetente " +
                           "FROM criterio_evaluacion ORDER BY idCriterio ASC;";
-        try (PreparedStatement sentencia = conexion.prepareStatement(consulta);
-             ResultSet resultado = sentencia.executeQuery()) {
-
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
             while (resultado.next()) {
-                CriterioEvaluacion criterio = new CriterioEvaluacion();
-                criterio.setIdCriterio(resultado.getInt("idCriterio"));
-                criterio.setCriterio(resultado.getString("nombreCriterio"));
-                // Se cargan las descripciones de cada nivel desde la BD.
-                criterio.setCompetente(resultado.getString("competente"));
-                criterio.setIndependiente(resultado.getString("independiente"));
-                criterio.setBasicoAvanzado(resultado.getString("basicoAvanzado"));
-                criterio.setBasicoMinimo(resultado.getString("basicoUmbral"));
-                criterio.setNoCompetente(resultado.getString("noCompetente"));
-                criterios.add(criterio);
+                criterios.add(convertirRegistroCriterioEvaluacion(resultado));
             }
-        } finally {
-            conexion.close();
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
+        return criterios;
     }
-    return criterios;
-}
+    
+    private static CriterioEvaluacion convertirRegistroCriterioEvaluacion(ResultSet resultado) throws SQLException{
+        CriterioEvaluacion criterio = new CriterioEvaluacion();
+        criterio.setIdCriterio(resultado.getInt("idCriterio"));
+        criterio.setCriterio(resultado.getString("nombreCriterio"));
+        criterio.setCompetente(resultado.getString("competente"));
+        criterio.setIndependiente(resultado.getString("independiente"));
+        criterio.setBasicoAvanzado(resultado.getString("basicoAvanzado"));
+        criterio.setBasicoMinimo(resultado.getString("basicoUmbral"));
+        criterio.setNoCompetente(resultado.getString("noCompetente"));
+        return criterio;
+    }
 }

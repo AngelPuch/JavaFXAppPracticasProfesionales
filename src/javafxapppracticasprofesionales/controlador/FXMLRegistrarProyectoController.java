@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
@@ -20,6 +19,7 @@ import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
+import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 
 public class FXMLRegistrarProyectoController implements Initializable {
 
@@ -31,10 +31,6 @@ public class FXMLRegistrarProyectoController implements Initializable {
     private TextArea taObjetivo;
     @FXML
     private TextField tfCupos; 
-
-    private OrganizacionVinculada organizacion;
-    private ResponsableProyecto responsable;
-    private INotificacion observador;
     @FXML
     private Label lbContadorCaracteresDescripcion;
     @FXML
@@ -42,11 +38,16 @@ public class FXMLRegistrarProyectoController implements Initializable {
     @FXML
     private Label lbContadorCaracteresNombre;
 
+    private OrganizacionVinculada organizacion;
+    private ResponsableProyecto responsable;
+    private INotificacion observador;
+    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 100);
-        Utilidad.configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 100);
-        Utilidad.configurarTextAreaConContador(taObjetivo, lbContadorCaracteresObjetivo, 100);
+        Utilidad.configurarTextAreaConContador(taDescripcion, lbContadorCaracteresDescripcion, 250);
+        Utilidad.configurarTextAreaConContador(taObjetivo, lbContadorCaracteresObjetivo, 250);
     }
     
     public void inicializarInformacion(OrganizacionVinculada organizacion, ResponsableProyecto responsable,
@@ -74,9 +75,7 @@ public class FXMLRegistrarProyectoController implements Initializable {
     }
 
     private boolean validarCampos() {
-        if (tfCupos.getText().trim().isEmpty() || tfNombre.getText().trim().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
-                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+        if (!ValidacionUtilidad.isCampoTextoValido(tfCupos, tfNombre)) {
             return false;
         }
 

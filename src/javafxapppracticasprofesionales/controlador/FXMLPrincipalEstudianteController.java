@@ -107,8 +107,22 @@ public class FXMLPrincipalEstudianteController implements Initializable, INotifi
 
     @FXML
     private void btnClicEntregasPendientes(ActionEvent event) {
-        cargarEscenas("vista/FXMLEntregasPendientes.fxml");
-        lbNombreVentana.setText("Entregas Pendientes");
+        try {
+            boolean tieneProyecto = EstudianteDAO.verificarProyectoAsignado(this.idEstudiante);
+
+            if (tieneProyecto) {
+                cargarEscenas("vista/FXMLEntregasPendientes.fxml");
+                lbNombreVentana.setText("Entregas Pendientes");
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Proyecto no Asignado",
+                    "No puedes entregar documentos porque aún no se te ha asignado un proyecto. " +
+                    "Por favor, contacta al coordinador.",
+                    Alert.AlertType.WARNING);
+            }
+        } catch (SQLException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", 
+                "No se pudo verificar el estado de tu proyecto. Inténtalo de nuevo.", Alert.AlertType.ERROR);
+        }
     }
     
     @FXML

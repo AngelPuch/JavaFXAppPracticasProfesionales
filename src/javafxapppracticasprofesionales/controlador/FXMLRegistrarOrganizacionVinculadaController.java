@@ -24,11 +24,6 @@ import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLRegistrarOrganizacionVinculadaController implements Initializable {
-
-
-    private INotificacion observador;
-    private OrganizacionVinculada organizacionVinculada;
-    
     @FXML
     private Label lbContadorCaracteresNombre;
     @FXML
@@ -65,6 +60,8 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     private TextField tfTelefono;
     @FXML
     private Label lbTelefonoError;
+    private INotificacion observador;
+    private OrganizacionVinculada organizacionVinculada;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,13 +71,12 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     public void inicializarInformacion(OrganizacionVinculada organizacionVinculada, INotificacion observador) {
         this.organizacionVinculada = organizacionVinculada;
         this.observador = observador;
-        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 45);
-        Utilidad.configurarTextAreaConContador(tfCalle, lbContadorCaracteresCalle, 100);
+        Utilidad.configurarTextAreaConContador(tfNombre, lbContadorCaracteresNombre, 80);
+        Utilidad.configurarTextAreaConContador(tfCalle, lbContadorCaracteresCalle, 80);
         Utilidad.configurarTextAreaConContador(tfNumero, lbContadorCaracteresNumero, 10);
-        Utilidad.configurarTextAreaConContador(tfColonia, lbContadorCaracteresColonia, 100);
-        Utilidad.configurarTextAreaConContador(tfCodigoPostal, lbContadorCaracteresCodigoPostal, 10);
-        Utilidad.configurarTextAreaConContador(tfMunicipio, lbContadorCaracteresMunicipio, 100);
-        Utilidad.configurarTextAreaConContador(tfEstado, lbContadorCaracteresEstado, 100);
+        Utilidad.configurarTextAreaConContador(tfColonia, lbContadorCaracteresColonia, 80);
+        Utilidad.configurarTextAreaConContador(tfMunicipio, lbContadorCaracteresMunicipio, 50);
+        Utilidad.configurarTextAreaConContador(tfEstado, lbContadorCaracteresEstado, 50);
     }
 
     @FXML
@@ -132,15 +128,8 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
         lbCodigoPostalError.setText("");
         boolean esValido = true;
         
-        if (tfNombre.getText().trim().isEmpty() || 
-            tfCalle.getText().trim().isEmpty() || 
-            tfNumero.getText().trim().isEmpty() || 
-            tfColonia.getText().trim().isEmpty() || 
-            tfCodigoPostal.getText().trim().isEmpty() || 
-            tfEstado.getText().trim().isEmpty()) {
-            
-            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos",
-                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", Alert.AlertType.WARNING);
+        if (!ValidacionUtilidad.isCampoTextoValido(tfNombre, tfCalle, tfNumero, tfColonia, 
+                tfCodigoPostal, tfEstado, tfMunicipio)) {
             return false;
         }
 

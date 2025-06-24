@@ -11,24 +11,32 @@ public class AcademicoDAO {
 
     public static Academico obtenerAcademicoPorIdUsuario(int idUsuario) throws SQLException {
         Academico academico = null;
-        Connection conexion = ConexionBD.abrirConexion();
-        if (conexion != null) {
-            String consulta = "SELECT idAcademico, numeroPersonal, nombre, correo, idUsuario FROM academico WHERE idUsuario = ?";
-            try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
-                sentencia.setInt(1, idUsuario);
-                ResultSet resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    academico = new Academico();
-                    academico.setIdAcademico(resultado.getInt("idAcademico"));
-                    academico.setNumeroPersonal(resultado.getString("numeroPersonal"));
-                    academico.setNombre(resultado.getString("nombre"));
-                    academico.setCorreo(resultado.getString("correo"));
-                    academico.setIdUsuario(resultado.getInt("idUsuario"));
-                }
-            } finally {
-                conexion.close();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String sql = "SELECT idAcademico, numeroPersonal, nombre, correo, idUsuario "
+                    + "FROM academico WHERE idUsuario = ?";
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idUsuario);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()){
+                academico = convertirRegistroAcademico(resultado);
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
+        return academico;
+    }
+    
+    private static Academico convertirRegistroAcademico(ResultSet resultado) throws SQLException {
+        Academico academico = new Academico();
+        academico.setIdAcademico(resultado.getInt("idAcademico"));
+        academico.setNumeroPersonal(resultado.getString("numeroPersonal"));
+        academico.setNombre(resultado.getString("nombre"));
+        academico.setCorreo(resultado.getString("correo"));
+        academico.setIdUsuario(resultado.getInt("idUsuario"));
         return academico;
     }
 }

@@ -39,32 +39,38 @@ public class AvanceDAO {
 
     private static ArrayList<Avance> consultarAvances(String sql, int idExpediente, String nombreColumnaComentarios) throws SQLException {
         ArrayList<Avance> avances = new ArrayList<>();
-        Connection conexion = ConexionBD.abrirConexion();
-        if (conexion != null) {
-            try (PreparedStatement consulta = conexion.prepareStatement(sql)) {
-                consulta.setInt(1, idExpediente);
-                ResultSet resultado = consulta.executeQuery();
-                while(resultado.next()) {
-                    Avance avance = new Avance();
-                    avance.setId(resultado.getInt("id"));
-                    avance.setNombre(resultado.getString("nombre"));
-                    avance.setFechaEntrega(resultado.getString("fecha"));
-                    avance.setEstado(resultado.getString("estado"));
-                    avance.setRutaArchivo(resultado.getString("rutaArchivo"));
-                    
-                    String comentarios = resultado.getString(nombreColumnaComentarios);
-                    if (comentarios == null || comentarios.trim().isEmpty()) {
-                        avance.setComentarios("Sin comentarios");
-                    } else {
-                        avance.setComentarios(comentarios);
-                    }
-                    
-                    avances.add(avance);
-                }
-            } finally {
-                conexion.close();
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idExpediente);
+            ResultSet resultado = sentencia.executeQuery();
+            while(resultado.next()) {
+                avances.add(convertirRegistroAvance(resultado, nombreColumnaComentarios));
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return avances;
+    }
+    
+    private static Avance convertirRegistroAvance(ResultSet resultado, String nombreColumnaComentarios) throws SQLException {
+        Avance avance = new Avance();
+        avance.setId(resultado.getInt("id"));
+        avance.setNombre(resultado.getString("nombre"));
+        avance.setFechaEntrega(resultado.getString("fecha"));
+        avance.setEstado(resultado.getString("estado"));
+        avance.setRutaArchivo(resultado.getString("rutaArchivo"));
+        
+        String comentarios = resultado.getString(nombreColumnaComentarios);
+        if (comentarios == null || comentarios.trim().isEmpty()){
+            avance.setComentarios("Sin comentarios");
+        } else{
+            avance.setComentarios(comentarios);
+        }
+        
+        return avance;
     }
 }

@@ -42,7 +42,7 @@
       <Label fx:id="lbContadorCaracteresCodigoPostal" layoutX="441.0" layoutY="280.0" prefHeight="17.0" prefWidth="80.0" />
 
       <!-- Municipio -->
-      <Label layoutX="22.0" layoutY="302.0" text="Municipio:" textFill="#333333" />
+      <Label layoutX="22.0" layoutY="302.0" text="Municipio: *" textFill="#333333" />
       <TextField fx:id="tfMunicipio" layoutX="151.0" layoutY="297.0" prefHeight="27.0" prefWidth="370.0" promptText="Benito Juárez" style="-fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" />
       <Label fx:id="lbContadorCaracteresMunicipio" layoutX="441.0" layoutY="324.0" prefHeight="17.0" prefWidth="80.0" />
 

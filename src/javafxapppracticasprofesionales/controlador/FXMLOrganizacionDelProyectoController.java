@@ -74,7 +74,7 @@ public class FXMLOrganizacionDelProyectoController implements Initializable {
     
     private void configurarTabla() {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionCompleta"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
     }
     

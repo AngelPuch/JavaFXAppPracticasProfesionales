@@ -125,29 +125,13 @@ public class FXMLProgramarEntregaController implements Initializable {
 
     private boolean validarCampos() {
         lbErrorGrupo.setText("");
-        String errores = "";
 
-        if (tfNombre.getText().trim().isEmpty()) {
-            errores += "- El nombre de la entrega es obligatorio.\n";
-        }
-        if (dpFechaInicio.getValue() == null) {
-            errores += "- La fecha de inicio es obligatoria.\n";
-        }
-        if (dpFechaFin.getValue() == null) {
-            errores += "- La fecha de fin es obligatoria.\n";
-        }
-        if (cbGrupo.getValue() == null) {
-            lbErrorGrupo.setText("Debe seleccionar un grupo.");
-            errores += "- El grupo es obligatorio.\n";
-        }
-        if (cmbHorasInicio.getValue() == null || cmbMinutosInicio.getValue() == null ||
+        if (tfNombre.getText().trim().isEmpty() || dpFechaInicio.getValue() == null || dpFechaFin.getValue() == null || 
+                cbGrupo.getValue() == null || cmbHorasInicio.getValue() == null || cmbMinutosInicio.getValue() == null ||
             cmbHorasFin.getValue() == null || cmbMinutosFin.getValue() == null) {
-            errores += "- Debe seleccionar una hora y minuto de inicio y fin.\n";
-        }
-        
-        if (!errores.isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Campos obligatorios", errores, Alert.AlertType.WARNING);
-            return false;
+            AlertaUtilidad.mostrarAlertaSimple("Campos vacíos", 
+                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", 
+                    Alert.AlertType.WARNING);
         }
 
         if (dpFechaFin.getValue().isBefore(dpFechaInicio.getValue())) {

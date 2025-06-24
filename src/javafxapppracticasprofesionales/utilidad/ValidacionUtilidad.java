@@ -2,6 +2,8 @@ package javafxapppracticasprofesionales.utilidad;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputControl;
 
 public final class ValidacionUtilidad {
 
@@ -29,11 +31,23 @@ public final class ValidacionUtilidad {
     }
     
     public static boolean validarCodigoPostal(String codigoPostal) {
-    if (codigoPostal == null) {
-        return false;
+        if (codigoPostal == null) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile(REGEX_CODIGO_POSTAL);
+        Matcher matcher = pattern.matcher(codigoPostal);
+        return matcher.matches();
     }
-    Pattern pattern = Pattern.compile(REGEX_CODIGO_POSTAL);
-    Matcher matcher = pattern.matcher(codigoPostal);
-    return matcher.matches();
-}
+    
+    public static boolean isCampoTextoValido(TextInputControl... campos) {
+        for (TextInputControl campo : campos) {
+            if (campo.getText() == null || campo.getText().trim().isEmpty()) {
+                AlertaUtilidad.mostrarAlertaSimple("Campos vacíos", 
+                    "Los campos marcados con un (*) no deben de ser vacíos. Por favor, complétalos para continuar.", 
+                    Alert.AlertType.WARNING);
+                return false;
+            }
+        }
+        return true;
+    }
 }

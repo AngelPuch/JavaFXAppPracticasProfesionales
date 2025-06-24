@@ -28,11 +28,11 @@ public class EstudianteDAO {
             while (resultado.next()) {
                 estudiantes.add(convertirRegistroEstudianteConProyecto(resultado));
             }
-            resultado.close();
-            sentencia.close();
             conexionBD.close();
+            sentencia.close();
+            resultado.close();
         } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return estudiantes;
     }
@@ -52,11 +52,11 @@ public class EstudianteDAO {
             while (resultado.next()) {
                 estudiantes.add(convertirRegistroEstudiante(resultado));
             }
-            resultado.close();
-            sentencia.close();
             conexionBD.close();
+            sentencia.close();
+            resultado.close();
         } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return estudiantes;
     }
@@ -71,23 +71,16 @@ public class EstudianteDAO {
                          "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
                          "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
                          "WHERE ex.Proyecto_idProyecto IS NOT NULL;";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-                 ResultSet resultado = sentencia.executeQuery()) {
-
-                while (resultado.next()) {
-                    Estudiante estudiante = new Estudiante();
-                    estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
-                    estudiante.setNombre(resultado.getString("nombre"));
-                    estudiante.setMatricula(resultado.getString("matricula"));
-                    estudiante.setSemestre(resultado.getInt("semestre"));
-                    estudiante.setCorreo(resultado.getString("correo"));
-                    estudiantes.add(estudiante);
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                estudiantes.add(convertirRegistroEstudiante(resultado));
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
         } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return estudiantes;
     }
@@ -98,15 +91,17 @@ public class EstudianteDAO {
         if (conexionBD != null) {
             String sql = "SELECT idEstudiante, nombre, matricula, semestre, correo, idUsuario " +
                          "FROM estudiante WHERE idUsuario = ?";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setInt(1, idUsuario);
-                ResultSet resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    estudiante = convertirRegistroEstudiante(resultado);
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idUsuario);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                estudiante = convertirRegistroEstudiante(resultado);
             }
+           conexionBD.close();
+           sentencia.close();
+           resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return estudiante;
     }
@@ -115,26 +110,26 @@ public class EstudianteDAO {
         InfoEstudianteSesion info = null;
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            try {
-                String sql = "SELECT e.idEstudiante, i.grupoEE_idgrupoEE, ex.idExpediente " +
+            String sql = "SELECT e.idEstudiante, i.grupoEE_idgrupoEE, ex.idExpediente " +
                              "FROM estudiante e " +
                              "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
                              "LEFT JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
                              "WHERE e.idUsuario = ?";
-                
-                PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-                sentencia.setInt(1, idUsuario);
-                ResultSet resultado = sentencia.executeQuery();
-                
-                if (resultado.next()) {
-                    info = new InfoEstudianteSesion();
-                    info.setIdEstudiante(resultado.getInt("idEstudiante"));
-                    info.setIdGrupo(resultado.getInt("grupoEE_idgrupoEE"));
-                    info.setIdExpediente(resultado.getInt("idExpediente"));
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idUsuario);
+            ResultSet resultado = sentencia.executeQuery();
+            
+            if (resultado.next()) {
+                info = new InfoEstudianteSesion();
+                info.setIdEstudiante(resultado.getInt("idEstudiante"));
+                info.setIdGrupo(resultado.getInt("grupoEE_idgrupoEE"));
+                info.setIdExpediente(resultado.getInt("idExpediente"));
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return info;
     }
@@ -148,19 +143,19 @@ public class EstudianteDAO {
                          "JOIN inscripcion i ON e.idEstudiante = i.Estudiante_idEstudiante " +
                          "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
                          "WHERE e.idEstudiante = ? AND ex.Proyecto_idProyecto IS NOT NULL";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setInt(1, idEstudiante);
-                ResultSet resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    if (resultado.getInt("totalProyectos") > 0) {
-                        tieneProyecto = true;
-                    }
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idEstudiante);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                if (resultado.getInt("totalProyectos") > 0) {
+                    tieneProyecto = true;
                 }
-            } finally {
-                conexionBD.close();
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
         } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return tieneProyecto;
     }
@@ -171,20 +166,17 @@ public class EstudianteDAO {
         if (conexionBD != null) {
             String sql = "SELECT idEstudiante, nombre, matricula, semestre, correo, idUsuario " +
                          "FROM estudiante WHERE matricula = ?";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setString(1, matricula);
-                ResultSet resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    estudiante = new Estudiante();
-                    estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
-                    estudiante.setNombre(resultado.getString("nombre"));
-                    estudiante.setMatricula(resultado.getString("matricula"));
-                    estudiante.setSemestre(resultado.getInt("semestre"));
-                    estudiante.setCorreo(resultado.getString("correo"));
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setString(1, matricula);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                estudiante = convertirRegistroEstudiante(resultado);
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return estudiante;
     }
@@ -194,16 +186,17 @@ public class EstudianteDAO {
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
             String consulta = "SELECT horasAcumuladas FROM expediente WHERE idExpediente = ?";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
-                sentencia.setInt(1, idExpediente);
-                ResultSet resultado = sentencia.executeQuery();
-
-                if (resultado.next()) {
-                    horasAcumuladas = resultado.getInt("horasAcumuladas");
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            sentencia.setInt(1, idExpediente);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                horasAcumuladas = resultado.getInt("horasAcumuladas");
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
         return horasAcumuladas;
     }
@@ -219,22 +212,15 @@ public class EstudianteDAO {
                          "JOIN expediente ex ON i.idInscripcion = ex.Inscripcion_idInscripcion " +
                          "JOIN proyecto p ON ex.Proyecto_idProyecto = p.idProyecto " +
                          "WHERE g.Academico_idAcademico = ?";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setInt(1, idAcademico);
-                try (ResultSet resultado = sentencia.executeQuery()) {
-                    while (resultado.next()) {
-                        EstudianteConProyecto estudiante = new EstudianteConProyecto();
-                        estudiante.setNombreEstudiante(resultado.getString("nombreEstudiante"));
-                        estudiante.setMatricula(resultado.getString("matricula"));
-                        estudiante.setNombreProyecto(resultado.getString("nombreProyecto"));
-                        estudiante.setSemestre(resultado.getInt("semestre"));
-                        estudiante.setCorreo(resultado.getString("correo"));
-                        estudiantes.add(estudiante);
-                    }
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idAcademico);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                estudiantes.add(convertirRegistroEstudianteConProyecto(resultado));
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
         } else {
             throw new SQLException("Error: Sin conexiÃ³n a la Base de Datos");
         }
