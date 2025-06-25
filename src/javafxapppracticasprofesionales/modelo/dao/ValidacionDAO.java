@@ -227,7 +227,7 @@ public static ResultadoOperacion validarEntrega(DocumentoEntregado docAValidar, 
         int filasAfectadas = sentencia.executeUpdate();
         if (filasAfectadas > 0) {
             resultado.setIsError(false);
-            resultado.setMensaje("Documento validado correctamente.");
+            resultado.setMensaje("Operación realizada correctamente.");
         } else {
             resultado.setIsError(true);
             resultado.setMensaje("No se pudo actualizar el estado del documento.");
