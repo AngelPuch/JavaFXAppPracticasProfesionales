@@ -90,7 +90,7 @@ public class FXMLRegistrarResponsableController implements Initializable {
         }
 
         if (!tfTelefono.getText().trim().isEmpty() && !ValidacionUtilidad.validarTelefono(tfTelefono.getText().trim())) {
-            lbTelefonoError.setText("Teléfono inválido");
+            lbTelefonoError.setText("Teléfono inválido (10 dígitos)");
             esValido = false;
         }
         
