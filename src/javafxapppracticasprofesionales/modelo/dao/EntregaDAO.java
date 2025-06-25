@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,8 @@ public class EntregaDAO {
             
             ResultSet resultado = sentencia.executeQuery();
 
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            
             while(resultado.next()){
                 Entrega entrega = new Entrega();
                 entrega.setIdEntrega(resultado.getInt(campoIdEntregaPK));
@@ -129,8 +132,16 @@ public class EntregaDAO {
                 entrega.setDescripcion(resultado.getString("descripcion"));
                 entrega.setFechaInicio(resultado.getString("fechaInicio"));
                 entrega.setFechaFin(resultado.getString("fechaFin"));
-                entrega.setHoraInicio(resultado.getString("horaInicio"));
-                entrega.setHoraFin(resultado.getString("horaFin"));
+                
+                LocalTime horaInicio = resultado.getObject("horaInicio", LocalTime.class);
+                LocalTime horaFin = resultado.getObject("horaFin", LocalTime.class);
+                
+                if (horaInicio != null) {
+                    entrega.setHoraInicio(horaInicio.format(timeFormatter));
+                }
+                if (horaFin != null) {
+                    entrega.setHoraFin(horaFin.format(timeFormatter));
+                }   
                 
                 if (resultado.getObject("documento_id") != null) {
                     entrega.setEstado("Entregado");

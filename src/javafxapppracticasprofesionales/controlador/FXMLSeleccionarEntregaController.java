@@ -92,16 +92,16 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             
             final LocalDateTime fechaYHoraActual = LocalDateTime.now();
             
-            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
             ArrayList<Entrega> entregasPendientes = entregasBD.stream()
                     .filter(entrega -> "Sin Entregar".equals(entrega.getEstado()))
                     .filter(entrega -> {
                         try {
                             String fechaInicioStr = entrega.getFechaInicio();
-                            String horaInicioStr = entrega.getHoraInicio() != null ? entrega.getHoraInicio() : "00:00:00";
+                            String horaInicioStr = entrega.getHoraInicio() != null ? entrega.getHoraInicio() : "00:00";
                             String fechaFinStr = entrega.getFechaFin();
-                            String horaFinStr = entrega.getHoraFin() != null ? entrega.getHoraFin() : "23:59:59";
+                            String horaFinStr = entrega.getHoraFin() != null ? entrega.getHoraFin() : "23:59";
                             String inicioCompletoStr = fechaInicioStr + " " + horaInicioStr;
                             String finCompletoStr = fechaFinStr + " " + horaFinStr;
                             LocalDateTime fechaInicioEntrega = LocalDateTime.parse(inicioCompletoStr, formatter);
