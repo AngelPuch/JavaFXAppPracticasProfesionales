@@ -71,5 +71,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Button layoutX="533.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnClicDarProrroga" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Dar prórroga" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

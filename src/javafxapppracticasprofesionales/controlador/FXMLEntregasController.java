@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -100,5 +101,12 @@ public class FXMLEntregasController implements Initializable, INotificacion {
     @Override
     public void operacionExitosa() {
         cargarTodasLasEntregas();
+    }
+
+    @FXML
+    private void btnClicDarProrroga(ActionEvent event) {
+        AlertaUtilidad.mostrarAlertaSimple("Funcionalidad no disponible", 
+                "La opción para dar prórroga a una entrega aún no se encuentra implementada en esta versión del sistema.", 
+                Alert.AlertType.INFORMATION);
     }
 }
