@@ -1,5 +1,12 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLProgramarEntregaController.java 
+    * Autor: Jose Luis Silva Gómez, Rodrigo Luna Vázquez
+    * Fecha: 13/06/2025
+*/
 public class EstudianteConProyecto {
     private String nombreEstudiante;
     private String matricula;

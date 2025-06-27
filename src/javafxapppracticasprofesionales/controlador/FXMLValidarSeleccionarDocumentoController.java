@@ -28,6 +28,12 @@ import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLValidarSeleccionarDocumentoController.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class FXMLValidarSeleccionarDocumentoController implements Initializable {
 
     @FXML

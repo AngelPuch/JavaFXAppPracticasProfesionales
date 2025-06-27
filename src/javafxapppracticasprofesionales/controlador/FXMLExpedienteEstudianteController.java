@@ -29,7 +29,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import static javafxapppracticasprofesionales.utilidad.Utilidad.abrirDocumento;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLExpedienteEstudianteController.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class FXMLExpedienteEstudianteController implements Initializable {
 
     @FXML

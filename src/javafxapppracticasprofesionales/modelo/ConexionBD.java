@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ConexionBD.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class ConexionBD {
 
     private static final String ARCHIVO_PROPIEDADES = "database.properties";

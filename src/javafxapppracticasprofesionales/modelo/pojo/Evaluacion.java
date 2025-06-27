@@ -3,6 +3,12 @@ package javafxapppracticasprofesionales.modelo.pojo;
 
 import java.util.List;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: Evaluacion.java 
+    * Autor: Angel Jonathan Puch Hernández 
+    * Fecha: 15/06/2025
+*/
 public class Evaluacion {
     private int idEvaluacion;
     private float calificacionTotal;

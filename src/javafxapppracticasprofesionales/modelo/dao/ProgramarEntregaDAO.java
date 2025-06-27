@@ -10,6 +10,12 @@ import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ProgramarEntregaDAO.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class ProgramarEntregaDAO {
 
     public static ResultadoOperacion programarNuevaEntrega(Entrega nuevaEntrega, String tabla, int idGrupoEE, int idTipoDocumento) throws SQLException {

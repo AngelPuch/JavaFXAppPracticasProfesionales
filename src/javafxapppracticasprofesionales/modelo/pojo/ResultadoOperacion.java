@@ -1,5 +1,11 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ResultadoOperacion.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class ResultadoOperacion {
     private boolean isError;
     private String mensaje;

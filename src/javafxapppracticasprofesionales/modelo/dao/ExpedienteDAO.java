@@ -7,7 +7,12 @@ import java.sql.SQLException;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ExpedienteDAO.java 
+    * Autor: Jose Luis Silva Gómez, Angel Jonathan Puch Hernández, Rodrigo Luna Vázquez
+    * Fecha: 12/06/2025
+*/
 public class ExpedienteDAO {
 
     public static ResultadoOperacion asignarProyectoAEstudiante(int idProyecto, int idEstudiante) throws SQLException {

@@ -1,5 +1,11 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ProyectoEstado.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 15/06/2025
+*/
 public class ProyectoEstado {
     private int idProyectoEstado;
     private String nombreEstado;

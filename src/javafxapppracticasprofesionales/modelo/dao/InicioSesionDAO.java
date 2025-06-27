@@ -8,6 +8,12 @@ import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.UtilidadPassword;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: InicioSesionDAO.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class InicioSesionDAO {
 
     public static Usuario verificarUsuario(String username, String password) throws SQLException {

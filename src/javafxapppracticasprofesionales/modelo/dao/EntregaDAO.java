@@ -14,14 +14,18 @@ import java.util.List;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: EntregaDAO.java 
+    * Autor: Angel Jonathan Puch Hernández, Jose Luis Silva Gómez, Rodrigo Luna Vázquez
+    * Fecha: 13/06/2025
+*/
 public class EntregaDAO {
     
     public static ArrayList<Entrega> obtenerTodasLasEntregas(String tabla) throws SQLException {
         ArrayList<Entrega> entregas = new ArrayList<>();
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
-            
-            // Consulta con JOIN para obtener el nombre del grupo
             String sql = String.format(
                 "SELECT e.*, CONCAT(g.seccion, ' - Bloque: ', g.bloque) AS nombreGrupo " +
                 "FROM %s e " +
@@ -38,40 +42,30 @@ public class EntregaDAO {
                     
                     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
-
-                    // Fecha de inicio
                     Date fechaInicio = resultSet.getDate("fechaInicio");
                     if (fechaInicio != null) {
                         entrega.setFechaInicio(fechaInicio.toLocalDate().format(formatoFecha));
                     } else {
                         entrega.setFechaInicio("N/A");
                     }
-
-                    // Fecha de fin
                     Date fechaFin = resultSet.getDate("fechaFin");
                     if (fechaFin != null) {
                         entrega.setFechaFin(fechaFin.toLocalDate().format(formatoFecha));
                     } else {
                         entrega.setFechaFin("N/A");
                     }
-
-                    // Hora de inicio
                     Time horaInicio = resultSet.getTime("horaInicio");
                     if (horaInicio != null) {
                         entrega.setHoraInicio(horaInicio.toLocalTime().format(formatoHora));
                     } else {
                         entrega.setHoraInicio("N/A");
                     }
-
-                    // Hora de fin
                     Time horaFin = resultSet.getTime("horaFin");
                     if (horaFin != null) {
                         entrega.setHoraFin(horaFin.toLocalTime().format(formatoHora));
                     } else {
                         entrega.setHoraFin("N/A");
                     }
-
-                    
                     entrega.setNombreGrupo(resultSet.getString("nombreGrupo"));
                     
                     entregas.add(entrega);
@@ -157,147 +151,82 @@ public class EntregaDAO {
         return entregas;
     }
     
-   /* public static ArrayList<Entrega> obtenerEntregasPorTipo(int idTipoDocumento, int idAcademico) throws SQLException {
-        ArrayList<Entrega> entregas = new ArrayList<>();
-        Connection conexion = ConexionBD.abrirConexion();
+   
+    public static List<Entrega> obtenerEntregasPorTipo(String tipoEntrega, int idAcademico) throws SQLException {
+        List<Entrega> entregas = new ArrayList<>();
+        String query = "";
+        Connection conexion = null;
 
-        if (conexion != null) {
-            String nombreTabla = "";
-            String nombreColumnaId = "";
+        switch (tipoEntrega) {
+            case "Documentos Iniciales":
+                query = "SELECT e.idEntregaDocumentoInicio, e.nombre, e.descripcion, e.fechaInicio, e.fechaFin, "
+                        + "g.seccion, ee.nombre AS nombreEE, tdi.nombre AS tipoDocumento "
+                        + "FROM entregadocumentoinicio AS e "
+                        + "INNER JOIN tipodocumentoinicio AS tdi ON e.TipoDocumentoInicio_idTipoDocumentoInicio = tdi.idTipoDocumentoInicio "
+                        + "INNER JOIN grupoee AS g ON e.grupoEE_idgrupoEE = g.idgrupoEE "
+                        + "INNER JOIN experienciaeducativa AS ee ON g.ExperienciaEducativa_idExperienciaEducativa = ee.idExperienciaEducativa "
+                        + "WHERE g.Academico_idAcademico = ?";
+                break;
+            case "Reportes":
+                query = "SELECT er.idEntregaReporte, er.nombre, er.descripcion, er.fechaInicio, er.fechaFin, "
+                        + "g.seccion, ee.nombre AS nombreEE, tdr.nombre AS tipoDocumento "
+                        + "FROM entregareporte AS er "
+                        + "INNER JOIN tipodocumentoreporte AS tdr ON er.TipoDocumentoReporte_idTipoDocumentoReporte = tdr.idTipoDocumentoReporte "
+                        + "INNER JOIN grupoee AS g ON er.grupoEE_idgrupoEE = g.idgrupoEE "
+                        + "INNER JOIN experienciaeducativa AS ee ON g.ExperienciaEducativa_idExperienciaEducativa = ee.idExperienciaEducativa "
+                        + "WHERE g.Academico_idAcademico = ?";
+                break;
+            case "Documentos Finales":
+                query = "SELECT ef.idEntregaDocumentoFinal, ef.nombre, ef.descripcion, ef.fechaInicio, ef.fechaFin, "
+                        + "g.seccion, ee.nombre AS nombreEE, tdf.nombre AS tipoDocumento "
+                        + "FROM entregadocumentofinal AS ef "
+                        + "INNER JOIN tipodocumentofinal AS tdf ON ef.TipoDocumentoFinal_idTipoDocumentoFinal = tdf.idTipoDocumentoFinal "
+                        + "INNER JOIN grupoee AS g ON ef.grupoEE_idgrupoEE = g.idgrupoEE "
+                        + "INNER JOIN experienciaeducativa AS ee ON g.ExperienciaEducativa_idExperienciaEducativa = ee.idExperienciaEducativa "
+                        + "WHERE g.Academico_idAcademico = ?";
+                break;
+            default:
+                return entregas;
+        }
 
-            switch (idTipoDocumento) {
-                case 1:
-                    nombreTabla = "entregadocumentoinicio";
-                    nombreColumnaId = "idEntregaDocumentoInicio";
-                    break;
-                case 2:
-                    nombreTabla = "entregareporte";
-                    nombreColumnaId = "idEntregaReporte";
-                    break;
-                case 3:
-                    nombreTabla = "entregadocumentofinal";
-                    nombreColumnaId = "idEntregaDocumentoFinal";
-                    break;
-                default:
-                    conexion.close();
-                    return entregas;
-            }
+        try {
+            conexion = ConexionBD.abrirConexion();
+            try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                ps.setInt(1, idAcademico);
 
-            String consulta = String.format("SELECT t.%s, t.nombre, t.descripcion, t.fechaInicio, t.fechaFin " +
-                                            "FROM %s t " +
-                                            "JOIN grupoee g ON t.grupoEE_idgrupoEE = g.idgrupoEE " +
-                                            "WHERE g.Academico_idAcademico = ?",
-                                            nombreColumnaId, nombreTabla);
-
-            try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
-                sentencia.setInt(1, idAcademico);
-
-                ResultSet resultado = sentencia.executeQuery();
-                while (resultado.next()) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
                     Entrega entrega = new Entrega();
-                    entrega.setIdEntrega(resultado.getInt(nombreColumnaId));
-                    entrega.setNombre(resultado.getString("nombre"));
-                    entrega.setDescripcion(resultado.getString("descripcion"));
-                    entrega.setFechaInicio(resultado.getTimestamp("fechaInicio").toLocalDateTime().toLocalDate().toString());
-                    entrega.setFechaFin(resultado.getTimestamp("fechaFin").toLocalDateTime().toLocalDate().toString());
+                    entrega.setIdEntrega(rs.getInt(1));
+                    entrega.setNombre(rs.getString("nombre"));
+                    entrega.setDescripcion(rs.getString("descripcion"));
+                    entrega.setTipoDocumento(rs.getString("tipoDocumento"));
+                    Date fechaInicioDb = rs.getDate("fechaInicio");
+                    Date fechaFinDb = rs.getDate("fechaFin");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    if (fechaInicioDb != null) {
+                        entrega.setFechaInicio(sdf.format(fechaInicioDb));
+                    }
+                    if (fechaFinDb != null) {
+                        entrega.setFechaFin(sdf.format(fechaFinDb));
+                    }
+
                     entregas.add(entrega);
                 }
-            } finally {
-                conexion.close();
+            }
+        } catch (SQLException ex) {
+            System.err.println("ERROR al consultar entregas por tipo: " + ex.getMessage());
+            throw ex;
+        } finally {
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException e) {
+                    System.err.println("ERROR al cerrar la conexión: " + e.getMessage());
+                }
             }
         }
+
         return entregas;
-    }*/
-    
-    public static List<Entrega> obtenerEntregasPorTipo(String tipoEntrega, int idAcademico) throws SQLException {
-    // Es buena práctica usar la interfaz (List) en lugar de la implementación (ArrayList).
-    List<Entrega> entregas = new ArrayList<>();
-    String query = "";
-    Connection conexion = null;
-
-    // 1. Se define la consulta SQL correcta basado en el String del tipo de entrega.
-    switch (tipoEntrega) {
-        case "Documentos Iniciales":
-            query = "SELECT e.idEntregaDocumentoInicio, e.nombre, e.descripcion, e.fechaInicio, e.fechaFin, "
-                    + "g.seccion, ee.nombre AS nombreEE, tdi.nombre AS tipoDocumento "
-                    + "FROM entregadocumentoinicio AS e "
-                    + "INNER JOIN tipodocumentoinicio AS tdi ON e.TipoDocumentoInicio_idTipoDocumentoInicio = tdi.idTipoDocumentoInicio "
-                    + "INNER JOIN grupoee AS g ON e.grupoEE_idgrupoEE = g.idgrupoEE "
-                    + "INNER JOIN experienciaeducativa AS ee ON g.ExperienciaEducativa_idExperienciaEducativa = ee.idExperienciaEducativa "
-                    + "WHERE g.Academico_idAcademico = ?";
-            break;
-        case "Reportes":
-            query = "SELECT er.idEntregaReporte, er.nombre, er.descripcion, er.fechaInicio, er.fechaFin, "
-                    + "g.seccion, ee.nombre AS nombreEE, tdr.nombre AS tipoDocumento "
-                    + "FROM entregareporte AS er "
-                    + "INNER JOIN tipodocumentoreporte AS tdr ON er.TipoDocumentoReporte_idTipoDocumentoReporte = tdr.idTipoDocumentoReporte "
-                    + "INNER JOIN grupoee AS g ON er.grupoEE_idgrupoEE = g.idgrupoEE "
-                    + "INNER JOIN experienciaeducativa AS ee ON g.ExperienciaEducativa_idExperienciaEducativa = ee.idExperienciaEducativa "
-                    + "WHERE g.Academico_idAcademico = ?";
-            break;
-        case "Documentos Finales":
-            query = "SELECT ef.idEntregaDocumentoFinal, ef.nombre, ef.descripcion, ef.fechaInicio, ef.fechaFin, "
-                    + "g.seccion, ee.nombre AS nombreEE, tdf.nombre AS tipoDocumento "
-                    + "FROM entregadocumentofinal AS ef "
-                    + "INNER JOIN tipodocumentofinal AS tdf ON ef.TipoDocumentoFinal_idTipoDocumentoFinal = tdf.idTipoDocumentoFinal "
-                    + "INNER JOIN grupoee AS g ON ef.grupoEE_idgrupoEE = g.idgrupoEE "
-                    + "INNER JOIN experienciaeducativa AS ee ON g.ExperienciaEducativa_idExperienciaEducativa = ee.idExperienciaEducativa "
-                    + "WHERE g.Academico_idAcademico = ?";
-            break;
-        default:
-             // Si el tipo de entrega no es válido, se devuelve una lista vacía.
-            return entregas;
     }
-
-    try {
-        // 2. Se abre la conexión usando tu clase `ConexionBD`.
-        conexion = ConexionBD.abrirConexion();
-
-        // 3. Se prepara y ejecuta la consulta.
-        try (PreparedStatement ps = conexion.prepareStatement(query)) {
-            ps.setInt(1, idAcademico);
-            
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Entrega entrega = new Entrega();
-                
-                // Se usa el índice 1 para la columna de ID, ya que cambia de nombre.
-                entrega.setIdEntrega(rs.getInt(1));
-                entrega.setNombre(rs.getString("nombre"));
-                entrega.setDescripcion(rs.getString("descripcion"));
-                  
-                // ¡Se obtiene la columna del nuevo campo!
-                entrega.setTipoDocumento(rs.getString("tipoDocumento"));
-                
-                // Se usa getDate() para columnas DATE y se formatea. Es más seguro.
-                Date fechaInicioDb = rs.getDate("fechaInicio");
-                Date fechaFinDb = rs.getDate("fechaFin");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                if (fechaInicioDb != null) {
-                    entrega.setFechaInicio(sdf.format(fechaInicioDb));
-                }
-                if (fechaFinDb != null) {
-                    entrega.setFechaFin(sdf.format(fechaFinDb));
-                }
-
-                entregas.add(entrega);
-            }
-        }
-    } catch (SQLException ex) {
-        // Se imprime el error y se relanza para que la capa superior lo maneje.
-        System.err.println("ERROR al consultar entregas por tipo: " + ex.getMessage());
-        throw ex;
-    } finally {
-        // 4. Se asegura de cerrar la conexión en el bloque finally.
-        if (conexion != null) {
-            try {
-                conexion.close();
-            } catch (SQLException e) {
-                System.err.println("ERROR al cerrar la conexión: " + e.getMessage());
-            }
-        }
-    }
-    
-    return entregas;
-}
 }

@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Academico;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: AcademicoDAO.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class AcademicoDAO {
 
     public static Academico obtenerAcademicoPorIdUsuario(int idUsuario) throws SQLException {

@@ -24,6 +24,12 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLConsultarExpedienteController.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class FXMLConsultarExpedienteController implements Initializable {
 
     @FXML

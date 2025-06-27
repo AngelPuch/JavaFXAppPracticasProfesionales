@@ -36,7 +36,12 @@ import javafxapppracticasprofesionales.modelo.pojo.EvaluacionDetalle;
 import java.util.List;                                                  
 import java.util.ArrayList;                                             
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLCalificarPresentacionController.java 
+    * Autor: Angel Jonathan Puch Hernández 
+    * Fecha: 15/06/2025
+*/
 public class FXMLCalificarPresentacionController implements Initializable {
     @FXML
     private TableView<CriterioEvaluacion> tvRubricaEvaluacion;

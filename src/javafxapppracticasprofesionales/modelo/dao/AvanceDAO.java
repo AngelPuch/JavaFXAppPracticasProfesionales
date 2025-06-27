@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Avance;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: AvanceDAO.java 
+    * Autor: Angel Jonathan Puch Hernández, Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class AvanceDAO {
 
     public static ArrayList<Avance> obtenerDocumentosInicio(int idExpediente) throws SQLException {

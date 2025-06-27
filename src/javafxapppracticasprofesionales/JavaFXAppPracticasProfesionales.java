@@ -8,6 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: JavaFXAppPracticasProfesionales.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class JavaFXAppPracticasProfesionales extends Application {
     
     @Override

@@ -11,7 +11,12 @@ import javafxapppracticasprofesionales.modelo.pojo.ExperienciaEducativa;
 import javafxapppracticasprofesionales.modelo.pojo.Grupo;
 import javafxapppracticasprofesionales.modelo.pojo.Periodo;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: GrupoDAO.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class GrupoDAO {
     
     public static ArrayList<Grupo> obtenerGruposPorPeriodo(int idPeriodo) throws SQLException {

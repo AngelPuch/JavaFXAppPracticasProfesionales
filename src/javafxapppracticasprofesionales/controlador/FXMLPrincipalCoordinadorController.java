@@ -19,6 +19,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLPrincipalCoordinadorController.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class FXMLPrincipalCoordinadorController implements Initializable, IControladorPrincipal {
 
     @FXML

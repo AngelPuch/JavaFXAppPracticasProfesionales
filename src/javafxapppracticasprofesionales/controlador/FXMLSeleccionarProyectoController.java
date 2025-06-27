@@ -26,6 +26,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLSeleccionarProyectoController.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 12/06/2025
+*/
 public class FXMLSeleccionarProyectoController implements Initializable {
 
     @FXML

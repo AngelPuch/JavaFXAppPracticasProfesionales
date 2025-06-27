@@ -1,5 +1,12 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: EvaluacionOV.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 15/06/2025
+*/
 public class EvaluacionOV {
      private String nombreAlumno;
     private String matricula;

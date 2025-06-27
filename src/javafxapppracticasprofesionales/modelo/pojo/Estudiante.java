@@ -1,5 +1,12 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLProgramarEntregaController.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 13/06/2025
+*/
 public class Estudiante {
     private int idEstudiante;
     private String nombre;

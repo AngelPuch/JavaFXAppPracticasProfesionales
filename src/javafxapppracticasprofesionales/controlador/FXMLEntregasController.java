@@ -20,6 +20,12 @@ import javafxapppracticasprofesionales.modelo.dao.EntregaDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLEntregasController.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class FXMLEntregasController implements Initializable, INotificacion {
 
     @FXML
@@ -115,7 +121,7 @@ public class FXMLEntregasController implements Initializable, INotificacion {
             Parent vista = loader.load();
             
             FXMLTipoDeEntregaController controlador = loader.getController();
-            controlador.inicializarInformacion(this); // Si el método existe
+            controlador.inicializarInformacion(this);
             
             Stage escenario = new Stage();
             escenario.setTitle("Programar Nueva Entrega");

@@ -1,6 +1,13 @@
 
 package javafxapppracticasprofesionales.modelo.pojo;
 
+
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ExperienciaEducativa.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class ExperienciaEducativa {
     private int idExperienciaEducativa;
     private String nombre;

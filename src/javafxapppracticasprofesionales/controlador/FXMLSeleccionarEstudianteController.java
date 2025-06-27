@@ -24,6 +24,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLSeleccionarEstudianteController.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 12/06/2025
+*/
 public class FXMLSeleccionarEstudianteController implements Initializable {
 
     @FXML

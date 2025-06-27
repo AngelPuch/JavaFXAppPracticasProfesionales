@@ -13,12 +13,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLTipoDeEntregaController.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class FXMLTipoDeEntregaController implements Initializable {
 
     @FXML

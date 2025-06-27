@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.Periodo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: PeriodoDAO.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class PeriodoDAO {
     
     public static Periodo obtenerPeriodoActual() throws SQLException {

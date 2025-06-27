@@ -24,6 +24,12 @@ import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLProyectosController.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class FXMLProyectosController implements Initializable, INotificacion {
 
     @FXML

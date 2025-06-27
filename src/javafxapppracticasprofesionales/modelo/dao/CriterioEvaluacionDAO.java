@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.CriterioEvaluacion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: CriterioEvaluacionDAO.java 
+    * Autor: Angel Jonathan Puch Hernández 
+    * Fecha: 15/06/2025
+*/
 public class CriterioEvaluacionDAO {
 
     public static ArrayList<CriterioEvaluacion> obtenerCriteriosRubrica() throws SQLException {

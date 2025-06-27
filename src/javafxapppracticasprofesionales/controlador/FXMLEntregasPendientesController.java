@@ -27,6 +27,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLEntregasPendientesController.java 
+    * Autor: Jose Luis Silva Gómez 
+    * Fecha: 15/06/2025
+*/
 public class FXMLEntregasPendientesController implements Initializable, INotificacion {
 
     @FXML

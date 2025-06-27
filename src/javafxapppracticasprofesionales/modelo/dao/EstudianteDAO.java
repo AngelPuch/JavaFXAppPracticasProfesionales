@@ -10,6 +10,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: EstudianteDAO.java 
+    * Autor: Angel Jonathan Puch Hernández, Jose Luis Silva Gómez, Rodrigo Luna Vázquez
+    * Fecha: 13/06/2025
+*/
 public class EstudianteDAO {
 
     public static ArrayList<EstudianteConProyecto> obtenerEstudiantesConProyecto() throws SQLException {

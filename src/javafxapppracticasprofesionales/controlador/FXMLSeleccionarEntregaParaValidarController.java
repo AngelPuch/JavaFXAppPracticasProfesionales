@@ -27,6 +27,12 @@ import javafxapppracticasprofesionales.modelo.pojo.DocumentoEntregado;
 import javafxapppracticasprofesionales.modelo.pojo.Entrega;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLSeleccionarEntregaParaValidarController.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class FXMLSeleccionarEntregaParaValidarController implements Initializable, INotificacion {
 
     @FXML

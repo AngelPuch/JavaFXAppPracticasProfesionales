@@ -28,6 +28,12 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import static javafxapppracticasprofesionales.utilidad.Utilidad.abrirDocumento;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLMiExpedienteController.java 
+    * Autor: Angel Jonathan Puch Hernández 
+    * Fecha: 15/06/2025
+*/
 public class FXMLMiExpedienteController implements Initializable {
 
     @FXML

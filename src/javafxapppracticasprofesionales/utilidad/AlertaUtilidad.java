@@ -5,7 +5,12 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: AlertaUtilidad.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class AlertaUtilidad {
     
     public static void mostrarAlertaSimple(String titulo, String mensaje, Alert.AlertType tipo) {

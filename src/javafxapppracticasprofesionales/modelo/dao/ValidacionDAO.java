@@ -11,6 +11,12 @@ import javafxapppracticasprofesionales.modelo.pojo.DocumentoEntregado;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ValidacionDAO.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class ValidacionDAO {
 
     public static ArrayList<DocumentoEntregado> obtenerEntregasParaValidar(int idEntrega, String tipoDocumento) throws SQLException {

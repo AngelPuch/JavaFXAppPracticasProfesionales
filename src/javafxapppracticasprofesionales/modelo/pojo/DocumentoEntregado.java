@@ -3,6 +3,12 @@ package javafxapppracticasprofesionales.modelo.pojo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: DocumentoEntregado.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class DocumentoEntregado {
 
     private int idDocumento;

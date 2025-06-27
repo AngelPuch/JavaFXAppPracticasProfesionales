@@ -5,6 +5,13 @@ import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputControl;
 
+
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ValidacionUtilidad.java 
+    * Autor: Rodrigo Luna Vázquez, Jose Luis Silva Gómez
+    * Fecha: 15/06/2025
+*/
 public final class ValidacionUtilidad {
 
     private static final String REGEX_CORREO = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";

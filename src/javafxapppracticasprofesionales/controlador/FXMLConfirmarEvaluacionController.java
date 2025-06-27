@@ -17,6 +17,12 @@ import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLConfirmarEvaluacionController.java 
+    * Autor: Angel Jonathan Puch Hernández 
+    * Fecha: 15/06/2025
+*/
 public class FXMLConfirmarEvaluacionController implements Initializable {
 
     @FXML

@@ -25,6 +25,12 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLPrincipalEstudianteController.java 
+    * Autor: Rodrigo Luna Vázquez 
+    * Fecha: 12/06/2025
+*/
 public class FXMLPrincipalEstudianteController implements Initializable, INotificacion, IControladorPrincipal {
 
     @FXML

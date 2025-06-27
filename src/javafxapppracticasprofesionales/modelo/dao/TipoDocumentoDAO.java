@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: TipoDocumentoDAO.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class TipoDocumentoDAO {
     
     public static ArrayList<TipoDocumento> obtenerTiposDeDocumento(String tipoEntrega) throws SQLException {

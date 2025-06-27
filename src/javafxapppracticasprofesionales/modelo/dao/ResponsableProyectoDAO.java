@@ -10,6 +10,12 @@ import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ResponsableProyecto.java 
+    * Autor: Rodrigo Luna Vázquez, Jose Luis Silva Gómez, Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class ResponsableProyectoDAO {
     
     public static ResultadoOperacion registrarResponsable(ResponsableProyecto responsable) throws SQLException {

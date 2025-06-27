@@ -1,5 +1,11 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: RespuestaGuardadaOV.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 15/06/2025
+*/
 public class RespuestaGuardadaOV {
     private String afirmacion;
     private int respuesta;

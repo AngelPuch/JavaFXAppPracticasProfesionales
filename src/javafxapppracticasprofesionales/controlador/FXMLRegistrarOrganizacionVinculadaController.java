@@ -23,6 +23,12 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLRegistrarOrganizacionVinculadaController.java 
+    * Autor: Rodrigo Luna Vázquez 
+    * Fecha: 12/06/2025
+*/
 public class FXMLRegistrarOrganizacionVinculadaController implements Initializable {
     @FXML
     private Label lbContadorCaracteresNombre;

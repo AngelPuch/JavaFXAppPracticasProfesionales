@@ -26,6 +26,12 @@ import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLResponsablesController.java 
+    * Autor: Rodrigo Luna Vázquez, Jose Luis Silva Gómez
+    * Fecha: 12/06/2025
+*/
 public class FXMLResponsablesController implements Initializable, INotificacion{
 
     @FXML

@@ -1,6 +1,12 @@
 
 package javafxapppracticasprofesionales.modelo.pojo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: Proyecto.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class Proyecto {
     private int idProyecto;
     private String nombre;

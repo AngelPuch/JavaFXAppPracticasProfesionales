@@ -24,6 +24,12 @@ import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLOrganizacionDelProyectoController.java 
+    * Autor: Angel Jonathan Puch Hernández, Rodrigo Luna Vázquez
+    * Fecha: 12/06/2025
+*/
 public class FXMLOrganizacionDelProyectoController implements Initializable {
 
     @FXML

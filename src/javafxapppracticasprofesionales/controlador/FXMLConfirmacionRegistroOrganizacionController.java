@@ -9,6 +9,12 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLConfirmacionRegistroOrganizacionController.java 
+    * Autor: Rodrigo Luna Vázquez 
+    * Fecha: 12/06/2025
+*/
 public class FXMLConfirmacionRegistroOrganizacionController implements Initializable {
 
     @FXML

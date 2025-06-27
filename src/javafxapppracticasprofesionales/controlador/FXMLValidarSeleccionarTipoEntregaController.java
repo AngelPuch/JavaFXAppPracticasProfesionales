@@ -16,6 +16,12 @@ import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.pojo.TipoDocumento;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLValidarSeleccionarTipoEntregaController.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class FXMLValidarSeleccionarTipoEntregaController implements Initializable {
 
     @FXML

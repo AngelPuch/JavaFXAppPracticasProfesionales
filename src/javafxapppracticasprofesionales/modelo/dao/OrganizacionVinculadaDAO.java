@@ -9,6 +9,12 @@ import javafxapppracticasprofesionales.modelo.ConexionBD;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: OrganizacionVinculadaDAO.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 12/06/2025
+*/
 public class OrganizacionVinculadaDAO {
     
     public static ResultadoOperacion registrarOrganizacion(OrganizacionVinculada organizacionVinculada) throws SQLException {

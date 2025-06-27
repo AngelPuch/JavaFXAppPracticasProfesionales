@@ -23,6 +23,12 @@ import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLEstudiantesConProyectoController.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 12/06/2025
+*/
 public class FXMLEstudiantesConProyectoController implements Initializable, INotificacion {
 
     @FXML

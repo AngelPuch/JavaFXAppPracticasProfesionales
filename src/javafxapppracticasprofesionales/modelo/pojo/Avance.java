@@ -1,6 +1,12 @@
 
 package javafxapppracticasprofesionales.modelo.pojo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: Avance.java 
+    * Autor: Rodrigo Luna Vázquez, Angel Jonathan Puch Hernández
+    * Fecha: 15/06/2025
+*/
 public class Avance {
 
     private int id;

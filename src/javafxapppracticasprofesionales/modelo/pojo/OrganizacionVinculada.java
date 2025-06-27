@@ -2,6 +2,12 @@ package javafxapppracticasprofesionales.modelo.pojo;
 
 import java.util.StringJoiner;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: OrganizacionVinculada.java 
+    * Autor: Rodrigo Luna Vázquez 
+    * Fecha: 12/06/2025
+*/
 public class OrganizacionVinculada {
     private int idOrganizacion;
     private String nombre;

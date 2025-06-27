@@ -1,5 +1,11 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: ResponsableProyecto.java 
+    * Autor: Rodrigo Luna Vázquez 
+    * Fecha: 12/06/2025
+*/
 public class ResponsableProyecto {
     private int idResponsable;
     private String nombre;

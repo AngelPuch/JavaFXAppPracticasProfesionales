@@ -20,6 +20,12 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLRegistrarProyectoController.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class FXMLRegistrarProyectoController implements Initializable {
 
     @FXML

@@ -1,6 +1,11 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: TipoDocumento.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 13/06/2025
+*/
 public class TipoDocumento {
     private int idTipoDocumento;
     private String nombre;

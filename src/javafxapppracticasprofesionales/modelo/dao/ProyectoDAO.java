@@ -12,6 +12,12 @@ import javafxapppracticasprofesionales.modelo.pojo.ProyectoEstado;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: Proyecto.java 
+    * Autor: Angel Jonathan Puch Hernández, Jose Luis Silva Gómez
+    * Fecha: 12/06/2025
+*/
 public class ProyectoDAO {
 
     public static ArrayList<Proyecto> obtenerTodosLosProyectosActivos() throws SQLException{

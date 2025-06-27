@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
 import javafxapppracticasprofesionales.modelo.ConexionBD;
@@ -18,6 +17,12 @@ import javafxapppracticasprofesionales.modelo.pojo.EvaluacionOV;
 import javafxapppracticasprofesionales.modelo.pojo.RespuestaGuardadaOV;
 import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLConfirmarEvaluacionController.java 
+    * Autor: Angel Jonathan Puch Hernández, Jose Luis Silva Gómez, Rodrigo Luna Vázquez
+    * Fecha: 15/06/2025
+*/
 public class EvaluacionDAO {
 
     public static ResultadoOperacion registrarEvaluacion(Evaluacion evaluacion) throws SQLException {

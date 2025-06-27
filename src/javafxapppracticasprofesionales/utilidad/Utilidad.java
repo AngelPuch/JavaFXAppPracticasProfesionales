@@ -11,6 +11,12 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextInputControl;
 import javafx.stage.Stage;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: Utilidad.java 
+    * Autor: Angel Jonathan Puch Hernández, Jose Luis Silva Gómez, Rodrigo Luna Vázquez
+    * Fecha: 12/06/2025
+*/
 public class Utilidad {
     
     public static Stage getEscenarioComponente(Control componente) {

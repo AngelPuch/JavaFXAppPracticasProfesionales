@@ -19,6 +19,12 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 import javafxapppracticasprofesionales.utilidad.ValidacionUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLRegistrarResponsableController.java 
+    * Autor: Rodrigo Luna Vázquez, Jose Luis Silva Gómez
+    * Fecha: 12/06/2025
+*/
 public class FXMLRegistrarResponsableController implements Initializable {
 
     @FXML

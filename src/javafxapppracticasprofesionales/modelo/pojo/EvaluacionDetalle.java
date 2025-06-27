@@ -1,5 +1,12 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
+
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: EvaluacionDetalle.java 
+    * Autor: Angel Jonathan Puch Hernández 
+    * Fecha: 15/06/2025
+*/
 public class EvaluacionDetalle {
     private int idEvaluacionDetalle;
     private int idEvaluacion;

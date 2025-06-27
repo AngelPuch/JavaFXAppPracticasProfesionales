@@ -1,6 +1,11 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: Academico.java 
+    * Autor: Rodrigo Luna Vázquez
+    * Fecha: 13/06/2025
+*/
 public class Academico {
     private int idAcademico;
     private String numeroPersonal;

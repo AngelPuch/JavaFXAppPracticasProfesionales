@@ -2,6 +2,12 @@ package javafxapppracticasprofesionales.utilidad;
 
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: SesionUsuario.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class SesionUsuario {
     private static SesionUsuario instancia;
     private Usuario usuarioLogueado;

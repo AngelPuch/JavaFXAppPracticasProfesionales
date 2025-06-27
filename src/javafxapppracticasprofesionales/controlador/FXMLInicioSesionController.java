@@ -21,7 +21,12 @@ import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 
-
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLInicioSesionController.java 
+    * Autor: Angel Jonathan Puch Hernández
+    * Fecha: 12/06/2025
+*/
 public class FXMLInicioSesionController implements Initializable {
 
     @FXML

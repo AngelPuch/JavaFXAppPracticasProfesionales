@@ -2,6 +2,12 @@ package javafxapppracticasprofesionales.modelo.pojo;
 
 import java.util.Objects;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: AfirmacionOV.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 15/06/2025
+*/
 public class AfirmacionOV {
 
     private int idAfirmacion;

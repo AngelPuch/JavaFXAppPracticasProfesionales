@@ -15,6 +15,12 @@ import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
+/** 
+    * Proyecto: JavaFXAppPracticasProfesionales 
+    * Archivo: FXMLPreEvaluarOVController.java 
+    * Autor: Jose Luis Silva Gómez
+    * Fecha: 15/06/2025
+*/
 public class FXMLPreEvaluarOVController implements Initializable {
     
     INotificacion observador;
