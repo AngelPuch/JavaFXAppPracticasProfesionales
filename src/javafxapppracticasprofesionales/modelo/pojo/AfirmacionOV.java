@@ -2,27 +2,22 @@ package javafxapppracticasprofesionales.modelo.pojo;
 
 import java.util.Objects;
 
-/**
- * Representa una afirmación (pregunta) en el formulario de evaluación de la OV.
- * Este POGO solo contiene los datos, la lógica de la interfaz (como los ToggleGroup)
- * se maneja por completo en el controlador.
- */
 public class AfirmacionOV {
 
     private int idAfirmacion;
     private String descripcion;
     private String categoria;
-    
-    // Campo para guardar el valor (1-5) de la respuesta del usuario. Se inicializa en 0.
     private int respuestaSeleccionada; 
 
-    // NO es necesario el ToggleGroup aquí, el controlador lo gestiona.
-
     public AfirmacionOV() {
-        // El constructor está limpio. No hay lógica de interfaz aquí.
     }
 
-    // --- Getters y Setters ---
+    public AfirmacionOV(int idAfirmacion, String descripcion, String categoria, int respuestaSeleccionada) {
+        this.idAfirmacion = idAfirmacion;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.respuestaSeleccionada = respuestaSeleccionada;
+    }
 
     public int getIdAfirmacion() {
         return idAfirmacion;
@@ -55,10 +50,6 @@ public class AfirmacionOV {
     public void setRespuestaSeleccionada(int respuestaSeleccionada) {
         this.respuestaSeleccionada = respuestaSeleccionada;
     }
-
-    // --- Métodos hashCode y equals ---
-    // Son importantes para que el objeto funcione correctamente como llave en el Map del controlador.
-    // Se basan en el identificador único 'idAfirmacion'.
 
     @Override
     public int hashCode() {

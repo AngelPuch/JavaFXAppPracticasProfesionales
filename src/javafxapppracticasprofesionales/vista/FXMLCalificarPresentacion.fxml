@@ -99,7 +99,7 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Button layoutX="702.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClisCancelar" style="-fx-background-color: #f3f4f6;" text="Cancelar">
+        <Button layoutX="702.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #f3f4f6;" text="Cancelar">
             <font>
                 <Font name="Arial Bold" size="14.0" />
             </font>
@@ -114,7 +114,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button layoutX="800.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicAceptar" style="-fx-background-color: #146cd0;" text="Calificar" textFill="WHITE">
+        <Button layoutX="800.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicCalificar" style="-fx-background-color: #146cd0;" text="Calificar" textFill="WHITE">
             <font>
                 <Font name="Arial Bold" size="14.0" />
             </font>

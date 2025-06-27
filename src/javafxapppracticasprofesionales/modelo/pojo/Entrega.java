@@ -26,7 +26,6 @@ public class Entrega {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public int getIdEntrega() {
         return idEntrega;
     }

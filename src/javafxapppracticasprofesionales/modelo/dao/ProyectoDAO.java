@@ -35,11 +35,9 @@ public class ProyectoDAO {
             while(resultado.next()){
                 proyectos.add(convertirRegistroProyecto(resultado));
             }
-            
             conexionBD.close();
             sentencia.close();
             resultado.close();
-            
         } else{
             throw new SQLException("Error: Sin conexión a la Base de Datos.");
         }
@@ -67,11 +65,9 @@ public class ProyectoDAO {
             while (resultado.next()) {
                 proyectos.add(convertirRegistroProyecto(resultado));
             }
-
             conexionBD.close();
             sentencia.close();
             resultado.close();
-            
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos.");
         }
@@ -86,14 +82,7 @@ public class ProyectoDAO {
                     + "OrganizacionVinculada_idOrganizacionVinculada, ResponsableProyecto_idResponsableProyecto) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            sentencia.setString(1, proyecto.getNombre());
-            sentencia.setString(2, proyecto.getDescripcion());
-            sentencia.setInt(3, proyecto.getNumeroCupos());
-            sentencia.setString(4, proyecto.getObjetivo());
-            sentencia.setInt(5, 1); // Disponible por defecto
-            sentencia.setInt(6, proyecto.getOrganizacion().getIdOrganizacion());
-            sentencia.setInt(7, proyecto.getResponsable().getIdResponsable());
-            
+            asignarParametrosProyecto(sentencia, proyecto);
             int filasAfectadas = sentencia.executeUpdate();
 
             if (filasAfectadas > 0) {
@@ -104,6 +93,7 @@ public class ProyectoDAO {
                 resultado.setMensaje("Error al registrar el proyecto.");
             }
             conexionBD.close();
+            sentencia.close();
         } else {
             throw new SQLException("Error de conexión");
         }
@@ -118,21 +108,20 @@ public class ProyectoDAO {
                          "FROM gestionpracticas.proyecto p " +
                          "JOIN gestionpracticas.expediente e ON p.idProyecto = e.Proyecto_idProyecto " +
                          "WHERE e.idExpediente = ?;";
-            try (PreparedStatement sentencia = conexionBD.prepareStatement(sql)) {
-                sentencia.setInt(1, idExpediente);
-                try (ResultSet resultado = sentencia.executeQuery()) {
-                    if (resultado.next()) {
-                        proyecto = new Proyecto();
-                        proyecto.setIdProyecto(resultado.getInt("idProyecto"));
-                        proyecto.setNombre(resultado.getString("nombre"));
-                        proyecto.setDescripcion(resultado.getString("descripcion"));
-                        proyecto.setNumeroCupos(resultado.getInt("numeroCupos"));
-                        proyecto.setObjetivo(resultado.getString("objetivo"));
-                    }
-                }
-            } finally {
-                conexionBD.close();
+            PreparedStatement sentencia = conexionBD.prepareStatement(sql);
+            sentencia.setInt(1, idExpediente);
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                proyecto = new Proyecto();
+                proyecto.setIdProyecto(resultado.getInt("idProyecto"));
+                proyecto.setNombre(resultado.getString("nombre"));
+                proyecto.setDescripcion(resultado.getString("descripcion"));
+                proyecto.setNumeroCupos(resultado.getInt("numeroCupos"));
+                proyecto.setObjetivo(resultado.getString("objetivo"));
             }
+            conexionBD.close();
+            sentencia.close();
+            resultado.close();
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos");
         }
@@ -154,7 +143,7 @@ public class ProyectoDAO {
         
         ResponsableProyecto responsable = new ResponsableProyecto();
         responsable.setIdResponsable(resultado.getInt("idResponsableProyecto"));
-        responsable.setNombre(resultado.getString("nombreResponsable")); // Ya viene concatenado desde la consulta
+        responsable.setNombre(resultado.getString("nombreResponsable"));
         proyecto.setResponsable(responsable);
         
         ProyectoEstado estado = new ProyectoEstado();
@@ -163,5 +152,15 @@ public class ProyectoDAO {
         proyecto.setEstado(estado);
         
         return proyecto;
+    }
+    
+    private static void asignarParametrosProyecto(PreparedStatement sentencia, Proyecto proyecto) throws SQLException {
+        sentencia.setString(1, proyecto.getNombre());
+        sentencia.setString(2, proyecto.getDescripcion());
+        sentencia.setInt(3, proyecto.getNumeroCupos());
+        sentencia.setString(4, proyecto.getObjetivo());
+        sentencia.setInt(5, 1);//Disponible por defecto
+        sentencia.setInt(6, proyecto.getOrganizacion().getIdOrganizacion());
+        sentencia.setInt(7, proyecto.getResponsable().getIdResponsable());
     }
 }

@@ -26,53 +26,53 @@ import javafxapppracticasprofesionales.modelo.pojo.InfoEstudianteSesion;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
-import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLEntregasPendientesController implements Initializable, INotificacion {
 
     @FXML
     private TableView<Entrega> tvEntregasIniciales;
     @FXML
-    private TableColumn<Entrega, String> colNombreInicial;
+    private TableColumn colNombreInicial;
     @FXML
-    private TableColumn<Entrega, String> colFechaInicioInicial;
+    private TableColumn colFechaInicioInicial;
     @FXML
-    private TableColumn<Entrega, String> colFechaFinInicial;
+    private TableColumn colFechaFinInicial;
+    @FXML
+    private TableColumn colEstadoInicial;
+    @FXML
+    private TableColumn colHoraInicioInicial;
+    @FXML
+    private TableColumn colHoraFinInicial;
     @FXML
     private TableView<Entrega> tvEntregasReportes;
     @FXML
-    private TableColumn<Entrega, String> colNombreReporte;
+    private TableColumn colNombreReporte;
     @FXML
-    private TableColumn<Entrega, String> colFechaInicioReporte;
+    private TableColumn colFechaInicioReporte;
     @FXML
-    private TableColumn<Entrega, String> colFechaFinReporte;
+    private TableColumn colFechaFinReporte;
+    @FXML
+    private TableColumn colEstadoReporte;
+    @FXML
+    private TableColumn colHoraInicioReporte;
+    @FXML
+    private TableColumn colHoraFinReporte;
     @FXML
     private TableView<Entrega> tvEntregasFinales;
     @FXML
-    private TableColumn<Entrega, String> colNombreFinal;
+    private TableColumn colNombreFinal;
     @FXML
-    private TableColumn<Entrega, String> colFechaInicioFinal;
+    private TableColumn colFechaInicioFinal;
     @FXML
-    private TableColumn<Entrega, String> colFechaFinFinal;
+    private TableColumn colFechaFinFinal;
+    @FXML
+    private TableColumn colEstadoFinal;
+    @FXML
+    private TableColumn colHoraInicioFinal;
+    @FXML
+    private TableColumn colHoraFinFinal;
+    
     private InfoEstudianteSesion infoSesion;
-    @FXML
-    private TableColumn<Entrega, String> colEstadoInicial;
-    @FXML
-    private TableColumn<Entrega, String> colEstadoReporte;
-    @FXML
-    private TableColumn<Entrega, String> colEstadoFinal;
-    @FXML
-    private TableColumn<Entrega, String> colHoraInicioInicial;
-    @FXML
-    private TableColumn<Entrega, String> colHoraFinInicial;
-    @FXML
-    private TableColumn<Entrega, String> colHoraInicioReporte;
-    @FXML
-    private TableColumn<Entrega, String> colHoraFinReporte;
-    @FXML
-    private TableColumn<Entrega, String> colHoraInicioFinal;
-    @FXML
-    private TableColumn<Entrega, String> colHoraFinFinal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

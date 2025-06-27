@@ -22,8 +22,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ResponsableProyectoDAO;
-import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
-import javafxapppracticasprofesionales.modelo.pojo.Periodo;
 import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.Utilidad;

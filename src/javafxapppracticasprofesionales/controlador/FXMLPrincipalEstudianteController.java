@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.interfaz.IControladorPrincipal;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
@@ -28,7 +25,7 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-public class FXMLPrincipalEstudianteController implements Initializable, INotificacion {
+public class FXMLPrincipalEstudianteController implements Initializable, INotificacion, IControladorPrincipal {
 
     @FXML
     private Label lbNombreVentana;
@@ -36,6 +33,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, INotifi
     private Label lbNombreUsuario;
     @FXML
     private AnchorPane apCentral;
+    
     private Usuario usuarioSesion;
     private int idEstudiante;
     private int idExpediente;
@@ -45,6 +43,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, INotifi
         // TODO
     }    
     
+    @Override
     public void inicializarInformacion(Usuario usuarioSesion) {
         this.usuarioSesion = usuarioSesion;
         try {

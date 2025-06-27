@@ -1,15 +1,14 @@
 package javafxapppracticasprofesionales.controlador;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,6 +27,7 @@ import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
+import static javafxapppracticasprofesionales.utilidad.Utilidad.abrirDocumento;
 
 
 public class FXMLExpedienteEstudianteController implements Initializable {
@@ -45,48 +45,42 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML
     private TableView<Avance> tvDocumentosIniciales;
     @FXML
-    private TableColumn<Avance, String> colNombreDI;
+    private TableColumn colNombreDI;
     @FXML
-    private TableColumn<Avance, String> colFechaDI;
+    private TableColumn colFechaDI;
     @FXML
-    private TableColumn<Avance, String> colEstadoDI;
+    private TableColumn colEstadoDI;
     @FXML
     private TableView<Avance> tvReportes;
     @FXML
-    private TableColumn<Avance, String> colNombreR;
+    private TableColumn colNombreR;
     @FXML
-    private TableColumn<Avance, String> colFechaR;
+    private TableColumn colFechaR;
     @FXML
-    private TableColumn<Avance, String> colEstadoR;
+    private TableColumn colEstadoR;
     @FXML
     private TableView<Avance> tvDocumentosFinales;
     @FXML
-    private TableColumn<Avance, String> colNombreDF;
+    private TableColumn colNombreDF;
     @FXML
-    private TableColumn<Avance, String> colFechaDF;
+    private TableColumn colFechaDF;
     @FXML
-    private TableColumn<Avance, String> colEstadoDF;
+    private TableColumn colEstadoDF;
     @FXML
     private TableView<Evaluacion> tvEvaluaciones;
     @FXML
-    private TableColumn<Evaluacion, String> colFechaEval;
+    private TableColumn colFechaEval;
     @FXML
-    private TableColumn<Evaluacion, Float> colCalificacionEval;
+    private TableColumn colCalificacionEval;
     @FXML
-    private TableColumn<Evaluacion, String> colMotivoEval;
-    
-    @FXML
-    private Tab tabDocIniciales;
-    @FXML
-    private Tab tabReportes;
-    @FXML
-    private Tab tabDocFinales;
+    private TableColumn colMotivoEval;
     @FXML
     private Tab tabEvaluaciones;
-
-    private EstudianteConProyecto estudianteConProyecto;
     @FXML
     private Button btnConsultar;
+    
+    private EstudianteConProyecto estudianteConProyecto;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -152,44 +146,51 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     @FXML
-    private void btnClicRegresar(ActionEvent event) {
+    private void btnClicCerrar(ActionEvent event) {
         Stage escenarioActual = (Stage) lbNombre.getScene().getWindow();
         escenarioActual.close();
     }
 
     @FXML
     private void btnClicConsultar(ActionEvent event) {
+        obtenerAvanceSeleccionadoDeTablaActiva().ifPresent(avance -> {
+            String rutaArchivo = avance.getRutaArchivo();
+            if (rutaArchivo != null && !rutaArchivo.trim().isEmpty()) {
+                abrirDocumento(rutaArchivo);
+            } else {
+                AlertaUtilidad.mostrarAlertaSimple("Archivo no disponible", 
+                    "El documento seleccionado no tiene una ruta de archivo registrada.", Alert.AlertType.ERROR);
+            }
+        });
+    }
+
+
+    private Optional<Avance> obtenerAvanceSeleccionadoDeTablaActiva() {
         Tab pestañaSeleccionada = tpExpediente.getSelectionModel().getSelectedItem();
         if (pestañaSeleccionada == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar una pestaña (Documentos Iniciales, Reportes, etc.).", Alert.AlertType.WARNING);
-            return;
-        }
-        
-        TableView<Avance> tablaActiva = (TableView<Avance>) pestañaSeleccionada.getContent().lookup("TableView");
-        Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
-
-        if (avanceSeleccionado == null) {
-            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", "Debes seleccionar un documento de la lista para consultarlo.", Alert.AlertType.WARNING);
-            return;
+            AlertaUtilidad.mostrarAlertaSimple("Sin Selección", 
+                "Debes seleccionar una pestaña (Documentos Iniciales, Reportes, etc.).", Alert.AlertType.WARNING);
+            return Optional.empty();
         }
 
-        String rutaArchivo = avanceSeleccionado.getRutaArchivo();
-        if (rutaArchivo == null || rutaArchivo.trim().isEmpty()) {
-            AlertaUtilidad.mostrarAlertaSimple("Archivo no disponible", "El documento seleccionado no tiene una ruta de archivo registrada.", Alert.AlertType.ERROR);
-            return;
+        Node contenidoPestaña = pestañaSeleccionada.getContent();
+        if (!(contenidoPestaña instanceof TableView)) {
+            contenidoPestaña = contenidoPestaña.lookup("TableView");
         }
 
-        try {
-            File archivo = new File(rutaArchivo);
-            if (archivo.exists()) {
-                Desktop.getDesktop().open(archivo);
-            } else {
-                AlertaUtilidad.mostrarAlertaSimple("Archivo no encontrado", "El archivo no pudo ser localizado en la ruta: \n" + rutaArchivo, Alert.AlertType.ERROR);
+        if (contenidoPestaña instanceof TableView) {
+            @SuppressWarnings("unchecked")
+            TableView<Avance> tablaActiva = (TableView<Avance>) contenidoPestaña;
+            Avance avanceSeleccionado = tablaActiva.getSelectionModel().getSelectedItem();
+
+            if (avanceSeleccionado == null) {
+                AlertaUtilidad.mostrarAlertaSimple("Sin Selección", 
+                    "Debes seleccionar un documento de la lista para consultarlo.", Alert.AlertType.WARNING);
+                return Optional.empty();
             }
-        } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error al abrir", "No se pudo abrir el archivo. Asegúrate de tener un programa compatible instalado.", Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error inesperado", "Ocurrió un error al intentar abrir el archivo: " + e.getMessage(), Alert.AlertType.ERROR);
+            return Optional.of(avanceSeleccionado);
         }
+
+        return Optional.empty();
     }
 }

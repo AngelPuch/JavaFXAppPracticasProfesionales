@@ -57,7 +57,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     }
 
     @FXML
-    private void clicBtnContinuar(ActionEvent event) {
+    private void btnClicContinuar(ActionEvent event) {
         ResponsableProyecto responsableSeleccionado = tvResponsables.getSelectionModel().getSelectedItem();
         if(responsableSeleccionado != null){
             try {
@@ -84,7 +84,7 @@ public class FXMLResponsableDelProyectoController implements Initializable {
     }
 
     @FXML
-    private void clicBtnRegresar(ActionEvent event) {
+    private void btnClicRegresar(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLOrganizacionDelProyecto.fxml"));
             Parent vista = loader.load();

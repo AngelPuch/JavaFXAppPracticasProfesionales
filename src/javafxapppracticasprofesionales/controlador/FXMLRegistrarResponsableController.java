@@ -79,6 +79,23 @@ public class FXMLRegistrarResponsableController implements Initializable {
             lbTitulo.setText("Registrar Responsable del Proyecto");
         }
     }
+    
+    @FXML
+    private void btnClicGuardar(ActionEvent event) {
+        if (validarCampos()) {
+            ResponsableProyecto responsable = obtenerResponsableFormulario();
+            if (esEdicion) {
+                actualizarResponsable(responsable);
+            } else {
+                registrarResponsable(responsable);
+            }
+        }
+    }
+
+    @FXML
+    private void btnClicCancelar(ActionEvent event) {
+        cerrarVentana();
+    }
 
     private boolean validarCampos() {
         lbTelefonoError.setText("");
@@ -144,23 +161,6 @@ public class FXMLRegistrarResponsableController implements Initializable {
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "Hubo un error en la conexión con la base de datos. Intente más tarde.", Alert.AlertType.ERROR);
         }
-    }
-
-    @FXML
-    private void btnAceptar(ActionEvent event) {
-        if (validarCampos()) {
-            ResponsableProyecto responsable = obtenerResponsableFormulario();
-            if (esEdicion) {
-                actualizarResponsable(responsable);
-            } else {
-                registrarResponsable(responsable);
-            }
-        }
-    }
-
-    @FXML
-    private void btnCancelar(ActionEvent event) {
-        cerrarVentana();
     }
     
     private void cerrarVentana() {

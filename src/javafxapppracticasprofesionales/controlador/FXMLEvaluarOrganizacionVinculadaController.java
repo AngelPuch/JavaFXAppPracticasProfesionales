@@ -22,7 +22,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -66,13 +65,15 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     private TableColumn<AfirmacionOV, HBox> colSiempre;
     @FXML
     private TextArea taObservaciones;
+    @FXML
+    private Label lbContadorCaracteres;
+    
     private InfoEstudianteSesion infoSesion;
     private ObservableList<AfirmacionOV> listaAfirmaciones;
     private int idExpediente;
     private int idUsuario;
     private final Map<AfirmacionOV, ToggleGroup> gruposPorAfirmacion = new HashMap<>();
-    @FXML
-    private Label lbContadorCaracteres;
+    
     private INotificacion observador;
 
     @Override
@@ -97,6 +98,25 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
     
     public void inicializarDatos(INotificacion observador) {
         this.observador = observador;
+    }
+    
+    @FXML
+    private void btnClicCalificar(ActionEvent event) {
+        if (!validarRespuestasCompletas()) {
+            AlertaUtilidad.mostrarAlertaSimple("Evaluación Incompleta", "Por favor, responde a todas las afirmaciones.", Alert.AlertType.WARNING);
+            return;
+        }
+        abrirVentanaConfirmacion();
+    }
+    
+    @FXML
+    private void btnClicCancelar(ActionEvent event) {
+        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", 
+                "¿Estás seguro de que quieres cancelar?",
+                "Si cancelas, la información no se guardará.");
+        if (confirmado) {
+            cerrarVentana();
+        }
     }
 
     private void configurarTabla() {
@@ -157,15 +177,6 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar los datos de la evaluación.", Alert.AlertType.ERROR);
         }
     }
-
-    @FXML
-    private void clicAceptar(ActionEvent event) {
-        if (!validarRespuestasCompletas()) {
-            AlertaUtilidad.mostrarAlertaSimple("Evaluación Incompleta", "Por favor, responde a todas las afirmaciones.", Alert.AlertType.WARNING);
-            return;
-        }
-        abrirVentanaConfirmacion();
-    }
     
     private boolean validarRespuestasCompletas() {
         for (AfirmacionOV afirmacion : listaAfirmaciones) {
@@ -191,22 +202,10 @@ public class FXMLEvaluarOrganizacionVinculadaController implements Initializable
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.show();
-            cerrarVentana();
-            
-            
+            cerrarVentana();     
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Interfaz", "No se pudo cargar la ventana de confirmación.", Alert.AlertType.ERROR);
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void clicCancelar(ActionEvent event) {
-        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", 
-                "¿Estás seguro de que quieres cancelar?",
-                "Si cancelas, la información no se guardará.");
-        if (confirmado) {
-            cerrarVentana();
         }
     }
     

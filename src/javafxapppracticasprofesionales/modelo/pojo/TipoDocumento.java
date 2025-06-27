@@ -1,7 +1,5 @@
 package javafxapppracticasprofesionales.modelo.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class TipoDocumento {
     private int idTipoDocumento;

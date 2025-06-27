@@ -63,11 +63,11 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="572.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#btnCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cancelar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button mnemonicParsing="false" onAction="#btnAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Confirmar" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#btnClicConfirmar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Confirmar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

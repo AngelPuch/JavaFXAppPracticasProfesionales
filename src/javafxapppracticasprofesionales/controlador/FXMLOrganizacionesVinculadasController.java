@@ -28,15 +28,16 @@ import javafxapppracticasprofesionales.utilidad.Utilidad;
 public class FXMLOrganizacionesVinculadasController implements Initializable, INotificacion{
 
     @FXML
+    private TableView<OrganizacionVinculada> tvOrganizacionesVinculadas;
+    @FXML
     private TableColumn colNombre;
     @FXML
     private TableColumn colDireccion;
     @FXML
-    private TableView<OrganizacionVinculada> tvOrganizacionesVinculadas;
+    private TableColumn colTelefono;
     
     private ObservableList<OrganizacionVinculada> listaOrganizaciones;
-    @FXML
-    private TableColumn colTelefono;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,8 +80,6 @@ public class FXMLOrganizacionesVinculadasController implements Initializable, IN
             escenario.setScene(new Scene(vista));
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
-            
-            
         } catch (IOException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de registro.", Alert.AlertType.ERROR);
             e.printStackTrace();

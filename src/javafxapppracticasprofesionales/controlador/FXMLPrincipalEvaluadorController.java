@@ -13,13 +13,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.interfaz.IControladorPrincipal;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
@@ -27,11 +27,10 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-public class FXMLPrincipalEvaluadorController implements Initializable {
+public class FXMLPrincipalEvaluadorController implements Initializable, IControladorPrincipal {
 
     @FXML
     private Label lblNombreEvaluador;
-    private Usuario usuario;
     @FXML
     private TableView<Estudiante> tvEstudiantes;
     @FXML
@@ -40,6 +39,8 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
     private TableColumn colMatricula;
     @FXML
     private TableColumn colSemestre;
+    
+    private Usuario usuario;
     private ObservableList<Estudiante> listaEstudiantes;
     
     @Override
@@ -48,6 +49,7 @@ public class FXMLPrincipalEvaluadorController implements Initializable {
         cargarEstudiantes();
     }   
     
+    @Override
     public void inicializarInformacion(Usuario usuario) {
         this.usuario = usuario;
         lblNombreEvaluador.setText("Bienvenido(a), " + usuario.getNombre());

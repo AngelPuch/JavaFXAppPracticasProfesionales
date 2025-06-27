@@ -34,9 +34,9 @@ public class FXMLSeleccionarEntregaParaValidarController implements Initializabl
     @FXML
     private TableView<DocumentoEntregado> tvEntregas;
     @FXML
-    private TableColumn<DocumentoEntregado, String> colNombreEstudiante;
+    private TableColumn colNombreEstudiante;
     @FXML
-    private TableColumn<DocumentoEntregado, String> colMatricula;
+    private TableColumn colMatricula;
     @FXML
     private TableColumn<DocumentoEntregado, String> colFechaEntrega;
 

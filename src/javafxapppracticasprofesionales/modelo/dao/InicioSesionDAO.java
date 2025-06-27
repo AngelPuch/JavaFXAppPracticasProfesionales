@@ -11,46 +11,53 @@ import javafxapppracticasprofesionales.utilidad.UtilidadPassword;
 public class InicioSesionDAO {
 
     public static Usuario verificarUsuario(String username, String password) throws SQLException {
-        Usuario usuarioSesion = null;
+        Usuario usuarioVerificado = null;
         Connection conexionBD = ConexionBD.abrirConexion();
-
+        Usuario usuarioRegistrado = obtenerUsuarioPorUsername(username, conexionBD);
         if (conexionBD != null) {
-            try {
-                String sqlUsuario = "SELECT idUsuario, username, password, nombre FROM usuario WHERE username = ?";
-                PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(sqlUsuario);
-                sentenciaUsuario.setString(1, username);
-                ResultSet resultadoUsuario = sentenciaUsuario.executeQuery();
-
-                if (resultadoUsuario.next()) {
-                    String hashGuardada = resultadoUsuario.getString("password");
-                    if (UtilidadPassword.verificarPassword(password, hashGuardada)) {
-                        usuarioSesion = new Usuario();
-                        usuarioSesion.setIdUsuario(resultadoUsuario.getInt("idUsuario"));
-                        usuarioSesion.setUsername(resultadoUsuario.getString("username"));
-                        usuarioSesion.setNombre(resultadoUsuario.getString("nombre"));
-
-                        String sqlRol = "SELECT r.nombreRol FROM rol r JOIN usuario_rol ur ON r.idRol = ur.Rol_idRol WHERE ur.Usuario_idUsuario = ?";
-                        PreparedStatement sentenciaRol = conexionBD.prepareStatement(sqlRol);
-                        sentenciaRol.setInt(1, usuarioSesion.getIdUsuario());
-                        ResultSet resultadoRol = sentenciaRol.executeQuery();
-
-                        if (resultadoRol.next()) {
-                            String rol = resultadoRol.getString("nombreRol");
-                            usuarioSesion.setRolPrincipal(rol);
-                            
-                            buscarYAsignarPerfil(conexionBD, usuarioSesion);
-                        }
-                    }
-                }
-            } finally {
-                if (conexionBD != null) {
-                    conexionBD.close();
-                }
+            if (usuarioRegistrado != null && UtilidadPassword.verificarPassword(password, usuarioRegistrado.getPassword())) {
+                usuarioVerificado = usuarioRegistrado;
+                String rolPrincipal = obtenerRolPrincipal(usuarioVerificado.getIdUsuario(), conexionBD);
+                usuarioVerificado.setRolPrincipal(rolPrincipal);
+                buscarYAsignarPerfil(conexionBD, usuarioVerificado);
             }
+            conexionBD.close();
         } else {
-            throw new SQLException("Error: Sin conexión a la Base de Datos");
+            throw new SQLException("Sin conexión a la Base de Datos");
         }
-        return usuarioSesion;
+        return usuarioVerificado;
+    }
+
+    private static Usuario obtenerUsuarioPorUsername(String username, Connection conexion) throws SQLException {
+        Usuario usuario = null;
+        String sql = "SELECT idUsuario, username, password, nombre FROM usuario WHERE username = ?";
+        PreparedStatement sentencia = conexion.prepareStatement(sql);
+        sentencia.setString(1, username);
+        ResultSet resultado = sentencia.executeQuery();
+        if (resultado.next()) {
+            usuario = new Usuario();
+            usuario.setIdUsuario(resultado.getInt("idUsuario"));
+            usuario.setUsername(resultado.getString("username"));
+            usuario.setPassword(resultado.getString("password"));
+            usuario.setNombre(resultado.getString("nombre"));
+        }
+        sentencia.close();
+        resultado.close();
+        return usuario;
+    }
+
+    private static String obtenerRolPrincipal(int idUsuario, Connection conexion) throws SQLException {
+        String rol = null;
+        String sql = "SELECT r.nombreRol FROM rol r JOIN usuario_rol ur ON r.idRol = ur.Rol_idRol WHERE ur.Usuario_idUsuario = ?";
+        PreparedStatement sentencia = conexion.prepareStatement(sql);
+        sentencia.setInt(1, idUsuario);
+        ResultSet resultado = sentencia.executeQuery();
+        if (resultado.next()) {
+            rol = resultado.getString("nombreRol");
+        }
+        sentencia.close();
+        resultado.close();
+        return rol;
     }
 
     private static void buscarYAsignarPerfil(Connection conexion, Usuario usuario) throws SQLException {
@@ -62,19 +69,15 @@ public class InicioSesionDAO {
                 sqlPerfil = "SELECT idEstudiante FROM estudiante WHERE idUsuario = ?";
                 idCampoPerfil = "idEstudiante";
                 break;
-
-            
             case "profesor":
             case "coordinador":
             case "evaluador": 
                 sqlPerfil = "SELECT idAcademico FROM academico WHERE idUsuario = ?";
                 idCampoPerfil = "idAcademico";
                 break;
-
             default:
                 return; 
         }
-
         PreparedStatement sentenciaPerfil = conexion.prepareStatement(sqlPerfil);
         sentenciaPerfil.setInt(1, usuario.getIdUsuario());
         ResultSet resultadoPerfil = sentenciaPerfil.executeQuery();
@@ -85,7 +88,6 @@ public class InicioSesionDAO {
                 case "estudiante":
                     usuario.setIdEstudiante(idPerfil);
                     break;
-
                 case "profesor":
                 case "coordinador":
                 case "evaluador":
@@ -93,5 +95,7 @@ public class InicioSesionDAO {
                     break;
             }
         }
+        sentenciaPerfil.close();
+        resultadoPerfil.close();
     }
 }

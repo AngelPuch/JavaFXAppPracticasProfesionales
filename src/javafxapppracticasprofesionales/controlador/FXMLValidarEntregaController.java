@@ -1,8 +1,5 @@
 package javafxapppracticasprofesionales.controlador;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -10,10 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.ValidacionDAO;
@@ -31,14 +26,10 @@ public class FXMLValidarEntregaController implements Initializable {
     @FXML
     private TextArea taComentarios;
     @FXML
-    private Button btnRechazar;
-    @FXML
-    private Button btnAprobar;
-
+    private Label lbContadorCaracteres;
+    
     private DocumentoEntregado docAValidar;
     private INotificacion notificador;
-    @FXML
-    private Label lbContadorCaracteres;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,17 +48,7 @@ public class FXMLValidarEntregaController implements Initializable {
     private void btnClicAbrirDocumento(ActionEvent event) {
         String ruta = docAValidar.getRutaArchivo();
         if (ruta != null && !ruta.isEmpty()) {
-            try {
-                File archivo = new File(ruta);
-                if (archivo.exists()) {
-                    Desktop.getDesktop().open(archivo);
-                    AlertaUtilidad.mostrarAlertaSimple("Información", "Documento abierto en la aplicación predeterminada.", javafx.scene.control.Alert.AlertType.INFORMATION);
-                } else {
-                    AlertaUtilidad.mostrarAlertaSimple("Error", "El archivo no se encontró en la ruta: " + ruta, javafx.scene.control.Alert.AlertType.ERROR);
-                }
-            } catch (IOException e) {
-                AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir el archivo. " + e.getMessage(), Alert.AlertType.ERROR);
-            }
+            Utilidad.abrirDocumento(ruta);
         } else {
             AlertaUtilidad.mostrarAlertaSimple("Sin archivo", "Este registro no tiene una ruta de archivo asociada.", javafx.scene.control.Alert.AlertType.WARNING);
         }
@@ -87,6 +68,11 @@ public class FXMLValidarEntregaController implements Initializable {
         validarDocumento(4); 
     }
     
+    @FXML
+    private void btnClicCancelar(ActionEvent event) {
+        cerrarVentana();
+    }
+    
     private void validarDocumento(int nuevoEstadoId) {
         String comentarios = taComentarios.getText();
         
@@ -102,11 +88,6 @@ public class FXMLValidarEntregaController implements Initializable {
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
-    }
-
-    @FXML
-    private void btnClicCancelar(ActionEvent event) {
-        cerrarVentana();
     }
     
     private void cerrarVentana() {

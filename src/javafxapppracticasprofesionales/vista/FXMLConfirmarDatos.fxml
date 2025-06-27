@@ -41,11 +41,11 @@
       
       <HBox alignment="CENTER_RIGHT" spacing="15.0">
          <children>
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#clicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#btnClicCancelar" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#clicGuardar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar " textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#btnClicGuardar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar " textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

@@ -16,12 +16,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafxapppracticasprofesionales.interfaz.INotificacion;
 import javafxapppracticasprofesionales.modelo.dao.EstudianteDAO;
 import javafxapppracticasprofesionales.modelo.pojo.EstudianteConProyecto;
-import javafxapppracticasprofesionales.modelo.pojo.ResponsableProyecto;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
@@ -49,21 +46,7 @@ public class FXMLConsultarExpedienteController implements Initializable {
     private void btnClicContinuar(ActionEvent event) {
         EstudianteConProyecto estudianteSeleccionado = tvEstudiantesConProyecto.getSelectionModel().getSelectedItem();
         if(estudianteSeleccionado != null){
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLExpedienteEstudiante.fxml"));
-                Parent vista = loader.load();
-
-                FXMLExpedienteEstudianteController controller = loader.getController();
-                controller.inicializarInformacion(estudianteSeleccionado);
-
-                Stage escenario = new Stage();
-                escenario.setTitle("Expediente Estudiante");
-                escenario.setScene(new Scene(vista));
-                escenario.show();
-                
-            } catch (IOException e) {
-                AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
-            }
+            irPantallaExpedienteEstudiante(estudianteSeleccionado);
         } else {
             AlertaUtilidad.mostrarAlertaSimple("Selección requerida", "Debes seleccionar un responsable para continuar.", Alert.AlertType.WARNING);
         }
@@ -92,7 +75,21 @@ public class FXMLConsultarExpedienteController implements Initializable {
             AlertaUtilidad.mostrarAlertaSimple("Error de conexión", "No se pudo cargar la lista de estudiantes.", Alert.AlertType.ERROR);
         }
     }
-
+     
+     private void irPantallaExpedienteEstudiante(EstudianteConProyecto estudianteSeleccionado) {
+         try {
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLExpedienteEstudiante.fxml"));
+             Parent vista = loader.load();
+             FXMLExpedienteEstudianteController controller = loader.getController();
+             controller.inicializarInformacion(estudianteSeleccionado);
+             Stage escenario = new Stage();
+             escenario.setTitle("Expediente Estudiante");
+             escenario.setScene(new Scene(vista));
+             escenario.show();
+         } catch (IOException e) {
+             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la siguiente ventana.", Alert.AlertType.ERROR);
+         }
+     }
     private void cerrarVentana(){
         Utilidad.getEscenarioComponente(tvEstudiantesConProyecto).close();
     }

@@ -64,7 +64,7 @@
       </GridPane>
       <TabPane fx:id="tpExpediente" layoutX="25.0" layoutY="164.0" prefHeight="372.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="tabDocIniciales" text="Documentos Iniciales">
+          <Tab text="Documentos Iniciales">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -79,7 +79,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tabReportes" text="Reportes Mensuales">
+          <Tab text="Reportes Mensuales">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -94,7 +94,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tabDocFinales" text="Documentos Finales">
+            <Tab text="Documentos Finales">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -130,7 +130,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="608.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicRegresar" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cerrar" textFill="WHITE">
+      <Button layoutX="608.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnClicCerrar" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Cerrar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

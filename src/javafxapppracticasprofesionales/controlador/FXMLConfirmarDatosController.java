@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -28,15 +27,11 @@ public class FXMLConfirmarDatosController implements Initializable {
     @FXML
     private TableView<RespuestaGuardadaOV> tvResumen;
     @FXML
-    private TableColumn<RespuestaGuardadaOV, String> colAfirmacion;
+    private TableColumn colAfirmacion;
     @FXML
-    private TableColumn<RespuestaGuardadaOV, Integer> colRespuesta;
+    private TableColumn colRespuesta;
     @FXML
     private TextArea taComentarios;
-    @FXML
-    private Button btnGuardar;
-    @FXML
-    private Button btnCancelar;
 
     private List<AfirmacionOV> listaAfirmaciones;
     private String comentarios;
@@ -77,7 +72,7 @@ public class FXMLConfirmarDatosController implements Initializable {
     }
 
     @FXML
-    private void clicGuardar(ActionEvent event) {
+    private void btnClicGuardar(ActionEvent event) {
         try {
             double sumaRespuestas = 0;
             for (AfirmacionOV afirmacion : listaAfirmaciones) {
@@ -103,7 +98,7 @@ public class FXMLConfirmarDatosController implements Initializable {
     }
 
     @FXML
-    private void clicCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", 
                 "¿Estás seguro de que quieres cancelar?",
                 "Si cancelas, la información no se guardará.");

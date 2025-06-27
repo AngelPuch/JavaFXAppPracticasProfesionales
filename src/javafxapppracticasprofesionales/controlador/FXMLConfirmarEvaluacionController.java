@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
@@ -48,7 +47,7 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
     }
 
     @FXML
-    private void btnCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         boolean confirmacion = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null ,"¿Estás seguro de que quieres cancelar? No se guardará la evaluación.");
         if (confirmacion) {
             Utilidad.getEscenarioComponente(lblNombreEstudiante).close();
@@ -56,7 +55,7 @@ public class FXMLConfirmarEvaluacionController implements Initializable {
     }
 
     @FXML
-    private void btnAceptar(ActionEvent event) {
+    private void btnClicConfirmar(ActionEvent event) {
         try {
             ResultadoOperacion resultado = EvaluacionDAO.registrarEvaluacion(this.evaluacion);
             if (!resultado.isError()) {

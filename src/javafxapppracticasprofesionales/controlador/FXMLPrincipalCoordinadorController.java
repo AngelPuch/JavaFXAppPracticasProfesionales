@@ -14,11 +14,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.interfaz.IControladorPrincipal;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-public class FXMLPrincipalCoordinadorController implements Initializable {
+public class FXMLPrincipalCoordinadorController implements Initializable, IControladorPrincipal {
 
     @FXML
     private AnchorPane apCentral;
@@ -26,6 +27,7 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     private Label lbNombreVentana;
     @FXML
     private Label lbNombreUsuario;
+    
     private Usuario usuarioSesion;
 
     @Override
@@ -33,6 +35,7 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
         // TODO
     }   
     
+    @Override
     public void inicializarInformacion(Usuario usuarioSesion) {
         this.usuarioSesion = usuarioSesion;
         cargarInformacion();

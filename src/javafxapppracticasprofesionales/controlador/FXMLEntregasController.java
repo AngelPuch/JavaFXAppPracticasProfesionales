@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,14 +22,49 @@ import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 
 public class FXMLEntregasController implements Initializable, INotificacion {
 
-    @FXML private TableView<Entrega> tvEntregasIniciales;
-    @FXML private TableColumn colNombreInicial, colFechaInicioInicial, colFechaFinInicial, colHoraInicioInicial, colHoraFinInicial, colGrupoInicial;
-    
-    @FXML private TableView<Entrega> tvEntregasReportes;
-    @FXML private TableColumn colNombreReporte, colFechaInicioReporte, colFechaFinReporte, colHoraInicioReporte, colHoraFinReporte, colGrupoReporte;
+    @FXML
+    private TableView<Entrega> tvEntregasIniciales;
+    @FXML
+    private TableColumn colNombreInicial;
+    @FXML
+    private TableColumn colFechaInicioInicial;
+    @FXML
+    private TableColumn colFechaFinInicial;
+    @FXML
+    private TableColumn colHoraInicioInicial;
+    @FXML
+    private TableColumn colHoraFinInicial;
+    @FXML
+    private TableColumn colGrupoInicial;
+    @FXML
+    private TableView<Entrega> tvEntregasReportes;
+    @FXML
+    private TableColumn colNombreReporte;
+    @FXML
+    private TableColumn colFechaInicioReporte;
+    @FXML
+    private TableColumn colFechaFinReporte;
+    @FXML
+    private TableColumn colHoraInicioReporte;
+    @FXML
+    private TableColumn colHoraFinReporte;
+    @FXML
+    private TableColumn colGrupoReporte;
+    @FXML
+    private TableView<Entrega> tvEntregasFinales;
+    @FXML
+    private TableColumn colNombreFinal;
+    @FXML
+    private TableColumn colFechaInicioFinal;
+    @FXML
+    private TableColumn colFechaFinFinal;
+    @FXML
+    private TableColumn colHoraInicioFinal;
+    @FXML
+    private TableColumn colHoraFinFinal;
+    @FXML
+    private TableColumn colGrupoFinal;
 
-    @FXML private TableView<Entrega> tvEntregasFinales;
-    @FXML private TableColumn colNombreFinal, colFechaInicioFinal, colFechaFinFinal, colHoraInicioFinal, colHoraFinFinal, colGrupoFinal;
 
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
@@ -89,7 +123,6 @@ public class FXMLEntregasController implements Initializable, INotificacion {
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
 
-            // Recargar las tablas después de cerrar la ventana modal
             cargarTodasLasEntregas();
 
         } catch (IOException e) {

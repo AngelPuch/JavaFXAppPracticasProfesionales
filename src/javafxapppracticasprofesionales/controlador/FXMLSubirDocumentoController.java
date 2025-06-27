@@ -28,31 +28,26 @@ import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLSubirDocumentoController implements Initializable {
-
-    
-    
     @FXML
     private Button btnSeleccionarArchivo;
     @FXML
-    private Button btnAceptar;
-    @FXML
-    private Button btnCancelar;
-    private Entrega entregaSeleccionada;
-    private int idExpediente;
-    private File archivoSeleccionado;
-    private static final String DIRECTORIO_PRINCIPAL_APP = "PracticasProfesionales_Documentos";
-    private static final String SUBDIRECTORIO_DOCUMENTOS = "DocumentosIniciales";
-    private INotificacion observador;
-    @FXML
     private Label lbTipoDocumento;
-    private String tipoDocumento;
-    private String nombreUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getNombre();
     @FXML
     private TextArea taDescripcion;
     @FXML
     private Label lbNombreArchivo;
     @FXML
     private TextArea taRutaArchivo;
+    
+    private static final String DIRECTORIO_PRINCIPAL_APP = "PracticasProfesionales_Documentos";
+    private static final String SUBDIRECTORIO_DOCUMENTOS = "DocumentosIniciales";
+    
+    private Entrega entregaSeleccionada;
+    private int idExpediente;
+    private File archivoSeleccionado;
+    private INotificacion observador;
+    private String tipoDocumento;
+    private String nombreUsuario = SesionUsuario.getInstancia().getUsuarioLogueado().getNombre();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,7 +63,7 @@ public class FXMLSubirDocumentoController implements Initializable {
     }
 
     @FXML
-    private void clicSeleccionarArchivo(ActionEvent event) {
+    private void btnClicSeleccionarArchivo(ActionEvent event) {
         FileChooser dialogo = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
             "Documentos Soportados (*.pdf, *.doc, *.docx)", "*.pdf", "*.doc", "*.docx");
@@ -81,9 +76,9 @@ public class FXMLSubirDocumentoController implements Initializable {
             lbNombreArchivo.setText(tipoDocumento + "_" + nombreUsuario);
         }
     }
-
-     @FXML
-    private void clicAceptar(ActionEvent event) {
+    
+    @FXML
+    private void btnClicGuardar(ActionEvent event) {
         if (!validarCampos()) {
             return;
         }
@@ -141,7 +136,7 @@ public class FXMLSubirDocumentoController implements Initializable {
     }
 
     @FXML
-    private void clicCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
                 "¿Estás seguro de que quieres cancelar?");
         if (confirmado) {

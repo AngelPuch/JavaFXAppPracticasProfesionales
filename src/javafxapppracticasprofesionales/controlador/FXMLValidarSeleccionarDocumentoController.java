@@ -56,6 +56,44 @@ public class FXMLValidarSeleccionarDocumentoController implements Initializable 
         lblTitulo.setText("Paso 2: Seleccionar Entrega de " + tipoDoc.getNombre());
         cargarEntregas();
     }
+
+    @FXML
+    private void btnClicContinuar(ActionEvent event) {
+        Entrega entregaSeleccionada = tvEntregasProgramadas.getSelectionModel().getSelectedItem();
+        if (entregaSeleccionada != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEntregaParaValidar.fxml"));
+                Parent vista = loader.load();
+                FXMLSeleccionarEntregaParaValidarController controlador = loader.getController();
+
+                controlador.inicializar(entregaSeleccionada, tipoDocumento.getNombre());
+
+                Stage escenario = (Stage) lblTitulo.getScene().getWindow();
+                escenario.setScene(new Scene(vista));
+                escenario.setTitle("Validar Entregas - Paso 3");
+            } catch (IOException e) {
+                AlertaUtilidad.mostrarAlertaSimple("Error","No se pudo cargar la ventana: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
+
+        } else {
+            AlertaUtilidad.mostrarAlertaSimple("Sin selección", "Debe seleccionar una entrega para continuar.", Alert.AlertType.WARNING);
+        }
+    }
+    @FXML
+    private void btnClicRegresar(ActionEvent event) {
+        try {
+            Stage escenarioActual = (Stage) lblTitulo.getScene().getWindow();
+            Parent vistaAnterior = FXMLLoader.load(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarSeleccionarTipoEntrega.fxml"));
+
+            Scene escenaAnterior = new Scene(vistaAnterior);
+            escenarioActual.setTitle("Validar Entregas - Paso 1");
+
+            escenarioActual.setScene(escenaAnterior);
+
+        } catch (IOException e) {
+            AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la ventana anterior: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
     
     private void cargarEntregas() {
         try {
@@ -74,45 +112,4 @@ public class FXMLValidarSeleccionarDocumentoController implements Initializable 
             AlertaUtilidad.mostrarAlertaSimple("Error",e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
-    @FXML
-private void btnClicContinuar(ActionEvent event) {
-    Entrega entregaSeleccionada = tvEntregasProgramadas.getSelectionModel().getSelectedItem();
-    if (entregaSeleccionada != null) {
-        // ¡El bloque switch que creaba el arreglo "tablaInfo" se elimina por completo!
-        
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLSeleccionarEntregaParaValidar.fxml"));
-            Parent vista = loader.load();
-            FXMLSeleccionarEntregaParaValidarController controlador = loader.getController();
-            
-            // Pasamos la información de forma limpia y directa.
-            controlador.inicializar(entregaSeleccionada, tipoDocumento.getNombre());
-
-            Stage escenario = (Stage) lblTitulo.getScene().getWindow();
-            escenario.setScene(new Scene(vista));
-            escenario.setTitle("Validar Entregas - Paso 3");
-        } catch (IOException e) {
-            AlertaUtilidad.mostrarAlertaSimple("Error","No se pudo cargar la ventana: " + e.getMessage(), Alert.AlertType.ERROR);
-        }
-
-    } else {
-        AlertaUtilidad.mostrarAlertaSimple("Sin selección", "Debe seleccionar una entrega para continuar.", Alert.AlertType.WARNING);
-    }
-}
-    @FXML
-private void btnClicRegresar(ActionEvent event) {
-    try {
-        Stage escenarioActual = (Stage) lblTitulo.getScene().getWindow();
-        Parent vistaAnterior = FXMLLoader.load(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLValidarSeleccionarTipoEntrega.fxml"));
-
-        Scene escenaAnterior = new Scene(vistaAnterior);
-        escenarioActual.setTitle("Validar Entregas - Paso 1");
-
-        escenarioActual.setScene(escenaAnterior);
-
-    } catch (IOException e) {
-        AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo cargar la ventana anterior: " + e.getMessage(), Alert.AlertType.ERROR);
-    }
-}
 }

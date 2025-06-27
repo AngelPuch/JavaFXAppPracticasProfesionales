@@ -38,17 +38,15 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     @FXML
     private TableView<Entrega> tvEntregas;
     @FXML
-    private TableColumn<Entrega, String> colNombre;
+    private TableColumn colNombre;
     @FXML
-    private TableColumn<Entrega, String> colFechaInicio;
+    private TableColumn colFechaInicio;
     @FXML
-    private TableColumn<Entrega, String> colFechaFin;
+    private TableColumn colFechaFin;
     @FXML
-    private TableColumn<Entrega, String> colHoraFin;
+    private TableColumn colHoraFin;
     @FXML
     private Button btnContinuar;
-    @FXML
-    private Button btnCancelar;
     private INotificacion observador;
     private InfoEstudianteSesion infoSesion;
 
@@ -87,13 +85,9 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     
     private void cargarEntregas(int idGrupo, int idExpediente) {
         try {
-            
             ArrayList<Entrega> entregasBD = EntregaDAO.obtenerEntregasPendientesEstudiante(idGrupo, idExpediente, "entregadocumentoinicio");
-            
             final LocalDateTime fechaYHoraActual = LocalDateTime.now();
-            
             final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
             ArrayList<Entrega> entregasPendientes = entregasBD.stream()
                     .filter(entrega -> "Sin Entregar".equals(entrega.getEstado()))
                     .filter(entrega -> {
@@ -117,14 +111,13 @@ public class FXMLSeleccionarEntregaController implements Initializable {
             
             ObservableList<Entrega> entregasObservable = FXCollections.observableArrayList(entregasPendientes);
             tvEntregas.setItems(entregasObservable);
-            
         } catch (SQLException e) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Conexión", "No se pudieron cargar las entregas.", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
-    private void clicContinuar(ActionEvent event) {
+    private void btnClicContinuar(ActionEvent event) {
         Entrega entregaSeleccionada = tvEntregas.getSelectionModel().getSelectedItem();
         if (entregaSeleccionada == null) {
             AlertaUtilidad.mostrarAlertaSimple("Selección requerida", "Debes seleccionar una entrega para continuar.", Alert.AlertType.WARNING);
@@ -150,7 +143,7 @@ public class FXMLSeleccionarEntregaController implements Initializable {
     }
 
     @FXML
-    private void clicCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         cerrarVentana();
     }
     

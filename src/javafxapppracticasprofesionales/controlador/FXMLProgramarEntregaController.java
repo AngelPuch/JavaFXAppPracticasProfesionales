@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -47,10 +46,6 @@ public class FXMLProgramarEntregaController implements Initializable {
     private Label lbContadorCaracteresNombre;
     @FXML
     private Label lbErrorGrupo;
-    @FXML
-    private Button btnCancelar;
-    @FXML
-    private Button btnAceptar;
     @FXML
     private ComboBox<String> cmbHorasInicio;
     @FXML
@@ -164,7 +159,7 @@ public class FXMLProgramarEntregaController implements Initializable {
     }
 
     @FXML
-    private void clicCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar Operación",
                 "¿Estás seguro de que quieres cancelar?", "Cualquier dato no guardado se perderá.");
         if (confirmado) {
@@ -173,15 +168,8 @@ public class FXMLProgramarEntregaController implements Initializable {
     }
 
     @FXML
-    private void clicAceptar(ActionEvent event) {
+    private void btnClicAceptar(ActionEvent event) {
         if (validarCampos()) {
-            if (tipoEntrega == null || tipoDocumento == null || observador == null) {
-                AlertaUtilidad.mostrarAlertaSimple("Error de Programación", 
-                    "El controlador no se inicializó correctamente desde la ventana anterior. No se puede continuar.", 
-                    Alert.AlertType.ERROR);
-                return;
-            }
-
             String tablaDestino = "";
             switch (tipoEntrega) {
                 case "DOCUMENTOS INICIALES": tablaDestino = "entregadocumentoinicio"; break;
@@ -192,17 +180,7 @@ public class FXMLProgramarEntregaController implements Initializable {
                     return;
             }
 
-            Entrega nuevaEntrega = new Entrega();
-            nuevaEntrega.setNombre(tfNombre.getText().trim());
-            nuevaEntrega.setDescripcion(taDescripcion.getText().trim());
-            nuevaEntrega.setFechaInicio(dpFechaInicio.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            nuevaEntrega.setFechaFin(dpFechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            
-            String horaInicio = cmbHorasInicio.getValue() + ":" + cmbMinutosInicio.getValue();
-            String horaFin = cmbHorasFin.getValue() + ":" + cmbMinutosFin.getValue();
-            nuevaEntrega.setHoraInicio(horaInicio);
-            nuevaEntrega.setHoraFin(horaFin);
-
+            Entrega nuevaEntrega = obtenerNuevaEntrega();
             int idGrupoSeleccionado = cbGrupo.getSelectionModel().getSelectedItem().getIdGrupo();
             int idTipoDocumentoSeleccionado = this.tipoDocumento.getIdTipoDocumento();
 
@@ -223,7 +201,23 @@ public class FXMLProgramarEntregaController implements Initializable {
         }
     }
     
+    private Entrega obtenerNuevaEntrega() {
+        Entrega entrega = new Entrega();
+        entrega.setNombre(tfNombre.getText().trim());
+        entrega.setDescripcion(taDescripcion.getText().trim());
+        entrega.setFechaInicio(dpFechaInicio.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        entrega.setFechaFin(dpFechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        String horaInicio = cmbHorasInicio.getValue() + ":" + cmbMinutosInicio.getValue();
+        String horaFin = cmbHorasFin.getValue() + ":" + cmbMinutosFin.getValue();
+        entrega.setHoraInicio(horaInicio);
+        entrega.setHoraFin(horaFin);
+
+        return entrega;
+    }
+    
     private void cerrarVentana() {
         Utilidad.getEscenarioComponente(tfNombre).close();
     }
+
 }

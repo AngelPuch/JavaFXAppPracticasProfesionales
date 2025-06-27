@@ -12,16 +12,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
+import javafxapppracticasprofesionales.interfaz.IControladorPrincipal;
 import javafxapppracticasprofesionales.modelo.pojo.Usuario;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
 
-public class FXMLPrincipalProfesorController implements Initializable {
+public class FXMLPrincipalProfesorController implements Initializable, IControladorPrincipal {
 
     @FXML
     private Label lbNombreVentana;
@@ -36,7 +36,8 @@ public class FXMLPrincipalProfesorController implements Initializable {
         // TODO
     }    
     
-    public void inicializarInformacion(Usuario usuarioSesion) {
+    @Override
+    public void inicializarInformacion(Usuario usuario) {
         this.usuarioSesion = usuarioSesion;
         cargarInformacion();
     }

@@ -3,7 +3,6 @@ package javafxapppracticasprofesionales.controlador;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,14 +58,14 @@ public class FXMLRegistrarProyectoController implements Initializable {
     }
 
     @FXML
-    private void clicBtnAceptar(ActionEvent event) {
+    private void btnClicGuardar(ActionEvent event) {
         if (validarCampos()) {
             registrarProyecto(obtenerProyectoNuevo());
         }
     }
 
     @FXML
-    private void clicBtnCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
                 "¿Estás seguro de que quieres cancelar?");
         if (confirmado) {

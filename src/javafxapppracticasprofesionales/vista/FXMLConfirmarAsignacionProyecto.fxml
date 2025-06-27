@@ -122,7 +122,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                         </Button>
-                        <Button onAction="#btnClicAceptar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Confirmar" textFill="WHITE">
+                        <Button onAction="#btnClicConfirmar" style="-fx-background-color: #007bff; -fx-font-weight: bold; -fx-background-radius: 5; -fx-background-insets: 0;" text="Confirmar" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

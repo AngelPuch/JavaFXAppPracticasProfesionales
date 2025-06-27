@@ -60,12 +60,12 @@
          </children>
       </HBox>
       
-      <Button fx:id="btnCancelar" layoutX="378.0" layoutY="436.0" onAction="#clicCancelar" style="-fx-background-color: #bdc3c7; -fx-text-fill: white; -fx-background-radius: 5;" text="Cancelar">
+      <Button layoutX="378.0" layoutY="436.0" onAction="#btnClicCancelar" style="-fx-background-color: #bdc3c7; -fx-text-fill: white; -fx-background-radius: 5;" text="Cancelar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnAceptar" layoutX="474.0" layoutY="436.0" onAction="#clicAceptar" style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-background-radius: 5;" text="Aceptar">
+      <Button layoutX="474.0" layoutY="436.0" onAction="#btnClicAceptar" style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-background-radius: 5;" text="Aceptar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

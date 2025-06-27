@@ -31,13 +31,13 @@ public class FXMLSeleccionarProyectoController implements Initializable {
     @FXML
     private TableView<Proyecto> tvProyectos;
     @FXML
-    private TableColumn<Proyecto, String> colNombre;
+    private TableColumn colNombre;
     @FXML
     private TableColumn<Proyecto, String> colOrganizacion;
     @FXML
-    private TableColumn<Proyecto, Integer> colCupos;
+    private TableColumn colCupos;
     @FXML
-    private TableColumn<Proyecto, String> colObjetivo;
+    private TableColumn colObjetivo;
 
     private ObservableList<Proyecto> listaProyectos;
     private Estudiante estudianteSeleccionado;

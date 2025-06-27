@@ -17,10 +17,10 @@ public class ResponsableProyectoDAO {
         Connection conexionBD = ConexionBD.abrirConexion();
         if (conexionBD != null) {
             String sql = "INSERT INTO responsableproyecto (nombre, apellidoPaterno, apellidoMaterno, "
-                    + "cargo, correo, OrganizacionVinculada_idOrganizacionVinculada, telefono)"
+                    + "cargo, correo,telefono, OrganizacionVinculada_idOrganizacionVinculada)"
                     + " VALUES (?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            asignarParametrosResponsable(sentencia, responsable);
+            asignarParametrosResponsable(sentencia, responsable, true);
             int filasAfectadas = sentencia.executeUpdate();
             
             if (filasAfectadas == 1) {
@@ -54,11 +54,9 @@ public class ResponsableProyectoDAO {
             while (resultado.next()) {
                 responsables.add(convertirRegistroResponsable(resultado, true));
             }
-            
             conexionBD.close();
             sentencia.close();
             resultado.close();
-            
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos.");
         }
@@ -79,11 +77,9 @@ public class ResponsableProyectoDAO {
             while (resultado.next()) {
                 responsables.add(convertirRegistroResponsable(resultado, false));
             }
-            
             conexionBD.close();
             sentencia.close();
             resultado.close();
-            
         } else {
             throw new SQLException("Error: Sin conexión a la Base de Datos.");
         }
@@ -100,18 +96,10 @@ public class ResponsableProyectoDAO {
                          "WHERE idResponsableProyecto = ?";
             
             PreparedStatement sentencia = conexionBD.prepareStatement(sql);
-            
-            sentencia.setString(1, responsable.getNombre());
-            sentencia.setString(2, responsable.getApellidoPaterno());
-            sentencia.setString(3, responsable.getApellidoMaterno());
-            sentencia.setString(4, responsable.getCargo());
-            sentencia.setString(5, responsable.getCorreo());
-            sentencia.setString(6, responsable.getTelefono());
-            
+            asignarParametrosResponsable(sentencia, responsable, false);
             sentencia.setInt(7, idResponsable);
             
             int filasAfectadas = sentencia.executeUpdate();
-            
             if (filasAfectadas == 1) {
                 resultado.setIsError(false);
                 resultado.setMensaje("Responsable actualizado correctamente.");
@@ -131,15 +119,17 @@ public class ResponsableProyectoDAO {
         return resultado;
     }
 
-    private static void asignarParametrosResponsable(PreparedStatement ps, ResponsableProyecto responsable) throws SQLException {
+    private static void asignarParametrosResponsable(PreparedStatement ps, 
+            ResponsableProyecto responsable, boolean isRegistrar) throws SQLException {
         ps.setString(1, responsable.getNombre());
         ps.setString(2, responsable.getApellidoPaterno());
         ps.setString(3, responsable.getApellidoMaterno());
         ps.setString(4, responsable.getCargo());
         ps.setString(5, responsable.getCorreo());
-        ps.setInt(6, responsable.getIdOrganizacion());
-        ps.setString(7, responsable.getTelefono());
-
+        ps.setString(6, responsable.getTelefono());
+        if (isRegistrar) {
+            ps.setInt(7, responsable.getIdOrganizacion());
+        }
     }
     
     private static ResponsableProyecto convertirRegistroResponsable(ResultSet resultado, boolean leerOrganizacion) throws SQLException {

@@ -3,7 +3,6 @@ package javafxapppracticasprofesionales.controlador;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import javafx.collections.FXCollections;
@@ -23,15 +22,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafxapppracticasprofesionales.JavaFXAppPracticasProfesionales;
-import javafxapppracticasprofesionales.modelo.dao.EvaluacionDAO;
 import javafxapppracticasprofesionales.modelo.dao.ExpedienteDAO;
 import javafxapppracticasprofesionales.modelo.dao.ProyectoDAO;
 import javafxapppracticasprofesionales.modelo.pojo.CriterioEvaluacion;
 import javafxapppracticasprofesionales.modelo.pojo.Estudiante;
 import javafxapppracticasprofesionales.modelo.pojo.Evaluacion;
 import javafxapppracticasprofesionales.modelo.pojo.Proyecto;
-import javafxapppracticasprofesionales.modelo.pojo.ResultadoOperacion;
 import javafxapppracticasprofesionales.utilidad.AlertaUtilidad;
 import javafxapppracticasprofesionales.utilidad.SesionUsuario;
 import javafxapppracticasprofesionales.utilidad.Utilidad;
@@ -109,24 +105,37 @@ public class FXMLCalificarPresentacionController implements Initializable {
     }
     
     @FXML
-    private void btnClisCancelar(ActionEvent event) {
+    private void btnClicCancelar(ActionEvent event) {
         if (AlertaUtilidad.mostrarAlertaConfirmacion("Salir de la evaluacion", null ,"¿Estás seguro que quieres cancelar?")) {
                 Utilidad.getEscenarioComponente(lbPromedioPuntaje).close();
         }
     }
 
-    @FXML
-    private void btnClicAceptar(ActionEvent event) {
+   @FXML
+    private void btnClicCalificar(ActionEvent event) {
+        if (validarCampos()) {
+            Evaluacion evaluacion = construirEvaluacionDesdeFormulario();
+            if (evaluacion != null) {
+                irPantallaConfirmacion(evaluacion);
+            }
+        }
+    }
+    private boolean validarCampos() {
         if (tfPuntajeMetodosTecnicasIS.getText().isEmpty() || tfPuntajeRequisitos.getText().isEmpty() || tfPuntajeSeguridadDominio.getText().isEmpty() || tfPuntajeContenido.getText().isEmpty() || tfPuntajeOrtografiaRedaccion.getText().isEmpty()) {
             AlertaUtilidad.mostrarAlertaSimple("Datos Inválidos", "La calificación de los criterios no puede estar vacía. Por favor corrige tu información.", Alert.AlertType.WARNING);
-            return;
+            return false;
         }
 
         if (this.idExpediente <= 0 || this.proyecto == null) {
             AlertaUtilidad.mostrarAlertaSimple("Error de Inicialización", "No se pueden guardar los datos porque falta información del estudiante o del proyecto.", Alert.AlertType.ERROR);
-            return;
+            return false;
         }
 
+
+        return true;
+    }
+    
+    private Evaluacion construirEvaluacionDesdeFormulario() {
         Evaluacion evaluacion = new Evaluacion();
         evaluacion.setCalificacionTotal(Float.parseFloat(lbPromedioPuntaje.getText()));
         evaluacion.setComentarios(taObservacionesYComentarios.getText());
@@ -163,7 +172,10 @@ public class FXMLCalificarPresentacionController implements Initializable {
         detalles.add(detalleOrtografia);
         
         evaluacion.setDetalles(detalles);
+        return evaluacion;
+    }
 
+    private void irPantallaConfirmacion(Evaluacion evaluacion) {
         try {
             FXMLLoader cargador = new FXMLLoader(getClass().getResource("/javafxapppracticasprofesionales/vista/FXMLConfirmarEvaluacion.fxml"));
             Parent vista = cargador.load();

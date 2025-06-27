@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafxapppracticasprofesionales.modelo.pojo.OrganizacionVinculada;
-import javafxapppracticasprofesionales.utilidad.Utilidad;
 
 public class FXMLConfirmacionRegistroOrganizacionController implements Initializable {
 
@@ -52,13 +51,13 @@ public class FXMLConfirmacionRegistroOrganizacionController implements Initializ
     }
 
     @FXML
-    private void btnConfirmar(ActionEvent event) {
+    private void btnClicConfirmar(ActionEvent event) {
         confirmado = true;
         cerrarVentana();
     }
 
     @FXML
-    private void btnModificar(ActionEvent event) {
+    private void btnClicModificarDatos(ActionEvent event) {
         confirmado = false;
         cerrarVentana();
     }

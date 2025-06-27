@@ -29,16 +29,17 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
     private Label lbMatriculaEstudiante;
     @FXML
     private Label lbNumeroCuposProyecto;
-    Proyecto proyectoSeleccionado;
-    Estudiante estudianteSeleccionado;
-    INotificacion observador;
     @FXML
     private TextArea taObjetivo;
     @FXML
     private TextArea taNombreProyecto;
     @FXML
     private TextArea taOrganizacion;
-
+    
+    Proyecto proyectoSeleccionado;
+    Estudiante estudianteSeleccionado;
+    INotificacion observador;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -62,7 +63,7 @@ public class FXMLConfirmarAsignacionProyectoController implements Initializable 
     }
 
     @FXML
-    private void btnClicAceptar(ActionEvent event) {
+    private void btnClicConfirmar(ActionEvent event) {
         try {
             ResultadoOperacion resultado = ExpedienteDAO.asignarProyectoAEstudiante(proyectoSeleccionado.getIdProyecto(), estudianteSeleccionado.getIdEstudiante());
             if (!resultado.isError()) {

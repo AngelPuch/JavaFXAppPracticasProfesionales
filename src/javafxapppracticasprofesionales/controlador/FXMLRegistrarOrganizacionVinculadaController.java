@@ -80,7 +80,7 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
     }
 
     @FXML
-    private void btnAceptar(ActionEvent event) {
+    private void btnClicGuardar(ActionEvent event) {
         if (validarCampos()) {
             OrganizacionVinculada organizacion = obtenerOrganizacionNueva();
             boolean confirmacionAceptada = mostrarVentanaConfirmacion(organizacion);
@@ -88,6 +88,15 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
             if (confirmacionAceptada) {
                 registrarOrganizacion(organizacion);
             }
+        }
+    }
+    
+    @FXML
+    private void btnClicCancelar(ActionEvent event) {
+        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
+                "¿Estás seguro de que quieres cancelar?");
+        if (confirmado) {
+            cerrarVentana();
         }
     }
     
@@ -111,15 +120,6 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
             AlertaUtilidad.mostrarAlertaSimple("Error", "No se pudo abrir la ventana de confirmación.", Alert.AlertType.ERROR);
             e.printStackTrace();
             return false;
-        }
-    }
-
-    @FXML
-    private void btnCancelar(ActionEvent event) {
-        boolean confirmado = AlertaUtilidad.mostrarAlertaConfirmacion("Cancelar", null,
-                "¿Estás seguro de que quieres cancelar?");
-        if (confirmado) {
-            cerrarVentana();
         }
     }
     
@@ -168,7 +168,6 @@ public class FXMLRegistrarOrganizacionVinculadaController implements Initializab
             if (!resultado.isError()) {
                 AlertaUtilidad.mostrarAlertaSimple("Operación exitosa",
                         "Operación realizada correctamente.", Alert.AlertType.INFORMATION);
-                
                 if (observador != null) {
                     observador.operacionExitosa();
                 }

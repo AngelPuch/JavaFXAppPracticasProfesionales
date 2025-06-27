@@ -48,11 +48,11 @@
          </font>
       </Label>
       <TextArea fx:id="taComentarios" layoutX="30.0" layoutY="205.0" prefHeight="74.0" prefWidth="440.0" wrapText="true" />
-      <Button fx:id="btnRechazar" layoutX="310.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicRechazar" prefWidth="70.0" style="-fx-background-color: #d9534f;" text="Rechazar" textFill="WHITE">
+      <Button layoutX="310.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicRechazar" prefWidth="70.0" style="-fx-background-color: #d9534f;" text="Rechazar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="btnAprobar" layoutX="399.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicAprobar" prefWidth="70.0" style="-fx-background-color: #5cb85c;" text="Aprobar" textFill="WHITE">
+      <Button layoutX="399.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnClicAprobar" prefWidth="70.0" style="-fx-background-color: #5cb85c;" text="Aprobar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
